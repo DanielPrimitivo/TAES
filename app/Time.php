@@ -13,7 +13,7 @@ class Time extends Model
         return $this->belongsTo('App\Notice');
     }
 
-    public static function create(array $data){
+    public static function crear(array $data){
         $t = new Time();
         $t->fecha = $data['fecha'];
         $t->viento = $data['viento'];
@@ -26,7 +26,7 @@ class Time extends Model
         return redirect()->route('times');
     }
 
-    public static function crear(){
+    public static function create(){
         return view('time.timecreate');
     }
 

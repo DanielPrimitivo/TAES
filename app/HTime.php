@@ -11,7 +11,7 @@ class HTime extends Model
         return $this->belongsTo('App\HNotice');
     }
 
-    public static function create(array $data){
+    public static function crear(array $data){
         $t = new HTime();
         $t->fecha = $data['fecha'];
         $t->viento = $data['viento'];
@@ -25,7 +25,7 @@ class HTime extends Model
         return redirect()->route('htimes');
     }
 
-    public static function crear(){
+    public static function create(){
         return view('htime.htimecreate');
     }
 
