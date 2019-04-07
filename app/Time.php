@@ -13,6 +13,34 @@ class Time extends Model
         return $this->belongsTo('App\Notice');
     }
 
+    public static function create(array $data){
+        $t = new Time();
+        $t->fecha = $data['fecha'];
+        $t->viento = $data['viento'];
+        $t->dirviento = $data['dirviento'];
+        $t->humedad = $data['humedad'];
+        $t->temperatura = $data['temperatura'];
+        $t->lluvia = $data['lluvia'];
+        $t->prevision = $data['prevision'];
+        $t->save();
+        return redirect()->route('times');
+    }
+
+    public static function crear(){
+        return view('time.timecreate');
+    }
+
+    public static function upgrade(array $data, Time $time){
+        $time->update($data);
+        return redirect()->route('time.details', ['time' => $time]);
+    }
+
+    public static function eliminar(Time $time){
+        $time->delete();
+        return redirect()->route('times.list');
+    }
+
+
     public function obtenerInformacion(int $id){
         $t = Time::where('id', '=', $id);
         return view('time.time', compact('t'));

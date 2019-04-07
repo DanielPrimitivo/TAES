@@ -14,4 +14,33 @@ class Coordinate extends Model
         //Coordinate tiene la clave ajena de Notice
         return $this->belongsTo('App\Notice');
     }
+
+    public static function create(array $data){
+        $t = new Coordinate();
+        $t->x = $data['x'];
+        $t->y = $data['y'];
+        $t->notice_id = $data['notice_id'];
+        $t->save();
+        return redirect()->route('coordinates');
+    }
+
+    public static function crear(){
+        return view('coordinate.coordinatecreate');
+    }
+
+    public static function upgrade(array $data, Coordinate $c){
+        $c->update($data);
+        return redirect()->route('coordiniate.details', ['coordinate' => $c]);
+    }
+
+    public static function eliminar(Coordinate $c){
+        $c->delete();
+        return redirect()->route('coordiniates.list');
+    }
+
+
+    public function obtenerInformacion(int $id){
+        $c = Coordiniate::where('id', '=', $id);
+        return view('coordiniate.coordiniate', compact('c'));
+    }
 }
