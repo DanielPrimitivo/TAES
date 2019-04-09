@@ -207,24 +207,16 @@
         <div class="table-responsive">
           <table class="table table-striped">
             <tbody>
-              <tr>
-                <td>LAT</td>
-                <td>LONG</td>
-                <td><a href="#" class="text-dark"><i class="fas fa-check"></i></a></td>
-                <td><a href="#" class="text-dark"><i class="fas fa-external-link-alt"></i></a></td>
-              </tr>
-              <tr>
-                <td>LAT</td>
-                <td>LONG</td>
-                <td><a href="#" class="text-dark"><i class="fas fa-check"></i></a></td>
-                <td><a href="#" class="text-dark"><i class="fas fa-external-link-alt"></i></a></td>
-              </tr>
-              <tr>
-                <td>LAT</td>
-                <td>LONG</td>
-                <td><a href="#" class="text-dark"><i class="fas fa-check"></i></a></td>
-                <td><a href="#" class="text-dark"><i class="fas fa-external-link-alt"></i></a></td>
-              </tr>
+              @if(isset($coordinates))
+                @foreach($coordinates as $coordinate)
+                  <tr>
+                    <td>{{ $coordinate->x }}</td>
+                    <td>{{ $coordinate->y }}</td>
+                    <td><a href="#" class="text-dark"><i class="fas fa-check"></i></a></td>
+                    <td><a href="#" class="text-dark"><i class="fas fa-external-link-alt"></i></a></td>
+                  </tr>
+                @endforeach
+              @endif
             </tbody>
           </table>
         </div>

@@ -43,4 +43,18 @@ class Coordinate extends Model
         $c = Coordiniate::where('id', '=', $id);
         return view('coordiniate.coordiniate', compact('c'));
     }
+
+    // --------------------------------------------
+
+    public function read() {
+        return Coordinate::All();
+    }
+
+    public function guardar($request) {
+        $coordinate = new Coordinate();
+        $coordinate->x = $request->input('latitud');
+        $coordinate->y = $request->input('longitud');
+        $coordinate->notice_id = $request->input('notice_id');
+        $coordinate->save();
+    }
 }

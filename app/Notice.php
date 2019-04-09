@@ -40,4 +40,10 @@ class Notice extends Model
         $notice->delete();
         return redirect()->route('notices.list');
     }
+
+    // --------------------------------------------
+
+    public function read() {
+        return Notice::All();
+    }
 }
