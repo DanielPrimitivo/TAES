@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Notice;
 
 class NoticeTableSeeder extends Seeder
 {
