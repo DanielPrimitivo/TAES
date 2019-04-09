@@ -13,7 +13,7 @@ class CreateNoticeHTable extends Migration
      */
     public function up()
     {
-        Schema::create('hnotices', function (Blueprint $table) {
+        Schema::create('h_notices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('fecha');
             $table->string('valoracion');
@@ -30,6 +30,6 @@ class CreateNoticeHTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hnotices');
+        Schema::dropIfExists('h_notices');
     }
 }

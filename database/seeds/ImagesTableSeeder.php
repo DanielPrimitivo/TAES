@@ -12,6 +12,8 @@ class ImagesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('images')->delete();
+
         $info = parse_ini_file("image.ini", true);
         foreach($info as $img){
             $imagen = new Image([

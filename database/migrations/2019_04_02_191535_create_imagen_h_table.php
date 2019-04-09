@@ -13,16 +13,16 @@ class CreateImagenHTable extends Migration
      */
     public function up()
     {
-        Schema::create('himages', function (Blueprint $table) {
+        Schema::create('h_images', function (Blueprint $table) {
             $table->increments('id');
             $table->string('fecha');
             $table->string('url');
 
             $table->integer('hcoordinate_id')->unsigned();
-            $table->foreign('hcoordinate_id')->references('id')->on('hcoordinates');
+            $table->foreign('hcoordinate_id')->references('id')->on('h_coordinates');
 
             $table->integer('hnotice_id')->unsigned();
-            $table->foreign('hnotice_id')->references('id')->on('hnotices');
+            $table->foreign('hnotice_id')->references('id')->on('h_notices');
 
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ class CreateImagenHTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('himages');
+        Schema::dropIfExists('h_images');
     }
 }
