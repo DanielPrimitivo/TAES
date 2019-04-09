@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', 'MainController@index')->name('dashboard');
+Route::get('/aviso', 'MainController@aviso')->name('aviso');

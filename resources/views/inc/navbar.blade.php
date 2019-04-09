@@ -17,7 +17,7 @@
           <span class="badge badge-danger">5</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item btn-outline-secondary" href="#" id="link1"><i class="fas fa-fire mr-2"></i> Aviso 1</a>
+          <a class="dropdown-item btn-outline-secondary" href="{{route('aviso')}}" id="link1"><i class="fas fa-fire mr-2"></i> Aviso 1</a>
           <a class="dropdown-item btn-outline-secondary" href="#" id="link1"><i class="fas fa-fire mr-2"></i> Aviso 2</a>
           <a class="dropdown-item btn-outline-secondary" href="#" id="link1"><i class="fas fa-fire mr-2"></i> Aviso 3</a>
           <a class="dropdown-item btn-outline-secondary" href="#" id="link2"><i class="fas fa-fire mr-2"></i> Aviso 4</a>
@@ -26,6 +26,9 @@
       </li>
 </div>
 <div class="btn-group mr-2" role="group">
+  @if(Route::current()->getName() != 'dashboard')
+    <a href="{{route('dashboard')}}" class="customButton btn btn-primary"><i class="fas fa-columns"></i></a>
+    @endif
     <!-- Adding more buttons in future -->
 </div>
 </div>

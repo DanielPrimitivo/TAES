@@ -10,4 +10,8 @@ class MainController extends Controller
     public function index() {
       return view::make('Main/dashboard');
     }
+
+    public function aviso() {
+      return view::make('Main/aviso');
+    }
 }
