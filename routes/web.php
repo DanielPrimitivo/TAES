@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'MainController@index')->name('dashboard')->middleware('auth');
+Route::get('/aviso', 'MainController@aviso')->name('aviso')->middleware('auth');
 
-Route::get('/dashboard', 'MainController@index')->name('dashboard');
-Route::get('/aviso', 'MainController@aviso')->name('aviso');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

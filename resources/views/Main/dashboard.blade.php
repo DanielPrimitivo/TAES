@@ -17,7 +17,7 @@
 
 .scroll-box {
             overflow-y: scroll;
-            height: 700px;
+            height: 750px;
             padding: 1rem;
         }
 @endsection
@@ -200,7 +200,7 @@
 </div>
 </div>
 <div class="row-lg-9">
-  <div class="card-deck mt-2 mb-4">
+  <div class="card-deck mt-4 mb-4">
     <div class="card shadow">
       <h5 class="card-header text-center">Últimos avisos</h5>
       <div class="card-body">
