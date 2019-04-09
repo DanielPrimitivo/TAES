@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Image;
 
 class ImagesTableSeeder extends Seeder
 {
@@ -11,14 +12,15 @@ class ImagesTableSeeder extends Seeder
      */
     public function run()
     {
-        $info = parse_ini_file("imagen.ini", true);
-        foreach($info as $noti){
-            $notice = new Notice([
-                'fecha' => $noti['fecha'],
-                'valoracion' => $noti['valoracion'],
-                'visto' => $noti['visto']
+        $info = parse_ini_file("image.ini", true);
+        foreach($info as $img){
+            $imagen = new Image([
+                'fecha' => $img['fecha'],
+                'url' => $img['url'],
+                'coordinate_id' => $img['coordinate_id'],
+                'notice_id' => $img['notice_id']
             ]);
-            $notice->save();
+            $imagen->save();
         }
     }
 }

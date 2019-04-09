@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\HCoordinate;
 
 class CoordinatesHTableSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class CoordinatesHTableSeeder extends Seeder
             $coordinate = new HCoordinate([
                 'x' => $coord['x'],
                 'y' => $coord['y'],
-                'notice' => $coord['notice']
+                'hnotice_id' => $coord['hnotice_id']
             ]);
             $coordinate->save();
         }

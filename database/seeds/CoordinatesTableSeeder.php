@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Coordinate;
 
 class CoordinatesTableSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class CoordinatesTableSeeder extends Seeder
             $coordinate = new Coordinate([
                 'x' => $coord['x'],
                 'y' => $coord['y'],
-                'notice' => $coord['notice']
+                'notice_id' => $coord['notice_id']
             ]);
             $coordinate->save();
         }
