@@ -12,6 +12,8 @@ class TimeTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('times')->delete();
+
         $info = parse_ini_file("time.ini", true);
         foreach($info as $tm){
             $time = new Time([

@@ -12,6 +12,11 @@ class NoticeHTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('h_images')->delete();
+        DB::table('h_coordinates')->delete();
+        DB::table('h_times')->delete();
+        DB::table('h_notices')->delete();
+
         $info = parse_ini_file("noticeh.ini", true);
         foreach($info as $noti){
             $notice = new HNotice([

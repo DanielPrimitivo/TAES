@@ -12,6 +12,8 @@ class TimeHTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('h_times')->delete();
+
         $info = parse_ini_file("timeh.ini", true);
         foreach($info as $tm){
             $time = new HTime([

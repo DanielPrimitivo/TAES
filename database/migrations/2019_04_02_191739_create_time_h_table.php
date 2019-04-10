@@ -13,7 +13,7 @@ class CreateTimeHTable extends Migration
      */
     public function up()
     {
-        Schema::create('htimes', function (Blueprint $table) {
+        Schema::create('h_times', function (Blueprint $table) {
             $table->increments('id');
             $table->string('viento');
             $table->string('dirviento');
@@ -25,7 +25,7 @@ class CreateTimeHTable extends Migration
             $table->timestamps();
 
             $table->integer('hnotice_id')->unsigned();
-            $table->foreign('hnotice_id')->references('id')->on('hnotices');
+            $table->foreign('hnotice_id')->references('id')->on('h_notices');
         });
     }
 
@@ -36,6 +36,6 @@ class CreateTimeHTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('htimes');
+        Schema::dropIfExists('h_times');
     }
 }

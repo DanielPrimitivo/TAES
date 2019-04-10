@@ -12,6 +12,8 @@ class CoordinatesHTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('h_coordinates')->delete();
+
         $info = parse_ini_file("coordinateh.ini", true);
         foreach($info as $coord){
             $coordinate = new HCoordinate([

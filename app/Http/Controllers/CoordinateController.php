@@ -41,4 +41,12 @@ class CoordinateController extends Controller
     public function destroy(Coordinate $coordinate){
         return Coordinate::eliminar($coordinate);
     }
+
+    // -----------------------------------
+    public function guardar(Request $request) {
+        $coordinate = new Coordinate();
+        $coordinate->guardar($request);
+
+        return redirect()->route('dashboard');
+    }
 }

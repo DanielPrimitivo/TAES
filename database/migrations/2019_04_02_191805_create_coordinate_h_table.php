@@ -13,13 +13,13 @@ class CreateCoordinateHTable extends Migration
      */
     public function up()
     {
-        Schema::create('hcoordinates', function (Blueprint $table) {
+        Schema::create('h_coordinates', function (Blueprint $table) {
             $table->increments('id');
             $table->float('x');
             $table->float('y');
 
             $table->integer('hnotice_id')->unsigned();
-            $table->foreign('hnotice_id')->references('id')->on('hnotices');
+            $table->foreign('hnotice_id')->references('id')->on('h_notices');
 
             $table->timestamps();
         });
@@ -32,6 +32,6 @@ class CreateCoordinateHTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hcoordinates');
+        Schema::dropIfExists('h_coordinates');
     }
 }
