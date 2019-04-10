@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'MainController@index')->name('dashboard')->middleware('auth');
+Route::post('/ajax/get/notice/times', 'MainController@getNoticeTimes')->name('ajax.noticeTimes');
 Route::get('/aviso', 'MainController@aviso')->name('aviso')->middleware('auth');
 
 Auth::routes();

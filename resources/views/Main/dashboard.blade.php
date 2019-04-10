@@ -205,15 +205,15 @@
       <h5 class="card-header text-center">Últimos avisos</h5>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-striped">
+          <table class="table table-hover">
             <tbody>
-              @if(isset($coordinates))
-                @foreach($coordinates as $coordinate)
-                  <tr>
-                    <td>{{ $coordinate->x }}</td>
-                    <td>{{ $coordinate->y }}</td>
-                    <td><a href="#" class="text-dark"><i class="fas fa-check"></i></a></td>
-                    <td><a href="#" class="text-dark"><i class="fas fa-external-link-alt"></i></a></td>
+              @if(isset($notices))
+                @foreach($notices as $notice)
+                  <tr id="fila{{$notice->id}}">
+                    <td>{{ $notice->coordinate->x }}</td>
+                    <td>{{ $notice->coordinate->y }}</td>
+                    <td><button onclick="noticeTimes('{{$notice->id}}')" class="text-dark btn btn-sm btn-link"><i class="fas fa-check"></i></button></td>
+                    <td><button href="#" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>
                   </tr>
                 @endforeach
               @endif
@@ -230,10 +230,10 @@
       </div>
     </div>
     <div class="card shadow">
-      <i class="card-img-top fas fa-cloud-sun text-center mt-5" style="font-size: 80px;"></i>
-      <div class="card-body text-center">
+      <div class="card-body text-center" id="temperaturaActualBody">
+        <i class="" style="font-size: 80px;" id="iconoTiempo"></i>
         <h5 class="card-title">Temperatura actual</h5>
-        <h4 class="text-center text-muted">26℃</h4>
+        <h4 class="text-center text-muted" id="temperaturaActual"></h4>
       </div>
       <div class="card-footer">
         <small class="text-muted">Actualizado hace 3 minutos</small>
@@ -243,10 +243,10 @@
       <h5 class="card-header text-center">El tiempo para el aviso seleccionado      </h5>
       <div class="card-body">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Humedad: <h6 class="text-muted float-right">50%</h6></li>
-          <li class="list-group-item">Viento: <h6 class="text-muted float-right">24 km/h</h6></li>
-          <li class="list-group-item">Temp min/max: <h6 class="text-muted float-right">15℃/28℃</h6></li>
-          <li class="list-group-item">Precipitaciones: <h6 class="text-muted float-right">10%</h6></li>
+          <li class="list-group-item">Humedad: <h6 class="text-muted float-right" id="humedadInfo"></h6></li>
+          <li class="list-group-item">Viento: <h6 class="text-muted float-right" id="sVientoInfo"></h6></li>
+          <li class="list-group-item">Dir. Viento: <h6 class="text-muted float-right" id="dirVientoInfo"></h6></li>
+          <li class="list-group-item">Precipitaciones: <h6 class="text-muted float-right" id="lluviaInfo"></h6></li>
         </ul>
       </div>
       <div class="card-footer">
@@ -269,10 +269,61 @@
 @endsection
 
 @section('js')
+function noticeTimes(notice)
+{
+    var fila = "fila" + notice;
+
+    var elems = document.querySelectorAll(".table-primary");
+
+    [].forEach.call(elems, function(el) {
+      el.className = el.className.replace(/\btable-primary\b/, "");
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: "{{route('ajax.noticeTimes')}}",
+        data: {notice: notice, _token: '{{csrf_token()}}' },
+        success: function(data){
+            if(data.times.length == 0) {
+              document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoTimes"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin datos del tiempo para el aviso!</div>';
+            }
+            else {
+                for (i = 0; i < data.times.length; i++) {
+                    document.getElementById(fila).className = 'table-primary';
+                    document.getElementById("temperaturaActual").innerHTML = data.times[i].temperatura + '℃';
+                    document.getElementById("humedadInfo").innerHTML = data.times[i].humedad + '%';
+                    document.getElementById("sVientoInfo").innerHTML = data.times[i].viento + 'km/h';
+                    document.getElementById("dirVientoInfo").innerHTML = data.times[i].dirviento;
+                    document.getElementById("lluviaInfo").innerHTML = data.times[i].lluvia;
+                    switch(data.times[i].lluvia) {
+                      case "fuerte":
+                        document.getElementById("iconoTiempo").className = 'fas fa-cloud-showers-heavy text-center mt-5';
+                        break;
+                      case "leve":
+                        document.getElementById("iconoTiempo").className = 'fas fa-cloud-rain text-center mt-5';
+                        break;
+                      default:
+                        document.getElementById("iconoTiempo").className = 'fas fa-sun text-center mt-5';
+                    }
+                }
+            }
+        },
+        error: function(jqxhr, status, exception) {
+             alert('Exception:' + exception,);
+         }
+    });
+}
+
+
 let modalId = $('#image-gallery');
 
 $(document)
   .ready(function () {
+    @foreach($notices as $notice)
+    @if ($loop->first)
+      noticeTimes({{$notice->id}});
+    @endif
+    @endforeach
 
     loadGallery(true, 'a.thumbnail');
 
