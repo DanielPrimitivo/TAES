@@ -25,7 +25,7 @@
 @section('content')
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="col-xs-12 col-sm-12 col-lg-4 col-md-12 order-lg-1 order-12">
 <div class="shadow card mt-2 mb-2">
   <div class="card-header">
     Últimas imágenes
@@ -190,7 +190,7 @@
 	</div>
 </div>
 </div> <!-- end of images box -->
-  <div class="col-xs-12 col-sm-6 col-lg-8">
+  <div class="col-xs-12 col-sm-12 col-lg-8 col-md-12 order-lg-12 order-1">
     <div class="row-lg-9">
     <div class="card mt-2 mb-2 shadow">
       <div class="card-header text-center">
