@@ -16,10 +16,14 @@
 }
 
 .scroll-box {
-            overflow-y: scroll;
-            height: 650px;
-            padding: 1rem;
-        }
+  overflow-y: scroll;
+  height: 650px;
+  padding: 1rem;
+}
+
+.nav-tabs li a{
+  color: grey !important;
+}
 @endsection
 
 @section('content')
@@ -39,7 +43,20 @@
 <div class="col-xs-12 col-sm-12 col-lg-6 col-md-12 mt-2 mb-2">
   <div class="row-lg-5">
       <div class="card shadow mb-2">
-        <h5 class="card-header text-center">Previsión del tiempo      </h5>
+        <div class="card-header">
+          <h5 class="text-center">Previsión del tiempo</h5>
+          <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item ml-auto">
+        <a class="nav-link" href="#">1H</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">2H</a>
+      </li>
+      <li class="nav-item mr-auto">
+        <a class="nav-link" href="#">3H</a>
+      </li>
+    </ul>
+    </div>
         <div class="card-body">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Humedad: <h6 class="text-muted float-right">90%</h6></li>

@@ -10,7 +10,7 @@ use App\Notice;
 class MainController extends Controller
 {
     public function index() {
-      $notices = Notice::all();
+      $notices = Notice::take(4)->skip(0)->get();
 
       foreach($notices as $notice) {
         $coordinate = $notice->coordinate()->firstOrFail();
