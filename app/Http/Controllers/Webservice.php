@@ -9,11 +9,6 @@ use APP\Coordinate;
 class Webservice extends Controller
 {
 
-
-    public function Controller(){
-        servir();
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +40,7 @@ class Webservice extends Controller
         //Guaradar la imagen en public/imagenes
         $imagen = new Image;
         $fimagen = fopen('public/imagenes/' . $imagen->id . 'jpg', 'w');
-        fwrite($fimagen, $request->imagen);
+        fwrite($fimagen, json_decode($request->imagen));
         fclose($fimagen);
 
         //Obtener los metadatos de la imagen
@@ -138,13 +133,5 @@ class Webservice extends Controller
         }
 
         return floatval($parts[0]) / floatval($parts[1]);
-    }
-
-    private function servir() {
-        while(true){
-            $json = file_get_contents("php://input");
-            $contenido = json_decode($json);
-            store($contenido);
-        }
     }
 }
