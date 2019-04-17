@@ -1,4 +1,8 @@
+@guest
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+@else
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" ><a href="#menu-toggle" id="menu-toggle" class="navbar-brand"><span class="navbar-toggler-icon"></span></a>
+@endguest
   @if(Route::current()->getName() != 'login' && Route::current()->getName() != 'register')
   <a class="navbar-brand" href="{{route('dashboard')}}"><img class="d-inline-block mr-2" style="border-radius: 50%" src="{{ URL::asset('/fireviewer/logo.png') }}" width="70" height="70">FireViewer</a>
   @else

@@ -29,7 +29,30 @@
 	</header>
 
 	<main>
-	@yield('content')
+		@guest
+		@yield('content')
+		@else
+<div id="wrapper" class="">
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+				<ul class="sidebar-nav">
+						<li class="sidebar-brand"> <a href="#"> Start Bootstrap </a> </li>
+						<li> <a href="#">Dashboard</a> </li>
+						<li> <a href="#">Shortcuts</a> </li>
+						<li> <a href="#">Overview</a> </li>
+						<li> <a href="#">Events</a> </li>
+						<li> <a href="#">About</a> </li>
+						<li> <a href="#">Services</a> </li>
+						<li> <a href="#">Contact</a> </li>
+				</ul>
+		</div> <!-- /#sidebar-wrapper -->
+		<!-- Page Content -->
+		<div id="page-content-wrapper" style="margin-top: 90px;">
+					@yield('content')
+		</div> <!-- /#page-content-wrapper -->
+		</div> <!-- /#wrapper -->
+<!-- Bootstrap core JavaScript -->
+@endguest
 	</main>
 
 	<footer>
@@ -46,6 +69,23 @@
 
 	<!-- TODO scripts externos -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	<script>
+		$(function(){
+			$("#menu-toggle").click(function(e) {
+					e.preventDefault();
+					$("#wrapper").toggleClass("toggled");
+			});
+
+			$(window).resize(function(e) {
+				if($(window).width()<=768){
+					$("#wrapper").removeClass("toggled");
+				}else{
+					$("#wrapper").addClass("toggled");
+				}
+			});
+		});
+
+	</script>
 
 	<script type="text/javascript">
 	@yield('js')
