@@ -36,14 +36,11 @@
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
 				<ul class="sidebar-nav">
-						<li class="sidebar-brand"> <a href="#"> Start Bootstrap </a> </li>
-						<li> <a href="#">Dashboard</a> </li>
-						<li> <a href="#">Shortcuts</a> </li>
-						<li> <a href="#">Overview</a> </li>
-						<li> <a href="#">Events</a> </li>
-						<li> <a href="#">About</a> </li>
-						<li> <a href="#">Services</a> </li>
-						<li> <a href="#">Contact</a> </li>
+						<li class="sidebar-brand"> <a href="#"> Todas las alertas <i class="fas fa-exclamation-triangle"></i></a> </li>
+						<li> <a href="#">Fuegos<i class="fas fa-fire"></i></a></li>
+						<li> <a href="#">Inundaciones<i class="fas fa-water"></i></a> </li>
+						<li> <a href="#">Terremotos<i class="fas fa-house-damage"></i></a> </li>
+						<li> <a href="#">Otras alertas<i class="fas fa-clone"></i></a> </li>
 				</ul>
 		</div> <!-- /#sidebar-wrapper -->
 		<!-- Page Content -->
@@ -54,7 +51,6 @@
 <!-- Bootstrap core JavaScript -->
 @endguest
 	</main>
-
 	<footer>
 	@if(Route::current()->getName() != 'login')
 		@if(Route::current()->getName() != 'register')
@@ -74,17 +70,14 @@
 			$("#menu-toggle").click(function(e) {
 					e.preventDefault();
 					$("#wrapper").toggleClass("toggled");
-			});
-
-			$(window).resize(function(e) {
-				if($(window).width()<=768){
-					$("#wrapper").removeClass("toggled");
-				}else{
-					$("#wrapper").addClass("toggled");
-				}
+					if(document.getElementById("iconLayer").className == 'fas fa-times-circle') {
+						document.getElementById("iconLayer").className = 'fas fa-layer-group';
+					}
+					else {
+						document.getElementById("iconLayer").className = 'fas fa-times-circle';
+					}
 			});
 		});
-
 	</script>
 
 	<script type="text/javascript">

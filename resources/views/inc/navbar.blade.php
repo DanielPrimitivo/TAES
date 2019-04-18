@@ -1,12 +1,12 @@
 @guest
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
 @else
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" ><a href="#menu-toggle" id="menu-toggle" class="navbar-brand"><span class="navbar-toggler-icon"></span></a>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" ><a href="#menu-toggle" id="menu-toggle" onClick="changeLayerButton" class="navbar-brand"><i id="iconLayer" class="fas fa-layer-group"></i></a>
 @endguest
   @if(Route::current()->getName() != 'login' && Route::current()->getName() != 'register')
-  <a class="navbar-brand" href="{{route('dashboard')}}"><img class="d-inline-block mr-2" style="border-radius: 50%" src="{{ URL::asset('/fireviewer/logo.png') }}" width="70" height="70">FireViewer</a>
+  <a class="navbar-brand" href="{{route('dashboard')}}"><img class="d-inline-block mr-2" style="border-radius: 50%" src="{{ URL::asset('/fireviewer/logo.png') }}" width="70" height="70">AlertViewer</a>
   @else
-  <a class="navbar-brand" href="{{route('dashboard')}}">FireViewer</a>
+  <a class="navbar-brand" href="{{route('dashboard')}}">AlertViewer</a>
   @endif
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
