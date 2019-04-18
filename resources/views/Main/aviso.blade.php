@@ -24,6 +24,106 @@
 .nav-tabs li a{
   color: grey !important;
 }
+
+.share {
+    position:fixed;
+    bottom:0px;
+    right:30px;
+    transform:translate(-50%,-50%) rotate(45deg);
+    width:80px;
+    height:80px;
+}
+.share ul {
+    position:relative;
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+}
+.share ul li {
+    position:absolute;
+    top:0;
+    left:0;
+    list-style:none;
+    width:100%;
+    height:100%;
+    border-radius:10px;
+    background:#fff;
+    transition:0.5s;
+    overflow:hidden;
+}
+.share ul.active li {
+    transform:scale(0.95);
+}
+.share ul li a {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    line-height:80px;
+    text-align:center;
+    font-size:30px;
+    color:#2196f3;
+    transition:.5s;
+}
+.share ul li a .fas {
+    transform:rotate(-45deg);
+}
+.share ul li a:hover {
+    color:#fff;
+    background:#2196f3;
+}
+.share ul.active li:nth-child(1){
+  top:0;
+  left:-100%;
+  transition-delay:0s;
+}
+.share ul.active li:nth-child(2){
+    top:-100%;
+    left:-100%;
+    transition-delay:0.2s;
+}
+.share ul.active li:nth-child(3){
+    top:-100%;
+    left:0;
+    transition-delay:0.4s;
+}
+.toggle {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#2196f3;
+    transform:scale(0.95);
+    overflow:hidden;
+    border-radius:10px;
+    z-index:1;
+    cursor:pointer;
+}
+.toggle:before {
+    content: "\f067";
+    font-family: 'Font Awesome\ 5 Free';
+    font-weight: 900; /* Fix version 5.0.9 */
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    text-align:center;
+    line-height:80px;
+    color:#fff;
+    font-size:30px;
+    transform:rotate(-45deg);
+}
+
+.toggle.active:before {
+    content:'\f068';
+}
+
+
+
 @endsection
 
 @section('content')
@@ -229,6 +329,14 @@
 </div> <!-- end of map column -->
 </div>
 </div>
+<div class="share">
+    <div class="toggle"></div>
+    <ul>
+        <li><a href="#"><i class="fas fa-archive" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fas fa-eye-slash" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fas fa-trash-alt" aria-hidden="true"></i></a></li>
+    </ul>
+</div>
 
 
 
@@ -240,6 +348,11 @@ let modalId = $('#image-gallery');
 
 $(document)
   .ready(function () {
+
+    $('.toggle').click(function(){
+        $('.toggle').toggleClass('active');
+        $('ul').toggleClass('active');
+    });
 
     loadGallery(true, 'a.thumbnail');
 

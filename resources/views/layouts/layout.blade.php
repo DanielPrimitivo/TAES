@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title> FireViewer @yield('title')</title>
+	<title> AlertViewer @yield('title')</title>
 	<!--TODO: Add layout css -->
 	<link rel="icon" type="image/png" href="{{ URL::asset('/fireviewer/logo.png') }}">
   <!-- Icon css -->
