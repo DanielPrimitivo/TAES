@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImagenHTable extends Migration
+class CreateHweatherTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateImagenHTable extends Migration
      */
     public function up()
     {
-        Schema::create('h_images', function (Blueprint $table) {
+        Schema::create('hweathers', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('viento');
+            $table->string('dirviento');
+            $table->string('humedad');
+            $table->string('temperatura');
+            $table->string('lluvia');
             $table->string('fecha');
-            $table->string('url');
-
-            $table->integer('hcoordinate_id')->unsigned();
-            $table->foreign('hcoordinate_id')->references('id')->on('h_coordinates');
+            $table->timestamps();
 
             $table->integer('hnotice_id')->unsigned();
-            $table->foreign('hnotice_id')->references('id')->on('h_notices');
-
-            $table->timestamps();
+            $table->foreign('hnotice_id')->references('id')->on('hnotices');
         });
     }
 
@@ -35,6 +35,6 @@ class CreateImagenHTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('h_images');
+        Schema::dropIfExists('hweathers');
     }
 }

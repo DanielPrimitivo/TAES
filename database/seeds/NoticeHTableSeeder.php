@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\HNotice;
+use App\Hnotice;
 
 class NoticeHTableSeeder extends Seeder
 {
@@ -12,17 +12,14 @@ class NoticeHTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('h_images')->delete();
-        DB::table('h_coordinates')->delete();
-        DB::table('h_times')->delete();
-        DB::table('h_notices')->delete();
-
         $info = parse_ini_file("noticeh.ini", true);
         foreach($info as $noti){
-            $notice = new HNotice([
+            $notice = new Hnotice([
                 'fecha' => $noti['fecha'],
                 'valoracion' => $noti['valoracion'],
-                'visto' => $noti['visto']
+                'visto' => $noti['visto'],
+                'lat' => $noti['lat'],
+                'long' => $noti['long']
             ]);
             $notice->save();
         }

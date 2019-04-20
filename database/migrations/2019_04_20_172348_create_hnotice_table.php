@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNoticeHTable extends Migration
+class CreateHnoticeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateNoticeHTable extends Migration
      */
     public function up()
     {
-        Schema::create('h_notices', function (Blueprint $table) {
+        Schema::create('hnotices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('fecha');
             $table->string('valoracion');
             $table->boolean('visto');
+            $table->double('lat');
+            $table->double('long');
 
             $table->timestamps();
         });
@@ -30,6 +32,6 @@ class CreateNoticeHTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('h_notices');
+        Schema::dropIfExists('hnotices');
     }
 }

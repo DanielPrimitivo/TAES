@@ -18,6 +18,8 @@ class CreateNoticeTable extends Migration
             $table->string('fecha');
             $table->string('valoracion');
             $table->boolean('visto');
+            $table->double('lat');
+            $table->double('long');
 
             $table->timestamps();
         });

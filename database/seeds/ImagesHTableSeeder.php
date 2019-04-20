@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\HImage;
+use App\Himage;
 
 class ImagesHTableSeeder extends Seeder
 {
@@ -12,14 +12,15 @@ class ImagesHTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('h_images')->delete();
-
         $info = parse_ini_file("imageh.ini", true);
         foreach($info as $img){
-            $imagen = new HImage([
+            $imagen = new Himage([
                 'fecha' => $img['fecha'],
                 'url' => $img['url'],
-                'hcoordinate_id' => $img['hcoordinate_id'],
+                'lat' => $img['lat'],
+                'long' => $img['long'],
+                'direccion' => $img['direccion'],
+                'user_id' => $img['user_id'],
                 'hnotice_id' => $img['hnotice_id']
             ]);
             $imagen->save();

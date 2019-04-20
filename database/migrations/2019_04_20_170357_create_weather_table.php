@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCoordinateTable extends Migration
+class CreateWeatherTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,18 @@ class CreateCoordinateTable extends Migration
      */
     public function up()
     {
-        Schema::create('coordinates', function (Blueprint $table) {
+        Schema::create('weathers', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('x');
-            $table->float('y');
+            $table->string('viento');
+            $table->string('dirviento');
+            $table->string('humedad');
+            $table->string('temperatura');
+            $table->string('lluvia');
+            $table->string('fecha');
+            $table->timestamps();
 
             $table->integer('notice_id')->unsigned();
             $table->foreign('notice_id')->references('id')->on('notices');
-
-            $table->timestamps();
         });
     }
 
@@ -32,6 +35,6 @@ class CreateCoordinateTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coordinates');
+        Schema::dropIfExists('weathers');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTimeTable extends Migration
+class CreatePrevisionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateTimeTable extends Migration
      */
     public function up()
     {
-        Schema::create('times', function (Blueprint $table) {
+        Schema::create('previsions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('rango_hora');
             $table->string('viento');
             $table->string('dirviento');
             $table->string('humedad');
             $table->string('temperatura');
             $table->string('lluvia');
             $table->string('fecha');
-            $table->string('prevision');
             $table->timestamps();
 
-            $table->integer('notice_id')->unsigned();
-            $table->foreign('notice_id')->references('id')->on('notices');
+            $table->integer('weather_id')->unsigned();
+            $table->foreign('weather_id')->references('id')->on('weathers');
         });
     }
 
@@ -36,6 +36,6 @@ class CreateTimeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('times');
+        Schema::dropIfExists('previsions');
     }
 }

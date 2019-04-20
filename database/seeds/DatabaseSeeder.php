@@ -13,10 +13,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(NoticeTableSeeder::class);
         $this->call(NoticeHTableSeeder::class);
-        $this->call(CoordinatesTableSeeder::class);
-        $this->call(CoordinatesHTableSeeder::class);
         $this->call(TimeTableSeeder::class);
         $this->call(TimeHTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         $this->call(ImagesTableSeeder::class);
         $this->call(ImagesHTableSeeder::class);
     }

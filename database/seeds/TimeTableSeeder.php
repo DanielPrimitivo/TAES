@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Time;
+use App\Weather;
 
 class TimeTableSeeder extends Seeder
 {
@@ -12,18 +12,15 @@ class TimeTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('times')->delete();
-
         $info = parse_ini_file("time.ini", true);
         foreach($info as $tm){
-            $time = new Time([
+            $time = new Weather([
                 'viento' => $tm['viento'],
                 'dirviento' => $tm['dirviento'],
                 'humedad' => $tm['humedad'],
                 'temperatura' => $tm['temperatura'],
                 'lluvia' => $tm['lluvia'],
                 'fecha' => $tm['fecha'],
-                'prevision' => $tm['prevision'],
                 'notice_id' => $tm['notice_id']
             ]);
             $time->save();

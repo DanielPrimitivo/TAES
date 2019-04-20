@@ -12,14 +12,15 @@ class ImagesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('images')->delete();
-
         $info = parse_ini_file("image.ini", true);
         foreach($info as $img){
             $imagen = new Image([
                 'fecha' => $img['fecha'],
                 'url' => $img['url'],
-                'coordinate_id' => $img['coordinate_id'],
+                'lat' => $img['lat'],
+                'long' => $img['long'],
+                'direccion' => $img['direccion'],
+                'user_id' => $img['user_id'],
                 'notice_id' => $img['notice_id']
             ]);
             $imagen->save();
