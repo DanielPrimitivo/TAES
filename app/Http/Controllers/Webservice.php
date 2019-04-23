@@ -39,26 +39,30 @@ class Webservice extends Controller
     {
         //Guaradar la imagen en public/imagenes
         $imagen = new Image;
-        $fimagen = fopen('public/imagenes/' . $imagen->id . 'jpg', 'w');
+        //$imagen->guardar();
+        $fimagen = fopen('public/imagenes/' . $imagen->id . '.jpg', 'w');
         fwrite($fimagen, json_decode($request->imagen));
         fclose($fimagen);
 
         //Obtener los metadatos de la imagen
-        $datosimagen = exif_read_data('public/imagenes/' . $imagen->id . 'jpg');
-        $longitud = getGPS($datosimagen["GPSLongitude"], $datosimagen["GPSLongitudeRef"]);
-        $latitud = getGPS($datosimagen["GPSLatitude"], $datosimagen["GPSLatitudeRef"]);
-        $fecha = $datosimagen["DateTimeOriginal"];
-        $url = 'public/imagenes/' . $imagen->id . 'jpg';
-
-        //Crear y guardar la coordenada de la imagen
-        $coordenada = new Coordinate;
-        $coordenada->x = $longitud;
-        $coordenada->y = $latitud;
-        $coordenada->save();
+        $longitud = $request->longitud;
+        $latitud = $request->latitud;
+        $fecha = $request->fecha;
+        $direccion = $request->direccion;
+        //$datosimagen = exif_read_data('public/imagenes/' . $imagen->id . 'jpg');
+        //$longitud = getGPS($datosimagen["GPSLongitude"], $datosimagen["GPSLongitudeRef"]);
+        //$latitud = getGPS($datosimagen["GPSLatitude"], $datosimagen["GPSLatitudeRef"]);
+        //$fecha = $datosimagen["DateTimeOriginal"];
+        $url = 'public/imagenes/' . $imagen->id . '.jpg';
 
         //Anadir los datos de la imagen y guardarlos
         $imagen->fecha = $fecha;
+        $imagen->long = $longitud;
+        $imagen->lat = $latitud;
         $imagen->url = $url;
+        $imagen->direccion = $direccion;
+
+        //$alertas = DB::table('notices')->get();
 
         $imagen->save();
 

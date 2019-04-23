@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
+	protected $fillable = ['fecha', 'url', 'lat', 'long', 'direccion'];
     public function user() {
         // Image tiene la clave ajena 'user_id'
         return $this->belongsTo('App\User');
