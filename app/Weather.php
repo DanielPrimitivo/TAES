@@ -14,5 +14,44 @@ class Weather extends Model
     public function previsions() {
         return $this->hasMany('App\Prevision');
     }
-       
+     
+    // Creación de un tiempo
+    public function create(array $data) {
+        $weather = new Weather();
+
+        $weather->viento = $data['viento'];
+        $weather->dirviento = $data['dirviento'];
+        $weather->humedad = $data['humedad'];
+        $weather->temperatura = $data['temperatura'];
+        $weather->lluvia = $data['lluvia'];
+        $weather->fecha = $data['fecha'];
+        $weather->notice_id = $data['notice_id'];
+
+        $weather->save();
+    }
+
+    // Lectura de un tiempo
+    public function read(int $id) {
+        $weather = Weather::find($id);
+
+        return $weather;
+    }
+
+    // Lectura de todos los tiempos
+    public function readAll() {
+        $weathers = Weather::all();
+
+        return $weathers;
+    }
+
+    // Actualización de un tiempo
+    public function update() {
+
+    }
+
+    // Eliminación de un tiempo
+    public function delete(int $id) {
+        $weather = Weather::find($id);
+        $weather->delete();
+    }
 }
