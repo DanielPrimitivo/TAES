@@ -13,7 +13,7 @@ class Hweather extends Model
     }
 
     // Creación de un tiempo
-    public function create(Weather $weather, int $id) {
+    public function createHWEATH(Weather $weather, int $id) {
         $hweather = new Hweather();
 
         $hweather->viento = $weather->viento;
@@ -28,7 +28,7 @@ class Hweather extends Model
     }
 
     // Lectura de un tiempo
-    public function read(int $id) {
+    public function readHWEATH(int $id) {
         $weather = Hweather::find($id);
 
         return $weather;
@@ -42,12 +42,12 @@ class Hweather extends Model
     }
 
     // Actualización de un tiempo
-    public function update() {
+    public function updateHWEATH() {
 
     }
 
     // Eliminación de un tiempo
-    public function delete(int $id) {
+    public function deleteHWEATH(int $id) {
         $weather = Hweather::find($id);
         $weather->delete();
     }

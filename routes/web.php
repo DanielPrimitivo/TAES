@@ -18,7 +18,3 @@ Route::get('/aviso', 'MainController@aviso')->name('aviso')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/crearaviso', function() {return view('Main/crearaviso');})->middleware('auth');
-
-Route::post('/crearaviso', 'CoordinateController@guardar')->name('crearaviso')->middleware('auth');

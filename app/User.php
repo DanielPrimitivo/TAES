@@ -44,7 +44,7 @@ class User extends Authenticatable
     }
 
     // Creación de un usuario
-    public function create(array $data) {
+    public function createUSU(array $data) {
         $user = new User();
 
         $user->name = $data['name'];
@@ -57,7 +57,7 @@ class User extends Authenticatable
     }
 
     // Lectura de un usuario
-    public function read(int $id) {
+    public function readUSU(int $id) {
         $user = User::find($id);
 
         return $user;
@@ -71,12 +71,12 @@ class User extends Authenticatable
     }
 
     // Actualización de un usuario
-    public function update() {
+    public function updateUSU() {
         
     }
 
     // Eliminación de un usuario
-    public function delete(int $id) {
+    public function deleteUSU(int $id) {
         $user = User::find($id);
         $user->delete();
     }

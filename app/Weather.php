@@ -31,7 +31,7 @@ class Weather extends Model
     }
 
     // Lectura de un tiempo
-    public function read(int $id) {
+    public function readWEATH(int $id) {
         $weather = Weather::find($id);
 
         return $weather;
@@ -45,12 +45,12 @@ class Weather extends Model
     }
 
     // Actualización de un tiempo
-    public function update() {
+    public function updateWEATH() {
 
     }
 
     // Eliminación de un tiempo
-    public function delete(int $id) {
+    public function deleteWEATH(int $id) {
         $weather = Weather::find($id);
         $weather->delete();
     }

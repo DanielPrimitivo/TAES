@@ -12,7 +12,7 @@ class Prevision extends Model
     }
 
     // Creación de una prevision
-    public function create(array $data) {
+    public function createPREV(array $data) {
         $prevision = new Prevision();
 
         $prevision->rango_hora = $data['rango_hora'];
@@ -27,7 +27,7 @@ class Prevision extends Model
     }
 
     // Lectura de una prevision
-    public function read(int $id) {
+    public function readPREV(int $id) {
         $prevision = Prevision::find($id);
 
         return $prevision;
@@ -41,12 +41,12 @@ class Prevision extends Model
     }
 
     // Actualización de una previsione
-    public function update() {
+    public function updatePREV() {
 
     }
 
     // Eliminación de una prevision
-    public function delete(int $id) {
+    public function deletePREV(int $id) {
         $prevision = Prevision::find($id);
         $prevision->delete();
     }

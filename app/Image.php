@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-	protected $fillable = ['fecha', 'url', 'lat', 'long', 'direccion'];
+    protected $fillable = ['fecha', 'url', 'lat', 'long', 'direccion'];
+    
     public function user() {
         // Image tiene la clave ajena 'user_id'
         return $this->belongsTo('App\User');
@@ -18,7 +19,7 @@ class Image extends Model
     }
 
     // Creación de una imagen
-    public function create(array $data) {
+    public function createIMG(array $data) {
         $image = new Image();
 
         $image->fecha = $data['fecha'];
@@ -33,7 +34,7 @@ class Image extends Model
     }
 
     // Lectura de una imagen
-    public function read(int $id) {
+    public function readIMG(int $id) {
         $image = Image::find($id);
 
         return $image;
@@ -47,12 +48,12 @@ class Image extends Model
     }
 
     // Actualización de una imagen
-    public function update() {
+    public function updateIMG() {
 
     }
 
     // Eliminación de una imagen
-    public function delete(int $id) {
+    public function deleteIMG(int $id) {
         $image = Image::find($id);
         $image->delete();
     }
