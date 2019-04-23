@@ -42,4 +42,61 @@ class User extends Authenticatable
     public function images() {
         return $this->hasMany('App\Image');
     }
+
+    // Creación de un usuario
+    public function create(array $data) {
+        $user = new User();
+
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = $data['password'];
+        $user->tlf = $data['tlf'];
+        $user->categoria = $data['categoria'];
+
+        $user->save();
+    }
+
+    // Lectura de un usuario
+    public function read(int $id) {
+        $user = User::find($id);
+
+        return $user;
+    }
+
+    // Lectura de todos los usuario
+    public function readAll() {
+        $users = User::all();
+
+        return $users;
+    }
+
+    // Actualización de un usuario
+    public function update() {
+        
+    }
+
+    // Eliminación de un usuario
+    public function delete(int $id) {
+        $user = User::find($id);
+        $user->delete();
+    }
+
+    // Comprobar si un usuario existe
+    public function exists(string $tlf) {
+        $user = User::where('tlf', '=', $tlf)->get();
+
+        if (count($user) >= 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    // Lectura de un usuario por tlf
+    public function readByTlf(string $tlf) {
+        $user = User::where('tlf', '=', $tlf)->get();
+
+        return $user;
+    }
 }
