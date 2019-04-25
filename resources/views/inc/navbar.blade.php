@@ -20,14 +20,6 @@
 
 <div class="btn-group mr-2" role="group">
   @guest
-        <li class="nav-item">
-            <a class="btn btn-success" href="{{ route('login') }}"><i class="fas fa-sign-in-alt mr-2"></i>{{ __('Acceso al panel') }}</a>
-        </li>
-        @if (Route::has('register'))
-            <li class="nav-item">
-                <a class="btn btn-secondary ml-2" href="{{ route('register') }}"><i class="fas fa-user-plus mr-2"></i>{{ __('Darse de alta') }}</a>
-            </li>
-        @endif
         @else
 <li class="nav-item dropdown">
         <a class="btn btn-secondary dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
