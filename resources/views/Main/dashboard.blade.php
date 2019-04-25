@@ -210,8 +210,8 @@
               @if(isset($notices))
                 @foreach($notices as $notice)
                   <tr id="fila{{$notice->id}}">
-                    <td>{{ $notice->coordinate->x }}</td>
-                    <td>{{ $notice->coordinate->y }}</td>
+                    <td>{{ $notice->lat }}</td>
+                    <td>{{ $notice->long }}</td>
                     <td><button onclick="noticeTimes('{{$notice->id}}')" class="text-dark btn btn-sm btn-link"><i class="fas fa-check"></i></button></td>
                     <td><button href="#" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>
                   </tr>

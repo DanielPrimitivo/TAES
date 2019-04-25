@@ -12,11 +12,6 @@ class MainController extends Controller
     public function index() {
       $notices = Notice::take(4)->skip(0)->get();
 
-      foreach($notices as $notice) {
-        $coordinate = $notice->coordinate()->firstOrFail();
-        $notice['coordinate'] = $coordinate;
-      }
-
       return view::make('Main/dashboard')->with('notices', $notices);
     }
 
@@ -30,7 +25,7 @@ class MainController extends Controller
 
         $notice = Notice::find($data["notice"]);
 
-        $times = $notice->times()->get();
+        $times = $notice->weather()->get();
 
         return response()->json(array('times' => $times), 200);
     }
