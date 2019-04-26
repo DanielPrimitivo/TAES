@@ -6,7 +6,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use App\Image;
 
 class User extends Authenticatable
 {
@@ -39,10 +38,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function images() {
-        return $this->hasMany('App\Image');
-    }
-
     // Creación de un usuario
     public function createUSU(array $data) {
         $user = new User();
@@ -50,8 +45,6 @@ class User extends Authenticatable
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->password = $data['password'];
-        $user->tlf = $data['tlf'];
-        $user->categoria = $data['categoria'];
 
         $user->save();
     }
@@ -79,24 +72,5 @@ class User extends Authenticatable
     public function deleteUSU(int $id) {
         $user = User::find($id);
         $user->delete();
-    }
-
-    // Comprobar si un usuario existe
-    public function exists(string $tlf) {
-        $user = User::where('tlf', '=', $tlf)->get();
-
-        if (count($user) >= 1) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    // Lectura de un usuario por tlf
-    public function readByTlf(string $tlf) {
-        $user = User::where('tlf', '=', $tlf)->get();
-
-        return $user;
     }
 }

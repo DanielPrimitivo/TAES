@@ -13,6 +13,13 @@ class CreateNoticeTable extends Migration
      */
     public function up()
     {
+        Schema::create('senders', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('tlf')->unique();
+            $table->string('categoria');
+            $table->timestamps();
+        });
+
         Schema::create('notices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('fecha');
@@ -32,6 +39,7 @@ class CreateNoticeTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('senders');
         Schema::dropIfExists('notices');
     }
 }

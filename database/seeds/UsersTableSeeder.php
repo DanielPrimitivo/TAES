@@ -17,9 +17,7 @@ class UsersTableSeeder extends Seeder
             $time = new User([
                 'name' => $tm['name'],
                 'email' => $tm['email'],
-                'password' => Hash::make($tm['password']),
-                'tlf' => $tm['tlf'],
-                'categoria' => $tm['categoria']
+                'password' => Hash::make($tm['password'])
             ]);
             $time->save();
         }

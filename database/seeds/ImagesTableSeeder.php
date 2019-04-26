@@ -20,7 +20,7 @@ class ImagesTableSeeder extends Seeder
                 'lat' => $img['lat'],
                 'long' => $img['long'],
                 'direccion' => $img['direccion'],
-                'user_id' => $img['user_id'],
+                'sender_id' => $img['sender_id'],
                 'notice_id' => $img['notice_id']
             ]);
             $imagen->save();

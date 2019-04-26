@@ -24,8 +24,8 @@ class CreateImageTable extends Migration
             $table->integer('notice_id')->unsigned();
             $table->foreign('notice_id')->references('id')->on('notices');
 
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('sender_id')->unsigned();
+            $table->foreign('sender_id')->references('id')->on('senders');
 
             $table->timestamps();
         });

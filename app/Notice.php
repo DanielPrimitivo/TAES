@@ -15,7 +15,7 @@ class Notice extends Model
     }
 
     // Creación de un aviso
-    public function createNOT(array $data) {
+    public static function createNOT(array $data) {
         $notice = new Notice();
 
         $notice->fecha = $data['fecha'];
@@ -25,29 +25,31 @@ class Notice extends Model
         $notice->long = $data['long'];
 
         $notice->save();
+
+        return $notice;
     }
 
     // Lectura de un aviso
-    public function readNOT(int $id) {
+    public static function readNOT(int $id) {
         $notice = Notice::find($id);
 
         return $notice;
     }
 
     // Lectura de todos los avisos
-    public function readAll() {
+    public static function readAll() {
         $notices = Notice::all();
 
         return $notices;
     }
 
     // Actualización de un aviso
-    public function updateNOT() {
+    public static function updateNOT() {
 
     }
 
     // Eliminación de un aviso
-    public function deleteNOT(int $id) {
+    public static function deleteNOT(int $id) {
         $notice = Notice::find($id);
         $notice->delete();
     }
