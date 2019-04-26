@@ -196,7 +196,7 @@
       <div class="card-header text-center">
         Mapa de avisos
       </div>
-    <iframe class="" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d35311.22684530311!2d-0.6951584730487351!3d38.5306879710471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1554661517100!5m2!1ses!2ses" width="100%" height="370" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <div id="map" style="width: 100%; height: 370px"></div>
 </div>
 </div>
 <div class="row-lg-9">
@@ -319,6 +319,7 @@ let modalId = $('#image-gallery');
 
 $(document)
   .ready(function () {
+
     @foreach($notices as $notice)
     @if ($loop->first)
       noticeTimes({{$notice->id}});
@@ -412,4 +413,51 @@ $(document)
     }
     e.preventDefault(); // prevent the default action (scroll / move caret)
   });
+
+function initMap() {
+@foreach($notices as $notice)
+var aviso{{$notice->id}} = {lat: {{$notice->lat}}, lng: {{$notice->long}}};
+@if ($loop->first)
+var map = new google.maps.Map(document.getElementById('map'), {
+  zoom: 9,
+  center: aviso{{$notice->id}}
+});
+@endif
+var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
+    '<h1 id="firstHeading" class="firstHeading">Aviso {{$notice->id}}<a class="btn-info btn-sm btn float-right w-50 mt-2" href="{{route('aviso')}}" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
+    '<div id="bodyContent">'+
+      '<div class="card shadow">'+
+        '<h5 class="card-header text-center">El tiempo ahora      </h5>'+
+    '<div class="card-body">'+
+      '<ul class="list-group list-group-flush">' +
+        '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">{{$notice->weather()->firstOrFail()->humedad}}%</h6></li>' +
+        '<li class="list-group-item">Temperatura: <h6 class="text-muted float-right">{{$notice->weather()->firstOrFail()->temperatura}}℃</h6></li>' +
+      '</ul>' +
+    '</div>'+
+    '</div>'+
+    '</div>'+
+    '</div>';
+
+var prev_infowindow=false;
+
+var infowindow{{$notice->id}} = new google.maps.InfoWindow({
+  content: contentString,
+  maxHeight: 1000
+});
+
+var marker{{$notice->id}} = new google.maps.Marker({
+  position: aviso{{$notice->id}},
+  map: map,
+  title: 'Aviso{{$notice->id}}'
+});
+marker{{$notice->id}}.addListener('click', function() {
+  if(prev_infowindow) {
+    prev_infowindow.close();
+  }
+
+  prev_infowindow = infowindow{{$notice->id}};
+  infowindow{{$notice->id}}.open(map, marker{{$notice->id}});
+});
+@endforeach
+}
 @endsection
