@@ -7,9 +7,9 @@ use App\Image;
 
 class Himage extends Model
 {
-    public function user() {
-        // Himage tiene la clave ajena 'user_id'
-        return $this->belongsTo('App\User');
+    public function sender() {
+        // Himage tiene la clave ajena 'sender_id'
+        return $this->belongsTo('App\Sender');
     }
 
     public function hnotice() {
@@ -27,7 +27,7 @@ class Himage extends Model
         $himage->long = $image->long;
         $himage->direccion = $image->direccion;
         $himage->hnotice_id = $id;
-        $himage->user_id = $image->user_id;
+        $himage->sender_id = $image->sender_id;
 
         $himage->save();
     }

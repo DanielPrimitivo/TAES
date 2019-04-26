@@ -24,8 +24,8 @@ class CreateHimageTable extends Migration
             $table->integer('hnotice_id')->unsigned();
             $table->foreign('hnotice_id')->references('id')->on('hnotices');
 
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('sender_id')->unsigned();
+            $table->foreign('sender_id')->references('id')->on('senders');
 
             $table->timestamps();
         });
