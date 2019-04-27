@@ -61,7 +61,7 @@ class Sender extends Model
 
     // Lectura de un sender por tlf
     public static function readByTlf(string $tlf) {
-        $sender = Sender::where('tlf', '=', $tlf)->get();
+        $sender = Sender::where('tlf', '=', $tlf)->first();
 
         return $sender;
     }

@@ -18,3 +18,5 @@ Route::get('/aviso', 'MainController@aviso')->name('aviso')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/prueba', 'ImageController@generadorWS')->name('prueba')->middleware('auth');

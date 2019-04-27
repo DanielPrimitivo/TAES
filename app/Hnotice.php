@@ -20,7 +20,7 @@ class Hnotice extends Model
         $hnotice = new Hnotice();
 
         $hnotice->fecha = $notice->fecha;
-        $hnotice->valoracion = $notice->valoracion;
+        $hnotice->categoria = $notice->categoria;
         $hnotice->visto = $notice->visto;
         $hnotice->lat = $notice->lat;
         $hnotice->long = $notice->long;

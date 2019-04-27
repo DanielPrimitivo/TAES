@@ -16,7 +16,7 @@ class CreateHnoticeTable extends Migration
         Schema::create('hnotices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('fecha');
-            $table->string('valoracion');
+            $table->string('categoria');
             $table->boolean('visto');
             $table->double('lat');
             $table->double('long');

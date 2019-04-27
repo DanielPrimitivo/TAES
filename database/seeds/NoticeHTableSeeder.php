@@ -16,7 +16,7 @@ class NoticeHTableSeeder extends Seeder
         foreach($info as $noti){
             $notice = new Hnotice([
                 'fecha' => $noti['fecha'],
-                'valoracion' => $noti['valoracion'],
+                'categoria' => $noti['categoria'],
                 'visto' => $noti['visto'],
                 'lat' => $noti['lat'],
                 'long' => $noti['long']

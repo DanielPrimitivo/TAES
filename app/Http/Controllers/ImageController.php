@@ -17,10 +17,10 @@ class ImageController extends Controller
         else{
             $datos = array(
                 "tlf"  => $data['tlf'],
-                "categoria"  => $data['categoria'],
+                "categoria"  => 'Ciudadano',
             );
             Sender::createSEN($datos);
-            $sender = Sender::readByTlf($tlf);
+            $sender = Sender::readByTlf($data['tlf']);
         }
         
         $notice_controll = new NoticeController();
@@ -33,11 +33,11 @@ class ImageController extends Controller
                                     "direccion" => $data['direccion'], 
                                     "notice_id" => $id, 
                                     "sender_id" => $sender->id);
-            Imagen::createIMG($datos_imagen);
+            Image::createIMG($datos_imagen);
         }
         else{
             $datos_notice = array("fecha" => $data['fecha'],
-                                   "valoracion" => 0, 
+                                   "categoria" => $data['categoria_not'], 
                                    "visto" => 0,
                                    "lat" => $data['lat'], 
                                    "long" => $data['long']);
@@ -52,7 +52,21 @@ class ImageController extends Controller
                                     "notice_id" => $notice->id, 
                                     "sender_id" => $sender->id);
 
-            Imagen::createIMG($datos_imagen);
+            Image::createIMG($datos_imagen);
         }
+    }
+
+    public function generadorWS(){
+        $datos_imagen = array("fecha" => '27/04/2019 - 11:09',
+                                "url" => 'imagen1',
+                                "categoria_not" => 'Incendio', 
+                                "lat" => 38.387111, 
+                                "long" => -0.5111661, 
+                                "direccion" => 'Sur',
+                                "tlf" => 113456789);
+
+        $this->reciveImage($datos_imagen);
+
+        echo 'FUNCIONANDO';
     }
 }

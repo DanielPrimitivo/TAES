@@ -19,13 +19,13 @@ class Notice extends Model
         $notice = new Notice();
 
         $notice->fecha = $data['fecha'];
-        $notice->valoracion = $data['valoracion'];
+        $notice->categoria = $data['categoria'];
         $notice->visto = $data['visto'];
         $notice->lat = $data['lat'];
         $notice->long = $data['long'];
 
         $notice->save();
-
+        //Comprobar que $notice al devolverlo ya lleva su id
         return $notice;
     }
 
