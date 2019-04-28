@@ -36,7 +36,7 @@
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
 				<ul class="sidebar-nav">
-						<li class="sidebar-brand"> <a href="#"> Todas las alertas <i class="fas fa-exclamation-triangle"></i></a> </li>
+						<li class="sidebar-brand"> <a href="{{ route('dashboard') }}"> Todas las alertas <i class="fas fa-exclamation-triangle"></i></a> </li>
 						<li> <a href="{{ route('categoria', 'incendio') }}">Fuegos<i class="fas fa-fire"></i></a></li>
 						<li> <a href="{{ route('categoria', 'inundacion') }}">Inundaciones<i class="fas fa-water"></i></a> </li>
 						<li> <a href="{{ route('categoria', 'terremoto') }}">Terremotos<i class="fas fa-house-damage"></i></a> </li>
