@@ -53,4 +53,10 @@ class Notice extends Model
         $notice = Notice::find($id);
         $notice->delete();
     }
+
+    public static function getByCategory($categoria) {
+        $notices = Notice::where('categoria', '=', $categoria)->get();
+
+        return $notices;
+    }
 }

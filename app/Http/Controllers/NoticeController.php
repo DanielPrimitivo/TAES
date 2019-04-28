@@ -28,5 +28,13 @@ class NoticeController extends Controller
         }
 
         return $elegido_id;
-    }   
+    }
+    
+    public function agruparCategoria($categoria) {
+        $notices = Notice::getByCategory($categoria);
+
+        dd($notices);
+
+        return $notices; // vista
+    }
 }
