@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Notice;
-
+use App\Weather;
 
 class NoticeController extends Controller
 {   
@@ -36,5 +36,15 @@ class NoticeController extends Controller
         dd($notices);
 
         return $notices; // vista
+    }
+
+    public function detallesAviso($id) {
+        //$id = 3;
+        $notice = Notice::readNOT($id);
+        $images = $notice->images;
+        $weather = $notice->weather;
+        $previsions = $weather->previsions;
+
+        // return view('vista', compact($notice, $images, $weather, $previsions));
     }
 }
