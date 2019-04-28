@@ -38,9 +38,9 @@ class Webservice extends Controller
     public function store(Request $request)
     {
         //Guaradar la imagen en public/imagenes
-        $imagen = new Image;
+        $id = numImagenes();
         //$imagen->guardar();
-        $fimagen = fopen('public/imagenes/' . $imagen->id . '.jpg', 'w');
+        $fimagen = fopen('public/imagenes/' . $id . '.jpg', 'w');
         fwrite($fimagen, json_decode($request->imagen));
         fclose($fimagen);
 
@@ -49,22 +49,14 @@ class Webservice extends Controller
         $latitud = $request->latitud;
         $fecha = $request->fecha;
         $direccion = $request->direccion;
-        //$datosimagen = exif_read_data('public/imagenes/' . $imagen->id . 'jpg');
-        //$longitud = getGPS($datosimagen["GPSLongitude"], $datosimagen["GPSLongitudeRef"]);
-        //$latitud = getGPS($datosimagen["GPSLatitude"], $datosimagen["GPSLatitudeRef"]);
-        //$fecha = $datosimagen["DateTimeOriginal"];
-        $url = 'public/imagenes/' . $imagen->id . '.jpg';
+        $url = 'public/imagenes/' . $id . '.jpg';
+        $usuario = $request->usuario;
 
-        //Anadir los datos de la imagen y guardarlos
-        $imagen->fecha = $fecha;
-        $imagen->long = $longitud;
-        $imagen->lat = $latitud;
-        $imagen->url = $url;
-        $imagen->direccion = $direccion;
+        $datos = array('fecha' => $fecha, 'url' => $url, 'lat' => $latitud, 'long' => $longitud, 'direccion' => $direccion, 'notice_id' => 0, 'sender_id' => $usuario);
+        $imagen = new Image();
+        $imagen->CreateIMG($datos);
 
-        //$alertas = DB::table('notices')->get();
 
-        $imagen->save();
 
     }
 
@@ -137,5 +129,12 @@ class Webservice extends Controller
         }
 
         return floatval($parts[0]) / floatval($parts[1]);
+    }
+
+    private function numImagenes(){
+        static $numImagenes = 0;
+        $valorRetorno = $numImagenes;
+        $numImagenes++;
+        return $valorRetorno;
     }
 }
