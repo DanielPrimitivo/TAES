@@ -49,14 +49,13 @@ class Webservice extends Controller
         $latitud = $request->latitud;
         $fecha = $request->fecha;
         $direccion = $request->direccion;
-        $url = 'public/imagenes/' . $id . '.jpg';
-        $usuario = $request->usuario;
+        $url = $id . '.jpg';
+        $telefono = $request->telefono;
+        $categoria = $request->categoria;
 
-        $datos = array('fecha' => $fecha, 'url' => $url, 'lat' => $latitud, 'long' => $longitud, 'direccion' => $direccion, 'notice_id' => 0, 'sender_id' => $usuario);
-        $imagen = new Image();
-        $imagen->CreateIMG($datos);
+        $datos = array('fecha' => $fecha, 'url' => $url, 'lat' => $latitud, 'long' => $longitud, 'direccion' => $direccion, 'categoria_not' => $categoria, 'tlf' => $telefono);
 
-
+        ImageController::recieveImage($datos);
 
     }
 
