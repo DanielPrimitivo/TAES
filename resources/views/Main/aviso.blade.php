@@ -134,9 +134,12 @@
     <div class="row-lg-12">
     <div class="card mt-2 mb-2 shadow">
       <div class="card-header text-center">
-        Mapa del aviso X con coordenadas: -48.468, 80.8447
+        Mapa del aviso {{$notice->id}} con coordenadas: {{$notice->lat}}, {{$notice->long}}
+        <span class="badge badge-warning">
+          {{$notice->categoria}}
+      </span>
       </div>
-    <iframe class="" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4413.966512531121!2d-0.7036652467432685!3d38.530410533494475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1554821636145!5m2!1ses!2ses" width="100%" height="370" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <div id="map" style="width: 100%; height: 370px"></div>
 </div>
 </div>
 <div class="row">
@@ -180,14 +183,15 @@
       <h5 class="card-header text-center">El tiempo ahora      </h5>
       <div class="card-body">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Humedad: <h6 class="text-muted float-right">50%</h6></li>
-          <li class="list-group-item">Viento: <h6 class="text-muted float-right">24 km/h</h6></li>
-          <li class="list-group-item">Temp min/max: <h6 class="text-muted float-right">15℃/28℃</h6></li>
-          <li class="list-group-item">Precipitaciones: <h6 class="text-muted float-right">10%</h6></li>
+          <li class="list-group-item">Humedad: <h6 class="text-muted float-right">{{$weather->humedad}}%</h6></li>
+          <li class="list-group-item">Viento: <h6 class="text-muted float-right">{{$weather->viento}} km/h</h6></li>
+          <li class="list-group-item">Dirección viento: <h6 class="text-muted float-right">{{$weather->dirviento}}</h6></li>
+          <li class="list-group-item">Temp min/max: <h6 class="text-muted float-right">{{$weather->temperatura}}℃</h6></li>
+          <li class="list-group-item">Precipitaciones: <h6 class="text-muted float-right">{{$weather->lluvia}}</h6></li>
         </ul>
       </div>
       <div class="card-footer">
-        <small class="text-muted">ult. act el 11/04/2019 a las 12:45
+        <small class="text-muted">ult. act {{$weather->updated_at->format('d-m-Y')}} a las {{$weather->updated_at->format('H:i:s')}}
         <div class="float-right">
         <a href="" class="text-dark"><i class="fas fa-sync-alt"></i></a>
         </div>
@@ -441,4 +445,17 @@ $(document)
     }
     e.preventDefault(); // prevent the default action (scroll / move caret)
   });
+  function initMap() {
+  var aviso{{$notice->id}} = {lat: {{$notice->lat}}, lng: {{$notice->long}}};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 12,
+    center: aviso{{$notice->id}}
+  });
+
+  var marker{{$notice->id}} = new google.maps.Marker({
+    position: aviso{{$notice->id}},
+    map: map,
+    title: 'Aviso{{$notice->id}}'
+  });
+  }
 @endsection

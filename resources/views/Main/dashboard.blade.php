@@ -20,11 +20,25 @@
             height: 750px;
             padding: 1rem;
         }
+.vertical-center {
+  min-height: 70%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 70vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
 @endsection
 
 @section('content')
 <div class="container-fluid">
   <div class="row">
+    @if($notices->isEmpty())
+    <div class="vertical-center mx-auto">
+    <div class="alert alert-warning" role="alert">
+      No se ha encontrado ningún aviso para la categoría:<strong> {{$filtered}} </strong>
+    </div>
+  </div>
+    @else
     <div class="col-xs-12 col-sm-12 col-lg-4 col-md-12 order-lg-1 order-12">
 <div class="shadow card mt-2 mb-2">
   <div class="card-header">
@@ -194,7 +208,18 @@
     <div class="row-lg-9">
     <div class="card mt-2 mb-2 shadow">
       <div class="card-header text-center">
-        Mapa de avisos
+        <div class="d-inline">Mapa de avisos</div>
+        <div class="float-right d-inline">
+          @if($filtered != 'false' && !$notices->isEmpty())
+        <a href="{{ route('dashboard') }}" class="btn btn-sm btn-info">
+          {{$filtered}} <i class="fas fa-times-circle text-light"></i>
+      </a>
+      @else
+      <span class="badge badge-info">
+        Todos los avisos
+    </span>
+      @endif
+    </div>
       </div>
     <div id="map" style="width: 100%; height: 370px"></div>
 </div>
@@ -213,7 +238,7 @@
                     <td>{{ $notice->lat }}</td>
                     <td>{{ $notice->long }}</td>
                     <td><button onclick="noticeTimes('{{$notice->id}}')" class="text-dark btn btn-sm btn-link"><i class="fas fa-check"></i></button></td>
-                    <td><button href="#" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>
+                    <td><a href="{{route('aviso', $notice->id)}}" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></a></td>
                   </tr>
                 @endforeach
               @endif
@@ -262,7 +287,7 @@
 </div> <!-- end of map box -->
 </div>
 </div>
-
+@endif
 
 
 
@@ -424,7 +449,7 @@ var map = new google.maps.Map(document.getElementById('map'), {
 });
 @endif
 var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
-    '<h1 id="firstHeading" class="firstHeading">Aviso {{$notice->id}}<a class="btn-info btn-sm btn float-right w-50 mt-2" href="{{route('aviso')}}" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
+    '<h1 id="firstHeading" class="firstHeading">Aviso {{$notice->id}}<a class="btn-info btn-sm btn float-right w-50 mt-2" href="{{route('aviso', ['id' => $notice->id])}}" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
     '<div id="bodyContent">'+
       '<div class="card shadow">'+
         '<h5 class="card-header text-center">El tiempo ahora      </h5>'+

@@ -12,7 +12,7 @@ class MainController extends Controller
     public function index() {
       $notices = Notice::take(4)->skip(0)->get();
 
-      return view::make('Main/dashboard')->with('notices', $notices);
+      return view::make('Main/dashboard')->with('notices', $notices)->with('filtered', 'false');
     }
 
     public function aviso() {
