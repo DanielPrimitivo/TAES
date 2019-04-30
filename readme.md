@@ -13,7 +13,7 @@
 <p>TAES$ ./cont.sh (linux)</p>
 <p>TAES$ .\cont-win.bat (windows)</p>
 
-**Si ya se tiene el repositorio inicalizado, para actualizar el entorno**
+**Si ya se tiene el repositorio inicalizado, para configuracion API OpenWeatherMap**
 <p>TAES$ ./api.sh (linux)</p>
 <p>TAES$ .\api-win.bat (windows)</p>
 
