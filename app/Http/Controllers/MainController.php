@@ -22,34 +22,10 @@ class MainController extends Controller
         return view::make('Main/aviso');
     }
 
-
     public function getNoticeTimes() {
         $data = request()->all();
         $notice = Notice::find($data["notice"]);
-
-        //llamar a la API para obtener el tiempo
-        $lowm = new LaravelOWM();
-        $weather = $lowm->getCurrentWeather(array('lat' => $notice->lat, 'lon' => $notice->long), 'es');
-        $array['viento'] = $weather->wind->speed;
-        $array['dirviento'] = $weather->wind->direction;
-        $array['humedad'] = $weather->humidity;
-        $array['temperatura'] = $weather->temperature;
-        $array['lluvia'] = $weather->precipitation;
-        $array['fecha'] = $weather->lastUpdate;
-        $array['notice_id'] = $notice->id;
-
-        //actualizar el tiempo para el aviso y si no tenia crearlo
         $times = $notice->weather()->get();
-        if ($times != null) {
-            $notice->weather()->update($array);
-            $times = $notice->weather()->get();
-            
-        } else {
-            $times = new Weather();
-            $times->create($array);
-            $times = $notice->weather()->get();
-        }
-
         return response()->json(array('times' => $times), 200);
     }
 }
