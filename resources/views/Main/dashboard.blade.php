@@ -27,6 +27,9 @@
   display: flex;
   align-items: center;
 }
+.table-row{
+cursor:pointer !important;
+}
 @endsection
 
 @section('content')
@@ -234,10 +237,9 @@
             <tbody>
               @if(isset($notices))
                 @foreach($notices as $notice)
-                  <tr id="fila{{$notice->id}}">
+                  <tr id="fila{{$notice->id}}" class="table-row" onclick="noticeTimes('{{$notice->id}}')">
                     <td>{{ $notice->lat }}</td>
                     <td>{{ $notice->long }}</td>
-                    <td><button onclick="noticeTimes('{{$notice->id}}')" class="text-dark btn btn-sm btn-link"><i class="fas fa-check"></i></button></td>
                     <td><a href="{{route('aviso', $notice->id)}}" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></a></td>
                   </tr>
                 @endforeach
@@ -314,7 +316,7 @@ function noticeTimes(notice)
             }
             else {
                 for (i = 0; i < data.times.length; i++) {
-                    document.getElementById(fila).className = 'table-primary';
+                    document.getElementById(fila).className = 'table-primary table-row';
                     document.getElementById("temperaturaActual").innerHTML = data.times[i].temperatura + '℃';
                     document.getElementById("humedadInfo").innerHTML = data.times[i].humedad + '%';
                     document.getElementById("sVientoInfo").innerHTML = data.times[i].viento + 'km/h';
@@ -338,7 +340,6 @@ function noticeTimes(notice)
          }
     });
 }
-
 
 let modalId = $('#image-gallery');
 
@@ -452,7 +453,7 @@ var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
     '<h1 id="firstHeading" class="firstHeading">Aviso {{$notice->id}}<a class="btn-info btn-sm btn float-right w-50 mt-2" href="{{route('aviso', ['id' => $notice->id])}}" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
     '<div id="bodyContent">'+
       '<div class="card shadow">'+
-        '<h5 class="card-header text-center">El tiempo ahora      </h5>'+
+        '<h5 class="card-header text-center"> <span class="badge badge-warning">{{$notice->categoria}}</span>  El tiempo ahora   </h5>'+
     '<div class="card-body">'+
       '<ul class="list-group list-group-flush">' +
         '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">{{$notice->weather()->firstOrFail()->humedad}}%</h6></li>' +
@@ -482,6 +483,7 @@ marker{{$notice->id}}.addListener('click', function() {
 
   prev_infowindow = infowindow{{$notice->id}};
   infowindow{{$notice->id}}.open(map, marker{{$notice->id}});
+  noticeTimes('{{$notice->id}}')
 });
 @endforeach
 }
