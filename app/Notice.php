@@ -59,4 +59,22 @@ class Notice extends Model
 
         return $notices;
     }
+
+    public static function marcarVisto($id) {
+        $notice = Notice::readNOT($id);
+        if($notice->visto){
+            $notice->visto = 0;
+        }
+        else{
+            $notice->visto = 1;
+        }
+        
+        $notice->save();
+    }
+
+    public function cambiarCategoria($id, $new_cat){
+        $notice = Notice::readNOT($id);
+        $notice->categoria = $new_cat;
+        $notice->save();
+    }
 }

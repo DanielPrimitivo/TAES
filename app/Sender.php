@@ -65,4 +65,10 @@ class Sender extends Model
 
         return $sender;
     }
+
+    public function updateCat($id, $new_cat){
+        $sender = Sender::readSEN($id);
+        $sender->categoria = $new_cat;
+        $sender->save();
+    }
 }

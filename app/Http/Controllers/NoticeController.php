@@ -47,4 +47,17 @@ class NoticeController extends Controller
 
         return view::make('Main/aviso')->with('notice', $notice)->with('images', $images)->with('weather', $weather)->with('previsions', $previsions);
     }
+
+    public function marcarVisto($id){
+        Notice::marcarVisto($id);
+        $notice = Notice::readNOT($id);
+
+        //return vista
+    }
+
+    public function cambiarCategoria($id, $new_cat){
+        Notice::cambiarCategoria($id, $new_cat);
+
+        //return vista
+    }
 }
