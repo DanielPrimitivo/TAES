@@ -41,9 +41,9 @@ class NoticeController extends Controller
     public function detallesAviso($id) {
         //$id = 3;
         $notice = Notice::readNOT($id);
-        $images = $notice->images();
-        $weather = $notice->weather();
-        $previsions = $weather->previsions();
+        $images = $notice->images;
+        $weather = $notice->weather;
+        $previsions = $weather->previsions;
 
         return view::make('Main/aviso')->with('notice', $notice)->with('images', $images)->with('weather', $weather)->with('previsions', $previsions);
     }
