@@ -8,7 +8,7 @@ use App\Time;
 
 class TimeController extends Controller
 {   
-    public function getWeather(double $lat,double $lon,int $hours) {
+    public function getWeather($lat, $lon, $hours) {
         //llamar a la API para obtener el tiempo
         $lowm = new LaravelOWM();
         if($hours == 0) {
