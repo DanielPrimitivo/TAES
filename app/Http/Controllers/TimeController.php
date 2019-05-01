@@ -16,23 +16,29 @@ class TimeController extends Controller
             $weather = $lowm->getCurrentWeather(array('lat' => $lat, 'lon' => $lon), 'es', 'metric');
         } else {
             $forecast = $lowm->getWeatherForecast(array('lat' => $lat, 'lon' => $lon), 'es', 'metric', 1);
-            $cto = new Carbon($forecast->forecasts[0]->time->to);
+            $i = 0;
+            foreach ($forecast as $forecastaux) {
+                $forecasts[$i] = $forecastaux;
+                $i=$i+1;
+            }
+            $cto = Carbon::createFromFormat('Y-m-d H:i:s.u', $forecasts[0]->time->to->format('Y-m-d H:i:s.u'));
+            //$cto = new Carbon($forecasts[0]->time->to);
             if(Carbon::now()->greaterThan($cto)) {
                 switch ($hours) {
-                    case 3: $weather = $forecast->forecasts[2];
+                    case 3: $weather = $forecasts[2];
                             break;
-                    case 6: $weather = $forecast->forecasts[3];
+                    case 6: $weather = $forecasts[3];
                             break;
-                    case 9: $weather = $forecast->forecasts[4];
+                    case 9: $weather = $forecasts[4];
                             break;
                 }
             } else {
                 switch ($hours) {
-                    case 3: $weather = $forecast->forecasts[1];
+                    case 3: $weather = $forecasts[1];
                             break;
-                    case 6: $weather = $forecast->forecasts[2];
+                    case 6: $weather = $forecasts[2];
                             break;
-                    case 9: $weather = $forecast->forecasts[3];
+                    case 9: $weather = $forecasts[3];
                             break;
                 }
             }
