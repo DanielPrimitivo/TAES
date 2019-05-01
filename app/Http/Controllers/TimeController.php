@@ -14,17 +14,6 @@ class TimeController extends Controller
         $lowm = new LaravelOWM();
         if($hours == 0) {
             $weather = $lowm->getCurrentWeather(array('lat' => $lat, 'lon' => $lon), 'es', 'metric');
-            $array = array(
-                'vientoVel' => $weather->wind->speed,
-                'vientoDir' => $weather->wind->direction,
-                'humedad' => $weather->humidity,
-                'temperatura' => $weather->temperature,
-                'temperaturaMin' => $weather->temperature->min,
-                'temperaturaMax' => $weather->temperature->max,
-                'precipitaciones' => $weather->precipitation,
-                'presion' => $weather->pressure,
-                'fecha' => $weather->lastUpdate
-            );
         } else {
             $forecast = $lowm->getWeatherForecast(array('lat' => $lat, 'lon' => $lon), 'es', 'metric', 1);
             $cto = new Carbon($forecast->forecasts[0]->time->to);
@@ -47,19 +36,18 @@ class TimeController extends Controller
                             break;
                 }
             }
-            $array = array(
-                'vientoVel' => $weather->wind->speed,
-                'vientoDir' => $weather->wind->direction,
-                'humedad' => $weather->humidity,
-                'temperatura' => $weather->temperature,
-                'temperaturaMin' => $weather->temperature->min,
-                'temperaturaMax' => $weather->temperature->max,
-                'precipitaciones' => $weather->precipitation,
-                'presion' => $weather->pressure,
-                'fecha' => $weather->lastUpdate
-            );
         }
-
+        $array = array(
+            'vientoVel' => $weather->wind->speed,
+            'vientoDir' => $weather->wind->direction,
+            'humedad' => $weather->humidity,
+            'temperatura' => $weather->temperature->now,
+            'temperaturaMin' => $weather->temperature->min,
+            'temperaturaMax' => $weather->temperature->max,
+            'precipitaciones' => $weather->precipitation,
+            'presion' => $weather->pressure,
+            'fecha' => $weather->lastUpdate
+        );
         return $array;
     }
 }
