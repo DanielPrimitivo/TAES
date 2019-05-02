@@ -113,7 +113,7 @@ cursor:pointer !important;
       <h5 class="card-header text-center">Últimos avisos</h5>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-hover">
+          <table class="table table-hover table-wrapper-scroll-y">
             <tbody>
               @if(isset($notices))
                 @foreach($notices as $notice)

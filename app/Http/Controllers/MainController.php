@@ -14,7 +14,7 @@ use Gmopx\LaravelOWM\LaravelOWM;
 class MainController extends Controller
 {
     public function index() {
-        $notices = Notice::take(4)->skip(0)->get();
+        $notices = Notice::take(4)->skip(0)->orderBy('id', 'desc')->get();
 
         return view::make('Main/dashboard')->with('notices', $notices)->with('filtered', 'false');
     }
@@ -31,7 +31,7 @@ class MainController extends Controller
     }
 
     public function getAllImages() {
-        $images = Image::readAll();
+        $images = Image::orderBy('id', 'desc')->get();
         foreach($images as $image) {
           $sender = $image->sender()->firstOrFail();
           $image->sender_id = $sender;
@@ -42,7 +42,7 @@ class MainController extends Controller
     public function getNoticeImages() {
         $data = request()->all();
         $notice = Notice::find($data["notice"]);
-        $images = $notice->images()->get();
+        $images = $notice->images()->orderBy('id', 'desc')->get();
         foreach($images as $image) {
           $sender = $image->sender()->firstOrFail();
           $image->sender_id = $sender;
