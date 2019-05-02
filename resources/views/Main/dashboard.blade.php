@@ -65,6 +65,9 @@ cursor:pointer !important;
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="image-gallery-title"></h4>
+                        <span class="badge badge-info mx-auto">
+                          <h5 class="modal-title" id="image-gallery-sender"></h5>
+                        </span>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
                         </button>
                     </div>
@@ -223,7 +226,7 @@ function noticeImages()
     var contentString = "";
     $.ajax({
         type: 'POST',
-        url: "{{route('ajax.noticeImages')}}",
+        url: "{{route('ajax.Images')}}",
         data: {_token: '{{csrf_token()}}' },
         success: function(data){
             if(data.images.length == 0) {
@@ -238,7 +241,8 @@ function noticeImages()
                   '<div class="col-lg-4 col-md-5 col-xs-6 thumb" style="display:none;">' +
                     '<a class="thumbnail" href="#" data-image-id="' + id + '" data-toggle="modal" data-title="Aviso' + data.images[i].notice_id + '"' +
                       'data-image="' + URL + '"' +
-                       'data-target="#image-gallery">' +
+                       'data-target="#image-gallery"' +
+                       'data-sender="' + data.images[i].sender_id.categoria + ', Tlf: ' + data.images[i].sender_id.tlf + '">' +
                          '<img class="img-thumbnail" src="' + URL + '" alt="Another alt text">' +
                            '</a>' +
                          '</div>';
@@ -300,6 +304,8 @@ function loadGallery(setIDs, setClickAttr) {
     current_image = $sel.data('image-id');
     $('#image-gallery-title')
       .text($sel.data('title'));
+    $('#image-gallery-sender')
+      .text($sel.data('sender'));
     $('#image-gallery-image')
       .attr('src', $sel.data('image'));
     disableButtons(counter, $sel.data('image-id'));

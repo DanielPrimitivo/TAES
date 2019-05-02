@@ -2,7 +2,6 @@
 
 @section('css')
 body {
-  background-image: url("/fireviewer/bglogin.jpg");
   background-position: right 50px;
 }
 @endsection

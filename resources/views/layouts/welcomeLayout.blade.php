@@ -22,7 +22,7 @@
 	@yield('css')
 	</style>
 </head>
-<body>
+<body style="background-image:url({{ URL::asset('/fireviewer/bglogin.jpg') }});">
 
 	<header>
 	@include('/inc/navbar')

@@ -30,8 +30,23 @@ class MainController extends Controller
         return response()->json(array('times' => $times), 200);
     }
 
-    public function getNoticeImages() {
+    public function getAllImages() {
         $images = Image::readAll();
+        foreach($images as $image) {
+          $sender = $image->sender()->firstOrFail();
+          $image->sender_id = $sender;
+        }
+        return response()->json(array('images' => $images), 200);
+    }
+
+    public function getNoticeImages() {
+        $data = request()->all();
+        $notice = Notice::find($data["notice"]);
+        $images = $notice->images()->get();
+        foreach($images as $image) {
+          $sender = $image->sender()->firstOrFail();
+          $image->sender_id = $sender;
+        }
         return response()->json(array('images' => $images), 200);
     }
 }
