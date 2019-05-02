@@ -7,6 +7,7 @@ use View;
 use App\Coordinate;
 use App\Notice;
 use App\Weather;
+use App\Image;
 use Carbon\Carbon;
 use Gmopx\LaravelOWM\LaravelOWM;
 
@@ -27,5 +28,10 @@ class MainController extends Controller
         $notice = Notice::find($data["notice"]);
         $times = $notice->weather()->get();
         return response()->json(array('times' => $times), 200);
+    }
+
+    public function getNoticeImages() {
+        $images = Image::readAll();
+        return response()->json(array('images' => $images), 200);
     }
 }

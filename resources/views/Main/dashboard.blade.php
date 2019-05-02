@@ -47,137 +47,14 @@ cursor:pointer !important;
   <div class="card-header">
     Últimas imágenes
     <div class="float-right">
-      <a href="" class="text-dark"><i class="fas fa-sync-alt"></i></a>
+      <button onclick="noticeImages();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
     </div>
 </div>
   <div class="card-body scroll-box">
     <div class="container">
 	     <div class="row">
-		       <div class="row">
-		           <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                 <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 1"
-                    data-image="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                    data-target="#image-gallery">
-                      <img class="img-thumbnail"
-                          src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 2"
-                        data-image="http://mediad.publicbroadcasting.net/p/nhpr/files/styles/medium/public/201710/dilly_fire_1.jpg"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="http://mediad.publicbroadcasting.net/p/nhpr/files/styles/medium/public/201710/dilly_fire_1.jpg"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 3"
-                        data-image="https://www.thelocal.de/userdata/images/article/1342d936cea42df5c34d1245c7d384e218740b62f430731f92b0c76a1761fdcb.jpg"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="https://www.thelocal.de/userdata/images/article/1342d936cea42df5c34d1245c7d384e218740b62f430731f92b0c76a1761fdcb.jpg"
-                          alt="Another alt text">
-                        </a>
-                      </div>
+		       <div class="row" id="imagesHolder">
 
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 4"
-                        data-image="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 5"
-                        data-image="http://mediad.publicbroadcasting.net/p/nhpr/files/styles/medium/public/201710/dilly_fire_1.jpg"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="http://mediad.publicbroadcasting.net/p/nhpr/files/styles/medium/public/201710/dilly_fire_1.jpg"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 6"
-                        data-image="https://www.thelocal.de/userdata/images/article/1342d936cea42df5c34d1245c7d384e218740b62f430731f92b0c76a1761fdcb.jpg"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="https://www.thelocal.de/userdata/images/article/1342d936cea42df5c34d1245c7d384e218740b62f430731f92b0c76a1761fdcb.jpg"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-
-
-
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 7"
-                        data-image="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 8"
-                        data-image="http://mediad.publicbroadcasting.net/p/nhpr/files/styles/medium/public/201710/dilly_fire_1.jpg"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="http://mediad.publicbroadcasting.net/p/nhpr/files/styles/medium/public/201710/dilly_fire_1.jpg"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 9"
-                        data-image="https://www.thelocal.de/userdata/images/article/1342d936cea42df5c34d1245c7d384e218740b62f430731f92b0c76a1761fdcb.jpg"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="https://www.thelocal.de/userdata/images/article/1342d936cea42df5c34d1245c7d384e218740b62f430731f92b0c76a1761fdcb.jpg"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-
-
-
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 10"
-                        data-image="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 11"
-                        data-image="http://mediad.publicbroadcasting.net/p/nhpr/files/styles/medium/public/201710/dilly_fire_1.jpg"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="http://mediad.publicbroadcasting.net/p/nhpr/files/styles/medium/public/201710/dilly_fire_1.jpg"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 12"
-                        data-image="https://www.thelocal.de/userdata/images/article/1342d936cea42df5c34d1245c7d384e218740b62f430731f92b0c76a1761fdcb.jpg"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="https://www.thelocal.de/userdata/images/article/1342d936cea42df5c34d1245c7d384e218740b62f430731f92b0c76a1761fdcb.jpg"
-                          alt="Another alt text">
-                        </a>
-                      </div>
-                      <div class="col-lg-4 col-md-5 col-xs-6 thumb">
-                        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Aviso 13"
-                        data-image="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                        data-target="#image-gallery">
-                        <img class="img-thumbnail"
-                          src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/10/10/15/forestfire-0.jpg?w968h681"
-                          alt="Another alt text">
-                        </a>
-                      </div>
                     </div>
                   </div>
 </div>
@@ -240,7 +117,7 @@ cursor:pointer !important;
                   <tr id="fila{{$notice->id}}" class="table-row" onclick="noticeTimes('{{$notice->id}}')">
                     <td>{{ $notice->lat }}</td>
                     <td>{{ $notice->long }}</td>
-                    <td><a href="{{route('aviso', $notice->id)}}" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></a></td>
+                    <td><button onclick="location.href='{{route('aviso', $notice->id)}}';" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>
                   </tr>
                 @endforeach
               @endif
@@ -341,79 +218,119 @@ function noticeTimes(notice)
     });
 }
 
+function noticeImages()
+{
+    var contentString = "";
+    $.ajax({
+        type: 'POST',
+        url: "{{route('ajax.noticeImages')}}",
+        data: {_token: '{{csrf_token()}}' },
+        success: function(data){
+            if(data.images.length == 0) {
+              document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoImages"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin Imagenes almacenadas!</div>';
+              contentString = "";
+            }
+            else {
+                for (i = 0; i < data.images.length; i++) {
+                  var id = i+1;
+                  var URL = "{{url('imagenes/')}}/"+data.images[i].url;
+                  contentString +=
+                  '<div class="col-lg-4 col-md-5 col-xs-6 thumb" style="display:none;">' +
+                    '<a class="thumbnail" href="#" data-image-id="' + id + '" data-toggle="modal" data-title="Aviso' + data.images[i].notice_id + '"' +
+                      'data-image="' + URL + '"' +
+                       'data-target="#image-gallery">' +
+                         '<img class="img-thumbnail" src="' + URL + '" alt="Another alt text">' +
+                           '</a>' +
+                         '</div>';
+                }
+                document.getElementById("imagesHolder").innerHTML = contentString;
+                $(".thumb").fadeIn("slow");
+            }
+        },
+        error: function(jqxhr, status, exception) {
+             alert('Exception:' + exception,);
+         }
+    });
+    setTimeout(function(){
+      loadGallery(true, 'a.thumbnail');
+    }, 1000);
+}
+
+//This function disables buttons when needed
+function disableButtons(counter_max, counter_current) {
+  $('#show-previous-image, #show-next-image')
+    .show();
+  if (counter_max === counter_current) {
+    $('#show-next-image')
+      .hide();
+  } else if (counter_current === 1) {
+    $('#show-previous-image')
+      .hide();
+  }
+}
+
+/**
+ *
+ * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
+ * @param setClickAttr  Sets the attribute for the click handler.
+ */
+
+function loadGallery(setIDs, setClickAttr) {
+  let current_image,
+    selector,
+    counter = 0;
+
+  $('#show-next-image, #show-previous-image')
+    .click(function () {
+      if ($(this)
+        .attr('id') === 'show-previous-image') {
+        current_image--;
+      } else {
+        current_image++;
+      }
+
+      selector = $('[data-image-id="' + current_image + '"]');
+
+      updateGallery(selector);
+    });
+
+  function updateGallery(selector) {
+    console.log(selector);
+    let $sel = selector;
+    current_image = $sel.data('image-id');
+    $('#image-gallery-title')
+      .text($sel.data('title'));
+    $('#image-gallery-image')
+      .attr('src', $sel.data('image'));
+    disableButtons(counter, $sel.data('image-id'));
+  }
+
+  if (setIDs == true) {
+    $('[data-image-id]')
+      .each(function () {
+        counter++;
+        $(this)
+          .attr('data-image-id', counter);
+      });
+  }
+  $('a.thumbnail')
+    .on('click', function () {
+      updateGallery($(this));
+    });
+}
+
 let modalId = $('#image-gallery');
 
 $(document)
   .ready(function () {
+
+    noticeImages();
 
     @foreach($notices as $notice)
     @if ($loop->first)
       noticeTimes({{$notice->id}});
     @endif
     @endforeach
-
-    loadGallery(true, 'a.thumbnail');
-
-    //This function disables buttons when needed
-    function disableButtons(counter_max, counter_current) {
-      $('#show-previous-image, #show-next-image')
-        .show();
-      if (counter_max === counter_current) {
-        $('#show-next-image')
-          .hide();
-      } else if (counter_current === 1) {
-        $('#show-previous-image')
-          .hide();
-      }
-    }
-
-    /**
-     *
-     * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
-     * @param setClickAttr  Sets the attribute for the click handler.
-     */
-
-    function loadGallery(setIDs, setClickAttr) {
-      let current_image,
-        selector,
-        counter = 0;
-
-      $('#show-next-image, #show-previous-image')
-        .click(function () {
-          if ($(this)
-            .attr('id') === 'show-previous-image') {
-            current_image--;
-          } else {
-            current_image++;
-          }
-
-          selector = $('[data-image-id="' + current_image + '"]');
-          updateGallery(selector);
-        });
-
-      function updateGallery(selector) {
-        let $sel = selector;
-        current_image = $sel.data('image-id');
-        $('#image-gallery-title')
-          .text($sel.data('title'));
-        $('#image-gallery-image')
-          .attr('src', $sel.data('image'));
-        disableButtons(counter, $sel.data('image-id'));
-      }
-
-      if (setIDs == true) {
-        $('[data-image-id]')
-          .each(function () {
-            counter++;
-            $(this)
-              .attr('data-image-id', counter);
-          });
-      }
-      $(setClickAttr)
-        .on('click', function () {
-          updateGallery($(this));
-        });
-    }
   });
 
 // build key actions
