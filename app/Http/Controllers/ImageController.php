@@ -73,4 +73,10 @@ class ImageController extends Controller
 
         echo 'FUNCIONANDO';
     }
+
+    public function agruparCategoria($categoria) {
+        $images = Image::getByCategory($categoria);
+        
+        //return vista;
+    }
 }
