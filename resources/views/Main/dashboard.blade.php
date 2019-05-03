@@ -134,7 +134,7 @@ cursor:pointer !important;
         </div>
       </div>
       <div class="card-footer">
-        <small class="text-muted">Actualizado hace 3 minutos
+        <small class="text-muted">Actualizado a las {{$lastCall}}
           <div class="float-right">
           <a href="" class="text-dark"><i class="fas fa-sync-alt"></i></a>
           </div>
@@ -148,7 +148,7 @@ cursor:pointer !important;
         <h4 class="text-center text-muted" id="temperaturaActual"></h4>
       </div>
       <div class="card-footer">
-        <small class="text-muted">Actualizado hace 3 minutos</small>
+        <small class="text-muted" id="horAct1"></small>
       </div>
     </div>
     <div class="card shadow">
@@ -162,9 +162,9 @@ cursor:pointer !important;
         </ul>
       </div>
       <div class="card-footer">
-        <small class="text-muted">Actualizado hace 3 minutos
+        <small class="text-muted"> <p class="d-inline" id="horAct2"></p>
         <div class="float-right">
-        <a href="" class="text-dark"><i class="fas fa-sync-alt"></i></a>
+          <button href="" class="text-dark btn btn-sm btn-link d-inline" id="updateTimes"><i class="fas fa-sync-alt"></i></button>
         </div>
       </small>
       </div>
@@ -207,6 +207,9 @@ function noticeTimes(notice)
                     document.getElementById("sVientoInfo").innerHTML = data.times[i].viento + 'km/h';
                     document.getElementById("dirVientoInfo").innerHTML = data.times[i].dirviento;
                     document.getElementById("lluviaInfo").innerHTML = data.times[i].lluvia;
+                    document.getElementById("horAct1").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
+                    document.getElementById("horAct2").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
+                    document.getElementById("updateTimes").setAttribute("onclick", 'noticeTimes(' + notice + ')');
                     switch(data.times[i].lluvia) {
                       case "fuerte":
                         document.getElementById("iconoTiempo").className = 'fas fa-cloud-showers-heavy text-center mt-5';

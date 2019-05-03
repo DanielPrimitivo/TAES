@@ -55,9 +55,12 @@ class NoticeController extends Controller
         return redirect()->route('aviso', ['id' => $id]);
     }
 
-    public function cambiarCategoria($id, $new_cat){
+    public function cambiarCategoria(Request $request){
+        $data = $request->all();
+        $id = $data["id"];
+        $new_cat = $data["newCat"];
         Notice::cambiarCategoria($id, $new_cat);
 
-        //return vista
+        return redirect()->route('aviso', ['id' => $id]);
     }
 }

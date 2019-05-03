@@ -16,7 +16,7 @@ class MainController extends Controller
     public function index() {
         $notices = Notice::orderBy('id', 'desc')->get();
 
-        return view::make('Main/dashboard')->with('notices', $notices)->with('filtered', 'false');
+        return view::make('Main/dashboard')->with('notices', $notices)->with('filtered', 'false')->with('lastCall', Carbon::now()->format('H:i'));
     }
 
     public function aviso() {
@@ -27,6 +27,10 @@ class MainController extends Controller
         $data = request()->all();
         $notice = Notice::find($data["notice"]);
         $times = $notice->weather()->get();
+        foreach($times as $time) {
+            $time["lastActD"] = Carbon::parse($time->updated_at)->format('d-m-Y');
+            $time["lastActH"] = Carbon::parse($time->updated_at)->format('H:i');
+        }
         return response()->json(array('times' => $times), 200);
     }
 

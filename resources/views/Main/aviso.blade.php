@@ -257,7 +257,7 @@
 <div class="share">
     <div class="toggle"></div>
     <ul>
-        <li><a href="#"><i class="fas fa-archive" aria-hidden="true"></i></a></li>
+        <li><a class="btn btn-sm text-primary btn-link" data-toggle="modal" data-target="#modalCategory"><i class="fas fa-archive" aria-hidden="true"></i></a></li>
         @if($notice->visto == 1)
         <li><a href="{{route('visto', $notice->id)}}"><i class="fas fa-eye" aria-label="Marcar no visto"></i></a></li>
         @else
@@ -267,6 +267,41 @@
     </ul>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Categoria del aviso {{$notice->id}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container text-center mb-2 mt-3">
+
+        <form method="POST" action="{{ action('NoticeController@cambiarCategoria') }}">
+            {{ csrf_field() }}
+            <input type="hidden" name="id" id="id" value="{{$notice->id}}">
+        <div class="modal-body" id="filterBy_body">
+        <div class="form-inline mt-2" id="type">
+            <label for="type" class="mr-2"><h6><i class="fas fa-archive"></i> Categoria: </h6></label>
+            <select name="newCat" id="newCat" style="block" class="custom-select">
+                <option value="incendio">incendio</option>
+                <option value="inundacion">inundacion</option>
+                <option value="terremoto">terremoto</option>
+                <option value="otro">otro</option>
+            </select>
+            </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+              <button type="submit" class="btn btn-success"><i class="fas fa-edit mr-2"></i> Cambiar categoria</button>
+            </form>
+          </div>
+    </div>
+  </div>
+</div>
 
 
 

@@ -68,11 +68,11 @@ class Notice extends Model
         else{
             $notice->visto = 1;
         }
-        
+
         $notice->save();
     }
 
-    public function cambiarCategoria($id, $new_cat){
+    public static function cambiarCategoria($id, $new_cat){
         $notice = Notice::readNOT($id);
         $notice->categoria = $new_cat;
         $notice->save();
