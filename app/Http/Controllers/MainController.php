@@ -53,4 +53,10 @@ class MainController extends Controller
         }
         return response()->json(array('images' => $images), 200);
     }
+
+    public function getPendingNotices() {
+        $notices = Notice::where('visto', '0')->orderBy('id', 'desc')->get();
+
+        return response()->json(array('notices' => $notices), 200);
+    }
 }
