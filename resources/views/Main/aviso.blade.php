@@ -138,6 +138,11 @@
         <span class="badge badge-warning">
           {{$notice->categoria}}
       </span>
+      @if($notice->visto == 1)
+      <span class="badge badge-info float-right">
+        Visto
+      </span>
+      @endif
       </div>
     <div id="map" style="width: 100%; height: 370px"></div>
 </div>
@@ -253,7 +258,11 @@
     <div class="toggle"></div>
     <ul>
         <li><a href="#"><i class="fas fa-archive" aria-hidden="true"></i></a></li>
-        <li><a href="#"><i class="fas fa-eye-slash" aria-hidden="true"></i></a></li>
+        @if($notice->visto == 1)
+        <li><a href="{{route('visto', $notice->id)}}"><i class="fas fa-eye" aria-label="Marcar no visto"></i></a></li>
+        @else
+        <li><a href="{{route('visto', $notice->id)}}"><i class="fas fa-eye-slash" aria-label="Marcar no visto"></i></a></li>
+        @endif
         <li><a href="#"><i class="fas fa-trash-alt" aria-hidden="true"></i></a></li>
     </ul>
 </div>

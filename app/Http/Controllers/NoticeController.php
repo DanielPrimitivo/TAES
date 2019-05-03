@@ -52,7 +52,7 @@ class NoticeController extends Controller
         Notice::marcarVisto($id);
         $notice = Notice::readNOT($id);
 
-        //return vista
+        return redirect()->route('aviso', ['id' => $id]);
     }
 
     public function cambiarCategoria($id, $new_cat){
