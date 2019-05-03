@@ -14,7 +14,7 @@ use Gmopx\LaravelOWM\LaravelOWM;
 class MainController extends Controller
 {
     public function index() {
-        $notices = Notice::take(4)->skip(0)->orderBy('id', 'desc')->get();
+        $notices = Notice::orderBy('id', 'desc')->get();
 
         return view::make('Main/dashboard')->with('notices', $notices)->with('filtered', 'false');
     }

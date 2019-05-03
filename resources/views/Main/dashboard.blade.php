@@ -30,6 +30,11 @@
 .table-row{
 cursor:pointer !important;
 }
+#sailorTableArea{
+    max-height: 220px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
 @endsection
 
 @section('content')
@@ -112,12 +117,12 @@ cursor:pointer !important;
     <div class="card shadow">
       <h5 class="card-header text-center">Últimos avisos</h5>
       <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive" id="sailorTableArea">
           <table class="table table-hover table-wrapper-scroll-y">
             <tbody>
               @if(isset($notices))
                 @foreach($notices as $notice)
-                  <tr id="fila{{$notice->id}}" class="table-row" onclick="noticeTimes('{{$notice->id}}')">
+                  <tr id="fila{{$notice->id}}" class="table-row marker-link" onclick="noticeTimes('{{$notice->id}}')" data-markerid="{{$loop->index}}">
                     <td>{{ $notice->lat }}</td>
                     <td>{{ $notice->long }}</td>
                     <td><button onclick="location.href='{{route('aviso', $notice->id)}}';" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>
@@ -196,7 +201,7 @@ function noticeTimes(notice)
             }
             else {
                 for (i = 0; i < data.times.length; i++) {
-                    document.getElementById(fila).className = 'table-primary table-row';
+                    document.getElementById(fila).className = 'table-primary table-row marker-link';
                     document.getElementById("temperaturaActual").innerHTML = data.times[i].temperatura + '℃';
                     document.getElementById("humedadInfo").innerHTML = data.times[i].humedad + '%';
                     document.getElementById("sVientoInfo").innerHTML = data.times[i].viento + 'km/h';
@@ -363,7 +368,10 @@ $(document)
     e.preventDefault(); // prevent the default action (scroll / move caret)
   });
 
+var mapdefault = null;
+
 function initMap() {
+  var markers = new Array();
 @foreach($notices as $notice)
 var aviso{{$notice->id}} = {lat: {{$notice->lat}}, lng: {{$notice->long}}};
 @if ($loop->first)
@@ -371,6 +379,7 @@ var map = new google.maps.Map(document.getElementById('map'), {
   zoom: 9,
   center: aviso{{$notice->id}}
 });
+mapdefault = map;
 @endif
 var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
     '<h1 id="firstHeading" class="firstHeading">Aviso {{$notice->id}}<a class="btn-info btn-sm btn float-right w-50 mt-2" href="{{route('aviso', ['id' => $notice->id])}}" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
@@ -399,15 +408,35 @@ var marker{{$notice->id}} = new google.maps.Marker({
   map: map,
   title: 'Aviso{{$notice->id}}'
 });
+
 marker{{$notice->id}}.addListener('click', function() {
   if(prev_infowindow) {
     prev_infowindow.close();
   }
 
-  prev_infowindow = infowindow{{$notice->id}};
-  infowindow{{$notice->id}}.open(map, marker{{$notice->id}});
-  noticeTimes('{{$notice->id}}')
+  if(prev_infowindow != infowindow{{$notice->id}}) {
+    infowindow{{$notice->id}}.open(map, marker{{$notice->id}});
+    prev_infowindow = infowindow{{$notice->id}};
+  }
+  else {
+    prev_infowindow = false;
+  }
+  noticeTimes('{{$notice->id}}');
+
+var target = document.getElementById('fila{{$notice->id}}');
+    target.scrollIntoView({
+    	behavior: 'smooth',
+      block: 'nearest',
+      inline: 'start'
+    });
 });
+
+markers.push(marker{{$notice->id}});
 @endforeach
+// Trigger a click event on each marker when the corresponding marker link is clicked
+    $('.marker-link').on('click', function () {
+        console.log(markers[$(this).data('markerid')]);
+        google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
+    });
 }
 @endsection
