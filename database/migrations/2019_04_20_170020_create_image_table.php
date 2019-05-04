@@ -22,10 +22,10 @@ class CreateImageTable extends Migration
             $table->string('direccion');
 
             $table->integer('notice_id')->unsigned();
-            $table->foreign('notice_id')->references('id')->on('notices');
+            $table->foreign('notice_id')->references('id')->on('notices')->onDelete('cascade');
 
             $table->integer('sender_id')->unsigned();
-            $table->foreign('sender_id')->references('id')->on('senders');
+            $table->foreign('sender_id')->references('id')->on('senders')->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -63,4 +63,8 @@ class NoticeController extends Controller
 
         return redirect()->route('aviso', ['id' => $id]);
     }
+
+    public function deleteNOT($id){
+        Notice::deleteNOT($id);
+    }
 }
