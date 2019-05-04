@@ -25,7 +25,7 @@ class CreatePrevisionTable extends Migration
             $table->timestamps();
 
             $table->integer('weather_id')->unsigned();
-            $table->foreign('weather_id')->references('id')->on('weathers');
+            $table->foreign('weather_id')->references('id')->on('weathers')->onDelete('cascade');
         });
     }
 
