@@ -45,6 +45,10 @@
                                   </a>
 
                                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item btn-danger" href="{{ route('manageSenders') }}">
+                                        <i class="fas fa-id-card-alt mr-2"></i> Administrar remitentes
+                                    </a>
+                                    <div class="dropdown-divider"></div>
                                       <a class="dropdown-item btn-danger" href="{{ route('logout') }}"
                                          onclick="event.preventDefault();
                                                        document.getElementById('logout-form').submit();">

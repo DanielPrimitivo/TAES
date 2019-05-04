@@ -142,7 +142,7 @@ cursor:pointer !important;
       </div>
     </div>
     <div class="card shadow">
-      <div class="card-body text-center" id="temperaturaActualBody">
+      <div class="card-body text-center" id="temperaturaActualBody" style="display: none;">
         <i class="" style="font-size: 80px;" id="iconoTiempo"></i>
         <h5 class="card-title">Temperatura actual</h5>
         <h4 class="text-center text-muted" id="temperaturaActual"></h4>
@@ -153,7 +153,7 @@ cursor:pointer !important;
     </div>
     <div class="card shadow">
       <h5 class="card-header text-center">El tiempo para el aviso seleccionado      </h5>
-      <div class="card-body">
+      <div class="card-body" id="allTimesInfoBody" style="display: none;">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Humedad: <h6 class="text-muted float-right" id="humedadInfo"></h6></li>
           <li class="list-group-item">Viento: <h6 class="text-muted float-right" id="sVientoInfo"></h6></li>
@@ -191,6 +191,9 @@ function noticeTimes(notice)
       el.className = el.className.replace(/\btable-primary\b/, "");
     });
 
+    $("#temperaturaActualBody").fadeOut();
+    $("#allTimesInfoBody").fadeOut();
+
     $.ajax({
         type: 'POST',
         url: "{{route('ajax.noticeTimes')}}",
@@ -221,6 +224,8 @@ function noticeTimes(notice)
                         document.getElementById("iconoTiempo").className = 'fas fa-sun text-center mt-5';
                     }
                 }
+                $("#temperaturaActualBody").fadeIn();
+                $("#allTimesInfoBody").fadeIn();
             }
         },
         error: function(jqxhr, status, exception) {
