@@ -58,9 +58,8 @@
             <label for="type" class="mr-2"><h6><i class="fas fa-archive"></i> Categoria: </h6></label>
             <select name="newCat" id="newCat" style="block" class="custom-select">
                 <option value="Ciudadano">Ciudadano</option>
-                <option value="Cuerpos de justicia">Cuerpos de justicia</option>
-                <option value="Cuerpo de bomberos">Cuerpo de bomberos</option>
-                <option value="Ciudadano preferente">Ciudadano preferente</option>
+                <option value="Autorizado">Autorizado</option>
+                <option value="Oficial">Oficial</option>
             </select>
             </div>
         </div>
