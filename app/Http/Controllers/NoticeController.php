@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Notice;
 use App\Weather;
+use App\Hnotice;
+use App\Himage;
+use App\Hweather;
 use View;
 use Carbon\Carbon;
 
@@ -39,7 +42,6 @@ class NoticeController extends Controller
     }
 
     public function detallesAviso($id) {
-        //$id = 3;
         $notice = Notice::readNOT($id);
         $images = $notice->images;
         $weather = $notice->weather;
@@ -65,6 +67,21 @@ class NoticeController extends Controller
     }
 
     public function deleteNOT($id){
+        Notice::deleteNOT($id);
+    }
+
+    public static function archivar($id) {
+        $notice = Notice::readNOT($id);
+        $hnotice = Hnotice::createHNOT($notice);
+        $images = $notice->images;
+        
+        foreach($images as $image) {
+            Himage::createHIMG($image, $hnotice->id);
+        }
+
+        $weather = $notice->weather;
+        Hweather::createHWEATH($weather, $hnotice->id);
+
         Notice::deleteNOT($id);
     }
 }

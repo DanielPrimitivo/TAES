@@ -71,4 +71,18 @@ class Image extends Model
 
         return $allImages;
     }
+
+    public static function getByUserCategory($id_notice, $categoria) {
+        $images = Image::where('notice_id', '=', $id_notice)->get();
+        
+        $allImages = array();
+
+        foreach($images as $image) {
+            if ($image->sender->categoria == $categoria) {
+                $allImages[] = $image;
+            }
+        }
+
+        return $allImages;
+    }
 }

@@ -18,7 +18,7 @@ class Himage extends Model
     }
 
     // Creación de una imagen
-    public function createHIMG(Image $image, int $id) {
+    public static function createHIMG(Image $image, int $id) {
         $himage = new Himage();
 
         $himage->fecha = $image->fecha;
@@ -33,26 +33,26 @@ class Himage extends Model
     }
 
     // Lectura de una imagen
-    public function readHIMG(int $id) {
+    public static function readHIMG(int $id) {
         $image = Himage::find($id);
 
         return $image;
     }
 
     // Lectura de todas las imagenes
-    public function readAll() {
+    public static function readAll() {
         $images = Himage::all();
 
         return $images;
     }
 
     // Actualización de una imagen
-    public function updateHIMG() {
+    public static function updateHIMG() {
 
     }
 
     // Eliminación de una imagen
-    public function deleteHIMG(int $id) {
+    public static function deleteHIMG(int $id) {
         $image = Himage::find($id);
         $image->delete();
     }

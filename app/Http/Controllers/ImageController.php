@@ -79,4 +79,10 @@ class ImageController extends Controller
         
         //return vista;
     }
+
+    public function agruparCategoriaUsuario($id_notice, $categoria) {
+        $images = Image::getByUserCategory($id_notice, $categoria);
+        
+        //return vista;
+    }
 }
