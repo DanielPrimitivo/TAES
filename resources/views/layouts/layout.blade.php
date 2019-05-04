@@ -94,7 +94,9 @@
 					data: {_token: '{{csrf_token()}}' },
 					success: function(data){
 							if(data.notices.length == 0) {
-								contentString = "";
+								contentString = 'Sin avisos pendientes';
+								document.getElementById("pendingNoticesDropdown").innerHTML = contentString;
+								document.getElementById("numberOfPendingNotices").innerHTML = data.notices.length;
 							}
 							else {
 									for (i = 0; i < data.notices.length; i++) {

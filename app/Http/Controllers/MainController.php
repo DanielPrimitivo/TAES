@@ -35,12 +35,25 @@ class MainController extends Controller
     }
 
     public function getAllImages() {
-        $images = Image::orderBy('id', 'desc')->get();
-        foreach($images as $image) {
-          $sender = $image->sender()->firstOrFail();
-          $image->sender_id = $sender;
+        $data = request()->all();
+        $categoriaSelec = $data["categoria"];
+        if($categoriaSelec == "false") {
+          $images = Image::orderBy('id', 'desc')->get();
+          foreach($images as $image) {
+            $sender = $image->sender()->firstOrFail();
+            $image->sender_id = $sender;
+          }
+          return response()->json(array('images' => $images), 200);
         }
-        return response()->json(array('images' => $images), 200);
+        else {
+          $images = Image::getByCategory($categoriaSelec);
+          foreach($images as $image) {
+            $sender = $image->sender()->firstOrFail();
+            $image->sender_id = $sender;
+          }
+          return response()->json(array('images' => $images), 200);
+        }
+
     }
 
     public function getNoticeImages() {

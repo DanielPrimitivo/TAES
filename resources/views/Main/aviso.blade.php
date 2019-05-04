@@ -140,7 +140,7 @@
       </span>
       @if($notice->visto == 1)
       <span class="badge badge-info float-right">
-        Visto
+        <i class="fas fa-eye-slash mr-2"></i> Visto
       </span>
       @endif
       </div>

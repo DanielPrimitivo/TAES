@@ -24,10 +24,10 @@
 <li class="nav-item dropdown">
         <a class="btn btn-secondary dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="far fa-bell"></i>
-          <span class="badge badge-danger" id="numberOfPendingNotices">5</span>
+          <span class="badge badge-danger" id="numberOfPendingNotices"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-right" id="pendingNoticesDropdown" aria-labelledby="navbarDropdownMenuLink">
-          
+
         </div>
       </li>
 </div>

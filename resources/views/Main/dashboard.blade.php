@@ -235,7 +235,7 @@ function noticeImages()
     $.ajax({
         type: 'POST',
         url: "{{route('ajax.Images')}}",
-        data: {_token: '{{csrf_token()}}' },
+        data: {categoria: '{{$filtered}}' ,_token: '{{csrf_token()}}' },
         success: function(data){
             if(data.images.length == 0) {
               document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoImages"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin Imagenes almacenadas!</div>';
