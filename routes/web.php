@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/prueba', 'ImageController@generadorWS')->name('prueba')->middleware('auth');
 Route::get('/{categoria}', 'NoticeController@agruparCategoria')->name('categoria')->middleware('auth');
 Route::get('aviso/{id}', 'NoticeController@detallesAviso')->name('aviso')->middleware('auth');
+Route::get('archivar/{id}', 'NoticeController@archivar')->name('archivarAviso')->middleware('auth');
 Route::get('aviso/visto/{id}', 'NoticeController@marcarVisto')->name('visto')->middleware('auth');
 Route::post('aviso/nuevaCategoria', 'NoticeController@cambiarCategoria')->name('cambiarCategoria')->middleware('auth');
 Route::post('senders/updateCat', 'SenderController@updateCat')->name('updateCat')->middleware('auth');

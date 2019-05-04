@@ -74,7 +74,7 @@ class NoticeController extends Controller
         $notice = Notice::readNOT($id);
         $hnotice = Hnotice::createHNOT($notice);
         $images = $notice->images;
-        
+
         foreach($images as $image) {
             Himage::createHIMG($image, $hnotice->id);
         }
@@ -83,5 +83,7 @@ class NoticeController extends Controller
         Hweather::createHWEATH($weather, $hnotice->id);
 
         Notice::deleteNOT($id);
+
+        return redirect()->route('dashboard');
     }
 }
