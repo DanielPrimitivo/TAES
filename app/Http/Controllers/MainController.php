@@ -60,12 +60,23 @@ class MainController extends Controller
     public function getNoticeImages() {
         $data = request()->all();
         $notice = Notice::find($data["notice"]);
-        $images = $notice->images()->orderBy('id', 'desc')->get();
-        foreach($images as $image) {
-          $sender = $image->sender()->firstOrFail();
-          $image->sender_id = $sender;
+        $senderCat = $data["categoria"];
+        if($senderCat == "false") {
+          $images = $notice->images()->orderBy('id', 'desc')->get();
+          foreach($images as $image) {
+            $sender = $image->sender()->firstOrFail();
+            $image->sender_id = $sender;
+          }
+          return response()->json(array('images' => $images), 200);
         }
-        return response()->json(array('images' => $images), 200);
+        else {
+          $images = Image::getByUserCategory($notice->id, $senderCat);
+          foreach($images as $image) {
+            $sender = $image->sender()->firstOrFail();
+            $image->sender_id = $sender;
+          }
+          return response()->json(array('images' => $images), 200);
+        }
     }
 
     public function getPendingNotices() {

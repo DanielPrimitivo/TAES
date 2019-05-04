@@ -208,6 +208,12 @@
 <div class="col-xs-12 col-sm-12 col-lg-6 col-md-12 mb-2 mt-2">
 <div class="shadow card">
 <h5 class="card-header text-center">
+<div class="float-left">
+  <button  class="text-dark btn btn-sm btn-link" data-toggle="modal" data-target="#modalSender"><i class="fas fa-filter"></i></button>
+  <span class="badge badge-info float-right mt-1" id="filterInfo" style="display: none;">
+
+  </span>
+</div>
 Últimas imágenes del aviso
 <div class="float-right">
   <button onclick="noticeImages();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
@@ -303,21 +309,69 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modalSender" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Categoria del remitente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container text-center mb-2 mt-3">
+        <div class="modal-body" id="filterBy_body">
+        <div class="form-inline mt-2" id="type">
+            <label for="type" class="mr-2"><h6><i class="fas fa-archive"></i> Categoria del remitente: </h6></label>
+            <select name="senderCat" id="senderCat" style="block" class="custom-select">
+                <option value="false">Sin filtrar</option>
+                <option value="Ciudadano">Ciudadano</option>
+                <option value="Autorizado">Autorizado</option>
+                <option value="Oficial">Oficial</option>
+            </select>
+            </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+              <button onclick="noticeImages();" data-dismiss="modal" class="btn btn-success"><i class="fas fa-filter mr-2"></i> Aplicar filtrado</button>
+          </div>
+    </div>
+  </div>
+</div>
+
 
 
 @endsection
 
 @section('js')
+function deleteFilterImg()
+{
+  document.getElementById("senderCat").selectedIndex = 0;
+  noticeImages();
+}
+
 function noticeImages()
 {
+    var selector = document.getElementById("senderCat");
+    var selectedValue = selector.options[selector.selectedIndex].value;
+    if(selectedValue != "false") {
+      var contentfilter = "";
+      contentFilter = 'De ' + selectedValue + '<button onclick="deleteFilterImg();" class="btn btn-sm btn-link text-light"><i class="fas fa-times-circle"></i></button>';
+      document.getElementById("filterInfo").innerHTML = contentFilter;
+      $("#filterInfo").fadeIn("slow");
+    }
+    else {
+      $("#filterInfo").fadeOut();
+    }
     var contentString = "";
     $.ajax({
         type: 'POST',
         url: "{{route('ajax.noticeImages')}}",
-        data: {notice: {{$notice->id}}, _token: '{{csrf_token()}}' },
+        data: {notice: {{$notice->id}}, categoria: selectedValue, _token: '{{csrf_token()}}' },
         success: function(data){
             if(data.images.length == 0) {
-              document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoImages"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin Imagenes almacenadas!</div>';
+              document.getElementById("imagesHolder").innerHTML = '<div class="alert alert-warning mx-auto" id="alertNoImages"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin Imagenes almacenadas!</div>';
               contentString = "";
             }
             else {
