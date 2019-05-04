@@ -38,7 +38,7 @@ class Sender extends Model
 
     // Actualización de un SENario
     public static function updateSEN() {
-        
+
     }
 
     // Eliminación de un SENario
@@ -66,7 +66,7 @@ class Sender extends Model
         return $sender;
     }
 
-    public function updateCat($id, $new_cat){
+    public static function updateCat($id, $new_cat){
         $sender = Sender::readSEN($id);
         $sender->categoria = $new_cat;
         $sender->save();

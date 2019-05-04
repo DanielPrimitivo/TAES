@@ -26,4 +26,6 @@ Route::get('/{categoria}', 'NoticeController@agruparCategoria')->name('categoria
 Route::get('aviso/{id}', 'NoticeController@detallesAviso')->name('aviso')->middleware('auth');
 Route::get('aviso/visto/{id}', 'NoticeController@marcarVisto')->name('visto')->middleware('auth');
 Route::post('aviso/nuevaCategoria', 'NoticeController@cambiarCategoria')->name('cambiarCategoria')->middleware('auth');
+Route::post('senders/updateCat', 'SenderController@updateCat')->name('updateCat')->middleware('auth');
+Route::get('senders/manage', 'MainController@administrarSenders')->name('manageSenders')->middleware('auth');
 //Route::get('/prueba/3', 'NoticeController@detallesAviso')->name('detalleaviso')->middleware('auth');

@@ -8,6 +8,7 @@ use App\Coordinate;
 use App\Notice;
 use App\Weather;
 use App\Image;
+use App\Sender;
 use Carbon\Carbon;
 use Gmopx\LaravelOWM\LaravelOWM;
 
@@ -71,5 +72,11 @@ class MainController extends Controller
         $notices = Notice::where('visto', '0')->orderBy('id', 'desc')->get();
 
         return response()->json(array('notices' => $notices), 200);
+    }
+
+    public function administrarSenders() {
+      $senders = Sender::paginate(5);
+
+      return view::make('Main/senders')->with('senders', $senders);
     }
 }
