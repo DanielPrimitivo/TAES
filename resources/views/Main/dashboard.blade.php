@@ -35,6 +35,29 @@ cursor:pointer !important;
     overflow-x: auto;
     overflow-y: auto;
 }
+
+/*style the box*/
+         .gm-style .gm-style-iw {
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            padding-top: 10px;
+            display: block !important;
+         }
+         .gm-style-iw {
+           overflow-y: auto !important;
+           overflow-x: hidden !important;
+         }
+         .gm-style-iw > div {
+           overflow: visible !important;
+         }
+         @media only screen and (min-width: 1080px) {
+           .gm-style-iw {
+             min-height: 250px;
+           }
+        }
+
+
 @endsection
 
 @section('content')
@@ -395,7 +418,7 @@ var map = new google.maps.Map(document.getElementById('map'), {
 });
 mapdefault = map;
 @endif
-var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
+var contentString = '<div id="content" class="col-lg-12">'+
     '<h1 id="firstHeading" class="firstHeading">Aviso {{$notice->id}}<a class="btn-info btn-sm btn float-right w-50 mt-2" href="{{route('aviso', ['id' => $notice->id])}}" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
     '<div id="bodyContent">'+
       '<div class="card shadow">'+
@@ -412,7 +435,7 @@ var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
 
 var infowindow{{$notice->id}} = new google.maps.InfoWindow({
   content: contentString,
-  maxHeight: 1000
+  maxHeight: 100
 });
 
 var marker{{$notice->id}} = new google.maps.Marker({
@@ -452,6 +475,7 @@ markers.push(marker{{$notice->id}});
         google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
     });
 }
+
 
 function updateNotices()
 {
