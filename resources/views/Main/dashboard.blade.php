@@ -480,8 +480,8 @@ function updateNotices()
                         '<h5 class="card-header text-center"> <span class="badge badge-warning">' + data.notices[i].categoria + '</span>  El tiempo ahora   </h5>'+
                     '<div class="card-body">'+
                       '<ul class="list-group list-group-flush">' +
-                        '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">%</h6></li>' +
-                        '<li class="list-group-item">Temperatura: <h6 class="text-muted float-right">℃</h6></li>' +
+                        '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">' + data.notices[i].weather.humedad + '%</h6></li>' +
+                        '<li class="list-group-item">Temperatura: <h6 class="text-muted float-right">' + data.notices[i].weather.temperatura + '℃</h6></li>' +
                       '</ul>' +
                     '</div>'+
                     '</div>'+
