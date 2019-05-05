@@ -85,6 +85,12 @@ class MainController extends Controller
         return response()->json(array('notices' => $notices), 200);
     }
 
+    public function getNotices() {
+      $notices = Notice::orderBy('id', 'desc')->get();
+
+      return response()->json(array('notices' => $notices), 200);
+    }
+
     public function administrarSenders() {
       $senders = Sender::paginate(5);
 

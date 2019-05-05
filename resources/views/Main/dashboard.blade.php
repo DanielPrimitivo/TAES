@@ -119,7 +119,7 @@ cursor:pointer !important;
       <div class="card-body">
         <div class="table-responsive" id="sailorTableArea">
           <table class="table table-hover table-wrapper-scroll-y">
-            <tbody>
+            <tbody id="noticesListBody">
               @if(isset($notices))
                 @foreach($notices as $notice)
                   <tr id="fila{{$notice->id}}" class="table-row marker-link" onclick="noticeTimes('{{$notice->id}}')" data-markerid="{{$loop->index}}">
@@ -136,7 +136,7 @@ cursor:pointer !important;
       <div class="card-footer">
         <small class="text-muted">Actualizado a las {{$lastCall}}
           <div class="float-right">
-          <a href="" class="text-dark"><i class="fas fa-sync-alt"></i></a>
+          <button onclick="updateNotices();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
           </div>
         </small>
       </div>
@@ -183,55 +183,58 @@ cursor:pointer !important;
 @section('js')
 function noticeTimes(notice)
 {
+  console.log(notice);
     var fila = "fila" + notice;
+    if(document.getElementById(fila).className != 'table-primary table-row marker-link') {
+      var elems = document.querySelectorAll(".table-primary");
 
-    var elems = document.querySelectorAll(".table-primary");
-
-    [].forEach.call(elems, function(el) {
-      el.className = el.className.replace(/\btable-primary\b/, "");
-    });
-
-    $("#temperaturaActualBody").fadeOut();
-    $("#allTimesInfoBody").fadeOut();
-
-    $.ajax({
-        type: 'POST',
-        url: "{{route('ajax.noticeTimes')}}",
-        data: {notice: notice, _token: '{{csrf_token()}}' },
-        success: function(data){
-            if(data.times.length == 0) {
-              document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoTimes"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin datos del tiempo para el aviso!</div>';
-            }
-            else {
-                for (i = 0; i < data.times.length; i++) {
-                    document.getElementById(fila).className = 'table-primary table-row marker-link';
-                    document.getElementById("temperaturaActual").innerHTML = data.times[i].temperatura + '℃';
-                    document.getElementById("humedadInfo").innerHTML = data.times[i].humedad + '%';
-                    document.getElementById("sVientoInfo").innerHTML = data.times[i].viento + 'km/h';
-                    document.getElementById("dirVientoInfo").innerHTML = data.times[i].dirviento;
-                    document.getElementById("lluviaInfo").innerHTML = data.times[i].lluvia;
-                    document.getElementById("horAct1").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
-                    document.getElementById("horAct2").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
-                    document.getElementById("updateTimes").setAttribute("onclick", 'noticeTimes(' + notice + ')');
-                    switch(data.times[i].lluvia) {
-                      case "fuerte":
-                        document.getElementById("iconoTiempo").className = 'fas fa-cloud-showers-heavy text-center mt-5';
-                        break;
-                      case "leve":
-                        document.getElementById("iconoTiempo").className = 'fas fa-cloud-rain text-center mt-5';
-                        break;
-                      default:
-                        document.getElementById("iconoTiempo").className = 'fas fa-sun text-center mt-5';
+      [].forEach.call(elems, function(el) {
+        el.className = el.className.replace(/\btable-primary\b/, "");
+      });
+      $("#temperaturaActualBody").fadeOut();
+      $("#allTimesInfoBody").fadeOut();
+      $.ajax({
+          type: 'POST',
+          url: "{{route('ajax.noticeTimes')}}",
+          data: {notice: notice, _token: '{{csrf_token()}}' },
+          success: function(data){
+              if(data.times.length == 0) {
+                document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoTimes"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin datos del tiempo para el aviso!</div>';
+              }
+              else {
+                  for (i = 0; i < data.times.length; i++) {
+                      document.getElementById(fila).className = 'table-primary table-row marker-link';
+                      document.getElementById("temperaturaActual").innerHTML = data.times[i].temperatura + '℃';
+                      document.getElementById("humedadInfo").innerHTML = data.times[i].humedad + '%';
+                      document.getElementById("sVientoInfo").innerHTML = data.times[i].viento + 'km/h';
+                      document.getElementById("dirVientoInfo").innerHTML = data.times[i].dirviento;
+                      document.getElementById("lluviaInfo").innerHTML = data.times[i].lluvia;
+                      document.getElementById("horAct1").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
+                      document.getElementById("horAct2").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
+                      document.getElementById("updateTimes").setAttribute("onclick", 'noticeTimes(' + notice + ')');
+                      switch(data.times[i].lluvia) {
+                        case "fuerte":
+                          document.getElementById("iconoTiempo").className = 'fas fa-cloud-showers-heavy text-center mt-5';
+                          break;
+                          case "leve":
+                          document.getElementById("iconoTiempo").className = 'fas fa-cloud-rain text-center mt-5';
+                          break;
+                          default:
+                          document.getElementById("iconoTiempo").className = 'fas fa-sun text-center mt-5';
+                        }
+                      }
+                      $("#temperaturaActualBody").fadeIn();
+                      $("#allTimesInfoBody").fadeIn();
                     }
-                }
-                $("#temperaturaActualBody").fadeIn();
-                $("#allTimesInfoBody").fadeIn();
-            }
-        },
-        error: function(jqxhr, status, exception) {
-             alert('Exception:' + exception,);
-         }
-    });
+                  },
+                  error: function(jqxhr, status, exception) {
+                    alert('Exception:' + exception,);
+                  }
+                });
+              }
+              else {
+
+              }
 }
 
 function noticeImages()
@@ -378,8 +381,11 @@ $(document)
 
 var mapdefault = null;
 
+var markers = new Array();
+
+var prev_infowindow=false;
+
 function initMap() {
-  var markers = new Array();
 @foreach($notices as $notice)
 var aviso{{$notice->id}} = {lat: {{$notice->lat}}, lng: {{$notice->long}}};
 @if ($loop->first)
@@ -404,8 +410,6 @@ var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
     '</div>'+
     '</div>';
 
-var prev_infowindow=false;
-
 var infowindow{{$notice->id}} = new google.maps.InfoWindow({
   content: contentString,
   maxHeight: 1000
@@ -414,6 +418,7 @@ var infowindow{{$notice->id}} = new google.maps.InfoWindow({
 var marker{{$notice->id}} = new google.maps.Marker({
   position: aviso{{$notice->id}},
   map: map,
+  animation: google.maps.Animation.DROP,
   title: 'Aviso{{$notice->id}}'
 });
 
@@ -445,6 +450,102 @@ markers.push(marker{{$notice->id}});
     $('.marker-link').on('click', function () {
         console.log(markers[$(this).data('markerid')]);
         google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
+    });
+}
+
+function updateNotices()
+{
+    $.ajax({
+        type: 'POST',
+        url: "{{route('ajax.notices')}}",
+        data: {_token: '{{csrf_token()}}' },
+        success: function(data){
+            if(data.notices.length == 0 || data.notices.length <= markers.length) {
+              alert("Sin nuevas alertas");
+            }
+            else {
+              console.log(parseFloat(data.notices[0].lat));
+              var myLatlng = {lat: parseFloat(data.notices[0].lat), lng: parseFloat(data.notices[0].long)};
+              var mapOptions = {
+                zoom: 9,
+                center: myLatlng
+              }
+              var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+              for(i = 0; i < data.notices.length-markers.length; i++) {
+                var noticeId = data.notices[i].id;
+                var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
+                    '<h1 id="firstHeading" class="firstHeading">Aviso ' + data.notices[i].id + '<a class="btn-info btn-sm btn float-right w-50 mt-2" href="{{route('aviso', ['id' => $notice->id])}}" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
+                    '<div id="bodyContent">'+
+                      '<div class="card shadow">'+
+                        '<h5 class="card-header text-center"> <span class="badge badge-warning">' + data.notices[i].categoria + '</span>  El tiempo ahora   </h5>'+
+                    '<div class="card-body">'+
+                      '<ul class="list-group list-group-flush">' +
+                        '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">%</h6></li>' +
+                        '<li class="list-group-item">Temperatura: <h6 class="text-muted float-right">℃</h6></li>' +
+                      '</ul>' +
+                    '</div>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
+
+                var infowindow = new google.maps.InfoWindow({
+                  content: contentString,
+                  maxHeight: 1000
+                });
+                var marker = new google.maps.Marker({
+                  position: {lat: parseFloat(data.notices[i].lat), lng: parseFloat(data.notices[i].long)},
+                  animation: google.maps.Animation.DROP,
+                  title: 'Aviso' + data.notices[i].id
+                });
+                marker.addListener('click', function() {
+                  if(prev_infowindow) {
+                    prev_infowindow.close();
+                  }
+
+                  if(prev_infowindow != infowindow) {
+                    infowindow.open(map, marker);
+                    prev_infowindow = infowindow;
+                  }
+                  else {
+                    prev_infowindow = false;
+                  }
+                  noticeTimes(noticeId);
+                  var fila = 'fila' + noticeId;
+                var target = document.getElementById(fila);
+                    target.scrollIntoView({
+                    	behavior: 'smooth',
+                      block: 'nearest',
+                      inline: 'start'
+                    });
+                });
+                markers.unshift(marker);
+              }
+              for(i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+              }
+              var newTableLine = "";
+              for(i = 0; i < data.notices.length; i++) {
+                var URL = "{{url('aviso/')}}/"+data.notices[i].id;
+                newTableLine += '<tr id="fila' + data.notices[i].id + '" class="table-row marker-link" onclick="noticeTimes('+ data.notices[i].id +')" data-markerid="' + i + '">' +
+                  '<td>'+ data.notices[i].lat +'</td>' +
+                  '<td>'+ data.notices[i].long +'</td>' +
+                  '<td><button onclick="location.href=\'' + URL + '\';" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>' +
+                '</tr>';
+              }
+              $("#noticesListBody").fadeOut();
+              document.getElementById("noticesListBody").innerHTML = newTableLine;
+              $("#noticesListBody").fadeIn();
+              noticeTimes(data.notices.length);
+              // Trigger a click event on each marker when the corresponding marker link is clicked
+                  $('.marker-link').on('click', function () {
+                      console.log(markers[$(this).data('markerid')]);
+                      google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
+                  });
+            }
+        },
+        error: function(jqxhr, status, exception) {
+             alert('Exception:' + exception,);
+         }
     });
 }
 @endsection

@@ -16,6 +16,7 @@ Route::post('/ajax/get/notice/times', 'MainController@getNoticeTimes')->name('aj
 Route::post('/ajax/get/all/images', 'MainController@getAllImages')->name('ajax.Images');
 Route::post('/ajax/get/notice/images', 'MainController@getNoticeImages')->name('ajax.noticeImages');
 Route::post('/ajax/get/notice/pending', 'MainController@getPendingNotices')->name('ajax.pendingNotices');
+Route::post('/ajax/get/notice', 'MainController@getNotices')->name('ajax.notices');
 
 Auth::routes();
 
