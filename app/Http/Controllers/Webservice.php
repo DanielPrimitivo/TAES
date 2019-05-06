@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use APP\Image;
-use APP\Coordinate;
+use App\Http\Controllers\ImageController;
 
 class Webservice extends Controller
 {
@@ -37,26 +36,37 @@ class Webservice extends Controller
      */
     public function store(Request $request)
     {
-        //Guaradar la imagen en public/imagenes
-        $id = numImagenes();
-        //$imagen->guardar();
-        $fimagen = fopen('public/imagenes/' . $id . '.jpg', 'w');
-        fwrite($fimagen, json_decode($request->imagen));
-        fclose($fimagen);
+    	try{
+	        //Guaradar la imagen en public/imagenes
+	        $id = numImagenes();
+	        //$imagen->guardar();
+	        $fimagen = fopen('public/imagenes/' . $id . '.jpg', 'w');
+	        fwrite($fimagen, json_decode($request->imagen));
+	        fclose($fimagen);
 
-        //Obtener los metadatos de la imagen
-        $longitud = $request->longitud;
-        $latitud = $request->latitud;
-        $fecha = $request->fecha;
-        $direccion = $request->direccion;
-        $url = $id . '.jpg';
-        $telefono = $request->telefono;
-        $categoria = $request->categoria;
+	        //Obtener los metadatos de la imagen
+	        $longitud = $request->longitud;
+	        $latitud = $request->latitud;
+	        $fecha = $request->fecha;
+	        $ejeX = $request->ejeX;
+	        $exeY = $request->ejeY;
+	        $direccion = convertirGiroscopio($ejeX, $ejeY);
+	        $url = $id . '.jpg';
+	        $telefono = $request->telefono;
+	        $categoria = $request->categoria;
+	        $comentarios = $request->comentarios;
 
-        $datos = array('fecha' => $fecha, 'url' => $url, 'lat' => $latitud, 'long' => $longitud, 'direccion' => $direccion, 'categoria_not' => $categoria, 'tlf' => $telefono);
 
-        ImageController::recieveImage($datos);
+	        $datos = array('fecha' => $fecha, 'url' => $url, 'lat' => $latitud, 'long' => $longitud, 'direccion' => $direccion, 'categoria_not' => $categoria, 'tlf' => $telefono);
 
+	        ImageController::recieveImage($datos);
+	        $respuesta = ['respuesta' => 'ok'];
+	        return response()->json($respuesta);
+	    }
+	    catch(Exception $e){
+	    	$respuesta = ['respuesta' => 'nook'];
+	        return response()->json($respuesta);
+	    }
     }
 
     /**
@@ -135,5 +145,11 @@ class Webservice extends Controller
         $valorRetorno = $numImagenes;
         $numImagenes++;
         return $valorRetorno;
+    }
+
+    private function convertirGiroscopio($ejeX, $ejeY){
+    	//
+    	$var = 0;
+    	return $var;
     }
 }
