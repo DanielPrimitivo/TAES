@@ -34,17 +34,11 @@ return [
     'connections' => [
 
         'sqlite' => [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '8000'),
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'strict' => false,
-            'engine' => null,
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+            'prefix'   => '',
+            'foreign_key_constraints' => env('DB_FOREIGN-KEYS',true),
+            'exec'	   => 'PRAGMA foreign_keys = ON;',  //enable delete cascade
         ],
 
         'mysql' => [

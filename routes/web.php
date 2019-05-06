@@ -13,7 +13,10 @@
 
 Route::get('/', 'MainController@index')->name('dashboard')->middleware('auth');
 Route::post('/ajax/get/notice/times', 'MainController@getNoticeTimes')->name('ajax.noticeTimes');
-Route::get('/aviso', 'MainController@aviso')->name('aviso')->middleware('auth');
+Route::post('/ajax/get/all/images', 'MainController@getAllImages')->name('ajax.Images');
+Route::post('/ajax/get/notice/images', 'MainController@getNoticeImages')->name('ajax.noticeImages');
+Route::post('/ajax/get/notice/pending', 'MainController@getPendingNotices')->name('ajax.pendingNotices');
+Route::post('/ajax/get/notice', 'MainController@getNotices')->name('ajax.notices');
 
 Auth::routes();
 
@@ -21,4 +24,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/prueba', 'ImageController@generadorWS')->name('prueba')->middleware('auth');
 Route::get('/{categoria}', 'NoticeController@agruparCategoria')->name('categoria')->middleware('auth');
+Route::get('aviso/{id}', 'NoticeController@detallesAviso')->name('aviso')->middleware('auth');
+Route::get('archivar/{id}', 'NoticeController@archivar')->name('archivarAviso')->middleware('auth');
+Route::get('aviso/visto/{id}', 'NoticeController@marcarVisto')->name('visto')->middleware('auth');
+Route::post('aviso/nuevaCategoria', 'NoticeController@cambiarCategoria')->name('cambiarCategoria')->middleware('auth');
+Route::post('senders/updateCat', 'SenderController@updateCat')->name('updateCat')->middleware('auth');
+Route::get('senders/manage', 'MainController@administrarSenders')->name('manageSenders')->middleware('auth');
 //Route::get('/prueba/3', 'NoticeController@detallesAviso')->name('detalleaviso')->middleware('auth');

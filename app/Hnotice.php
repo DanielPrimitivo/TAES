@@ -16,7 +16,7 @@ class Hnotice extends Model
     }
 
     // Creación de un aviso
-    public function createHNOT(Notice $notice) {
+    public static function createHNOT(Notice $notice) {
         $hnotice = new Hnotice();
 
         $hnotice->fecha = $notice->fecha;
@@ -26,29 +26,31 @@ class Hnotice extends Model
         $hnotice->long = $notice->long;
 
         $hnotice->save();
+
+        return $hnotice;
     }
 
     // Lectura de un aviso
-    public function readHNOT(int $id) {
+    public static function readHNOT(int $id) {
         $notice = Hnotice::find($id);
 
         return $notice;
     }
 
     // Lectura de todos los avisos
-    public function readAll() {
+    public static function readAll() {
         $notices = Hnotice::all();
 
         return $notices;
     }
 
     // Actualización de un aviso
-    public function updateHNOT() {
+    public static function updateHNOT() {
         
     }
 
     // Eliminación de un aviso
-    public function deleteHNOT(int $id) {
+    public static function deleteHNOT(int $id) {
         $hnotice = Hnotice::find($id);
         $hnotice->delete();
     }

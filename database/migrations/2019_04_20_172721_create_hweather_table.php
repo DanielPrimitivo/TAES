@@ -24,7 +24,7 @@ class CreateHweatherTable extends Migration
             $table->timestamps();
 
             $table->integer('hnotice_id')->unsigned();
-            $table->foreign('hnotice_id')->references('id')->on('hnotices');
+            $table->foreign('hnotice_id')->references('id')->on('hnotices')->onDelete('cascade');
         });
     }
 

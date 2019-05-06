@@ -38,7 +38,7 @@ class Sender extends Model
 
     // Actualización de un SENario
     public static function updateSEN() {
-        
+
     }
 
     // Eliminación de un SENario
@@ -64,5 +64,11 @@ class Sender extends Model
         $sender = Sender::where('tlf', '=', $tlf)->first();
 
         return $sender;
+    }
+
+    public static function updateCat($id, $new_cat){
+        $sender = Sender::readSEN($id);
+        $sender->categoria = $new_cat;
+        $sender->save();
     }
 }

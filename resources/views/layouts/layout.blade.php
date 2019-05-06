@@ -84,6 +84,51 @@
 		});
 	</script>
 
+	<script>
+	$(document)
+	  .ready(function () {
+		var contentString = "";
+			$.ajax({
+					type: 'POST',
+					url: "{{route('ajax.pendingNotices')}}",
+					data: {_token: '{{csrf_token()}}' },
+					success: function(data){
+							if(data.notices.length == 0) {
+								contentString = 'Sin avisos pendientes';
+								document.getElementById("pendingNoticesDropdown").innerHTML = contentString;
+								document.getElementById("numberOfPendingNotices").innerHTML = data.notices.length;
+							}
+							else {
+									for (i = 0; i < data.notices.length; i++) {
+										var URL = "{{URL("aviso")}}/"+data.notices[i].id;
+											switch(data.notices[i].categoria) {
+												case "incendio":
+												contentString += '<a class="dropdown-item btn-outline-secondary" href="' + URL + '" id="link1"><i class="fas fa-fire mr-2"></i> Aviso ' + data.notices[i].id + '</a>';
+													break;
+												case "terremoto":
+													contentString += '<a class="dropdown-item btn-outline-secondary" href="' + URL + '" id="link1"><i class="fas fa-house-damage mr-2"></i> Aviso ' + data.notices[i].id + '</a>';
+													break;
+												case "inundacion":
+													contentString += '<a class="dropdown-item btn-outline-secondary" href="' + URL + '" id="link1"><i class="fas fa-water mr-2"></i> Aviso ' + data.notices[i].id + '</a>';
+												break;
+												case "otro":
+													contentString += '<a class="dropdown-item btn-outline-secondary" href="' + URL + '" id="link1"><i class="fas fa-clone mr-2"></i> Aviso ' + data.notices[i].id + '</a>';
+												break;
+												default:
+													contentString += 'error';
+											}
+									}
+									document.getElementById("pendingNoticesDropdown").innerHTML = contentString;
+									document.getElementById("numberOfPendingNotices").innerHTML = data.notices.length;
+							}
+					},
+					error: function(jqxhr, status, exception) {
+							 alert('Exception:' + exception,);
+					 }
+			});
+	});
+	</script>
+
 	<script type="text/javascript">
 	@yield('js')
 	</script>

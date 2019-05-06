@@ -24,14 +24,10 @@
 <li class="nav-item dropdown">
         <a class="btn btn-secondary dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="far fa-bell"></i>
-          <span class="badge badge-danger">5</span>
+          <span class="badge badge-danger" id="numberOfPendingNotices"></span>
         </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item btn-outline-secondary" href="{{route('aviso')}}" id="link1"><i class="fas fa-fire mr-2"></i> Aviso 1</a>
-          <a class="dropdown-item btn-outline-secondary" href="#" id="link1"><i class="fas fa-fire mr-2"></i> Aviso 2</a>
-          <a class="dropdown-item btn-outline-secondary" href="#" id="link1"><i class="fas fa-fire mr-2"></i> Aviso 3</a>
-          <a class="dropdown-item btn-outline-secondary" href="#" id="link2"><i class="fas fa-fire mr-2"></i> Aviso 4</a>
-          <a class="dropdown-item btn-outline-secondary" href="#" id="link3"><i class="fas fa-fire mr-2"></i> Aviso x...</a>
+        <div class="dropdown-menu dropdown-menu-right" id="pendingNoticesDropdown" aria-labelledby="navbarDropdownMenuLink">
+
         </div>
       </li>
 </div>
@@ -49,6 +45,10 @@
                                   </a>
 
                                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item btn-danger" href="{{ route('manageSenders') }}">
+                                        <i class="fas fa-id-card-alt mr-2"></i> Administrar remitentes
+                                    </a>
+                                    <div class="dropdown-divider"></div>
                                       <a class="dropdown-item btn-danger" href="{{ route('logout') }}"
                                          onclick="event.preventDefault();
                                                        document.getElementById('logout-form').submit();">

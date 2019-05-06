@@ -5,10 +5,17 @@
 **Obtener cambios**
 <p>TAES$ git pull</p>
 
-**Crear/Actualizar env y database**
-<p>TAES$ composer install</p>
-<p>TAES$ ./init.sh</p>
-<p>Si hay error de dependecias: TAES$ composer update</p>
+**Crear entorno: vendor, env y database**
+<p>TAES$ ./init.sh (linux)</p>
+<p>TAES$ .\init-win.bat (windows)</p>
+
+**Actualizar antorno: vendor y database**
+<p>TAES$ ./cont.sh (linux)</p>
+<p>TAES$ .\cont-win.bat (windows)</p>
+
+**Si ya se tiene el repositorio inicalizado, para configuracion API OpenWeatherMap**
+<p>TAES$ ./api.sh (linux)</p>
+<p>TAES$ .\api-win.bat (windows)</p>
 
 **Configurar identidad**
 <p>git config user.name "nombreUsuario"</p>

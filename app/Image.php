@@ -57,4 +57,32 @@ class Image extends Model
         $image = Image::find($id);
         $image->delete();
     }
+
+    public static function getByCategory($categoria) {
+        $notices = Notice::where('categoria', '=', $categoria)->get();
+
+        $allImages = array();
+        foreach($notices as $notice) {
+            $imagenes = $notice->images;
+            foreach($imagenes as $imagen) {
+                $allImages[] = $imagen;
+            }
+        }
+
+        return $allImages;
+    }
+
+    public static function getByUserCategory($id_notice, $categoria) {
+        $images = Image::where('notice_id', '=', $id_notice)->get();
+        
+        $allImages = array();
+
+        foreach($images as $image) {
+            if ($image->sender->categoria == $categoria) {
+                $allImages[] = $image;
+            }
+        }
+
+        return $allImages;
+    }
 }

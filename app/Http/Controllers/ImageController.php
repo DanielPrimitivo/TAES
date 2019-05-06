@@ -34,6 +34,8 @@ class ImageController extends Controller
                                     "notice_id" => $id, 
                                     "sender_id" => $sender->id);
             Image::createIMG($datos_imagen);
+
+            //invocar método del controlador de time
         }
         else{
             $datos_notice = array("fecha" => $data['fecha'],
@@ -53,6 +55,8 @@ class ImageController extends Controller
                                     "sender_id" => $sender->id);
 
             Image::createIMG($datos_imagen);
+
+            //invocar método del controlador de time
         }
     }
 
@@ -68,5 +72,17 @@ class ImageController extends Controller
         $this->reciveImage($datos_imagen);
 
         echo 'FUNCIONANDO';
+    }
+
+    public function agruparCategoria($categoria) {
+        $images = Image::getByCategory($categoria);
+        
+        //return vista;
+    }
+
+    public function agruparCategoriaUsuario($id_notice, $categoria) {
+        $images = Image::getByUserCategory($id_notice, $categoria);
+        
+        //return vista;
     }
 }

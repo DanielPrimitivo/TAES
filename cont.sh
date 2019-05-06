@@ -1,5 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 
-cp .env.example .env
-touch database/database.sqlite
+composer update
 php artisan migrate:refresh --seed
