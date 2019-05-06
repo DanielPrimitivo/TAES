@@ -55,7 +55,7 @@ class Notice extends Model
     }
 
     public static function getByCategory($categoria) {
-        $notices = Notice::where('categoria', '=', $categoria)->get();
+        $notices = Notice::where('categoria', '=', $categoria);
 
         return $notices;
     }

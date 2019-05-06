@@ -43,6 +43,9 @@ cursor:pointer !important;
             width: 100% !important;
             padding-top: 10px;
             display: block !important;
+            box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+            border: 1px solid rgba(72, 181, 233, 0.6);
+            border-radius: 10px 10px 10px 10px; // apply 10px to the bottom corners of the infowindow
          }
          .gm-style-iw {
            overflow-y: auto !important;
@@ -157,7 +160,7 @@ cursor:pointer !important;
         </div>
       </div>
       <div class="card-footer">
-        <small class="text-muted">Actualizado a las {{$lastCall}}
+        <small class="text-muted" id="lastUpdateInfo">Actualizado a las {{$lastCall}}
           <div class="float-right">
           <button onclick="updateNotices();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
           </div>
@@ -489,7 +492,7 @@ function updateNotices()
     $.ajax({
         type: 'POST',
         url: "{{route('ajax.notices')}}",
-        data: {_token: '{{csrf_token()}}' },
+        data: {categoria: '{{$filtered}}',_token: '{{csrf_token()}}' },
         success: function(data){
             if(data.notices.length == 0 || data.notices.length <= markers.length) {
               alertContent = '<i class="fas fa-info-circle"></i> Sin nuevos avisos';
@@ -507,7 +510,8 @@ function updateNotices()
               }
               var map = new google.maps.Map(document.getElementById("map"), mapOptions);
               var numberNewNotices = data.notices.length-markers.length;
-              for(i = numberNewNotices-1; i >= 0; i--) {
+              markers = [];
+              for(i = data.notices.length-1; i >= 0; i--) {
                 noticeId = data.notices[i].id;
                 var fila = 'fila' + noticeId;
                 console.log(fila);
@@ -590,6 +594,10 @@ function updateNotices()
                       console.log(markers[$(this).data('markerid')]);
                       google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
                   });
+
+                  var d = new Date();
+                  var n = d.getHours() + ':' + d.getMinutes();
+                  document.getElementById("lastUpdateInfo").innerHTML = 'Actualizado a las ' + n;
             }
         },
         error: function(jqxhr, status, exception) {

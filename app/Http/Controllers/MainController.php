@@ -86,13 +86,24 @@ class MainController extends Controller
     }
 
     public function getNotices() {
-      $notices = Notice::orderBy('id', 'desc')->get();
-      foreach($notices as $notice) {
-        $weather = $notice->weather()->firstOrFail();
-        $notice["weather"] = $weather;
+      $data = request()->all();
+      $categoriaSelec = $data["categoria"];
+      if($categoriaSelec == "false") {
+        $notices = Notice::orderBy('id', 'desc')->get();
+        foreach($notices as $notice) {
+          $weather = $notice->weather()->firstOrFail();
+          $notice["weather"] = $weather;
+        }
+        return response()->json(array('notices' => $notices), 200);
       }
-
-      return response()->json(array('notices' => $notices), 200);
+      else {
+        $notices = Notice::getByCategory($categoriaSelec)->orderBy('id', 'desc')->get();
+        foreach($notices as $notice) {
+          $weather = $notice->weather()->firstOrFail();
+          $notice["weather"] = $weather;
+        }
+        return response()->json(array('notices' => $notices), 200);
+      }
     }
 
     public function administrarSenders() {
