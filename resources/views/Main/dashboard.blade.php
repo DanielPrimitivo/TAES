@@ -162,6 +162,9 @@ cursor:pointer !important;
           <button onclick="updateNotices();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
           </div>
         </small>
+        <span class="badge badge-info float-right mt-1" id="alertUpdateNotices" style="display: none;">
+
+      </span>
       </div>
     </div>
     <div class="card shadow">
@@ -476,27 +479,38 @@ markers.push(marker{{$notice->id}});
     });
 }
 
+var noticeId = null;
+var fila = null;
+var InfoWindows = [];
 
 function updateNotices()
 {
+  var alertContent = "";
     $.ajax({
         type: 'POST',
         url: "{{route('ajax.notices')}}",
         data: {_token: '{{csrf_token()}}' },
         success: function(data){
             if(data.notices.length == 0 || data.notices.length <= markers.length) {
-              alert("Sin nuevas alertas");
+              alertContent = '<i class="fas fa-info-circle"></i> Sin nuevos avisos';
+              document.getElementById("alertUpdateNotices").innerHTML = alertContent;
+              $("#alertUpdateNotices").fadeIn("1000");
+              setTimeout(function(){
+                $("#alertUpdateNotices").fadeOut();
+              }, 2000);
             }
             else {
-              console.log(parseFloat(data.notices[0].lat));
               var myLatlng = {lat: parseFloat(data.notices[0].lat), lng: parseFloat(data.notices[0].long)};
               var mapOptions = {
                 zoom: 9,
                 center: myLatlng
               }
               var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-              for(i = 0; i < data.notices.length-markers.length; i++) {
-                var noticeId = data.notices[i].id;
+              var numberNewNotices = data.notices.length-markers.length;
+              for(i = numberNewNotices-1; i >= 0; i--) {
+                noticeId = data.notices[i].id;
+                var fila = 'fila' + noticeId;
+                console.log(fila);
                 var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
                     '<h1 id="firstHeading" class="firstHeading">Aviso ' + data.notices[i].id + '<a class="btn-info btn-sm btn float-right w-50 mt-2" href="{{route('aviso', ['id' => $notice->id])}}" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
                     '<div id="bodyContent">'+
@@ -511,36 +525,41 @@ function updateNotices()
                     '</div>'+
                     '</div>'+
                     '</div>';
-
                 var infowindow = new google.maps.InfoWindow({
                   content: contentString,
-                  maxHeight: 1000
+                  maxHeight: 1000,
+                  id: i
                 });
+                InfoWindows.unshift(infowindow);
                 var marker = new google.maps.Marker({
                   position: {lat: parseFloat(data.notices[i].lat), lng: parseFloat(data.notices[i].long)},
                   animation: google.maps.Animation.DROP,
-                  title: 'Aviso' + data.notices[i].id
+                  title: 'Aviso' + data.notices[i].id,
+                  aviso: noticeId,
+                  fila: fila,
+                  info: i
                 });
                 marker.addListener('click', function() {
                   if(prev_infowindow) {
                     prev_infowindow.close();
                   }
 
-                  if(prev_infowindow != infowindow) {
-                    infowindow.open(map, marker);
-                    prev_infowindow = infowindow;
+                  if(prev_infowindow != InfoWindows[this.info]) {
+                    InfoWindows[this.info].open(map, this);
+                    prev_infowindow = InfoWindows[this.info];
                   }
                   else {
                     prev_infowindow = false;
                   }
-                  noticeTimes(noticeId);
-                  var fila = 'fila' + noticeId;
-                var target = document.getElementById(fila);
+                  console.log(this.aviso);
+                  noticeTimes(this.aviso);
+                  var target = document.getElementById(this.fila);
                     target.scrollIntoView({
                     	behavior: 'smooth',
                       block: 'nearest',
                       inline: 'start'
                     });
+                    console.log(this.fila);
                 });
                 markers.unshift(marker);
               }
@@ -559,6 +578,12 @@ function updateNotices()
               $("#noticesListBody").fadeOut();
               document.getElementById("noticesListBody").innerHTML = newTableLine;
               $("#noticesListBody").fadeIn();
+              alertContent = '<i class="fas fa-info-circle"></i> ' + numberNewNotices + ' nuevas alertas';
+              document.getElementById("alertUpdateNotices").innerHTML = alertContent;
+              $("#alertUpdateNotices").fadeIn("1000");
+              setTimeout(function(){
+                $("#alertUpdateNotices").fadeOut();
+              }, 2000);
               noticeTimes(data.notices.length);
               // Trigger a click event on each marker when the corresponding marker link is clicked
                   $('.marker-link').on('click', function () {
