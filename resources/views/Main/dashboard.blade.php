@@ -161,10 +161,12 @@ cursor:pointer !important;
       </div>
       <div class="card-footer">
         <small class="text-muted" id="lastUpdateInfo">Actualizado a las {{$lastCall}}
-          <div class="float-right">
-          <button onclick="updateNotices();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
-          </div>
         </small>
+        <small>
+        <div class="float-right">
+          <button onclick="updateNotices();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
+        </div>
+      </small>
         <span class="badge badge-info float-right mt-1" id="alertUpdateNotices" style="display: none;">
 
       </span>
@@ -494,7 +496,7 @@ function updateNotices()
         url: "{{route('ajax.notices')}}",
         data: {categoria: '{{$filtered}}',_token: '{{csrf_token()}}' },
         success: function(data){
-            if(data.notices.length == 0 || data.notices.length <= markers.length) {
+            if(data.notices.length == 0 || data.notices.length == markers.length) {
               alertContent = '<i class="fas fa-info-circle"></i> Sin nuevos avisos';
               document.getElementById("alertUpdateNotices").innerHTML = alertContent;
               $("#alertUpdateNotices").fadeIn("1000");
@@ -582,7 +584,13 @@ function updateNotices()
               $("#noticesListBody").fadeOut();
               document.getElementById("noticesListBody").innerHTML = newTableLine;
               $("#noticesListBody").fadeIn();
-              alertContent = '<i class="fas fa-info-circle"></i> ' + numberNewNotices + ' nuevas alertas';
+              if(numberNewNotices < 0) {
+                var numberLessNotices = Math.abs(numberNewNotices);
+                alertContent = '<i class="fas fa-info-circle"></i> ' + numberLessNotices + ' alertas menos';
+              }
+              else {
+                alertContent = '<i class="fas fa-info-circle"></i> ' + numberNewNotices + ' nuevas alertas';
+              }
               document.getElementById("alertUpdateNotices").innerHTML = alertContent;
               $("#alertUpdateNotices").fadeIn("1000");
               setTimeout(function(){
@@ -596,7 +604,12 @@ function updateNotices()
                   });
 
                   var d = new Date();
-                  var n = d.getHours() + ':' + d.getMinutes();
+                  if(d.getMinutes() < 10) {
+                    var n = d.getHours() + ':0' + d.getMinutes();
+                  }
+                  else {
+                    var n = d.getHours() + ':' + d.getMinutes();
+                  }
                   document.getElementById("lastUpdateInfo").innerHTML = 'Actualizado a las ' + n;
             }
         },
