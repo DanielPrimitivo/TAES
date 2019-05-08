@@ -27,8 +27,8 @@
 
 .share {
     position:fixed;
-    bottom:0px;
-    right:30px;
+    bottom:30px;
+    right:40px;
     transform:translate(-50%,-50%) rotate(45deg);
     width:80px;
     height:80px;
@@ -51,6 +51,9 @@
     background:#fff;
     transition:0.5s;
     overflow:hidden;
+    -webkit-box-shadow: 0px 0px 45px -8px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 45px -8px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 45px -8px rgba(0,0,0,0.75);
 }
 .share ul.active li {
     transform:scale(0.95);
@@ -81,13 +84,18 @@
 }
 .share ul.active li:nth-child(2){
     top:-100%;
-    left:-100%;
+    left:0;
     transition-delay:0.2s;
 }
 .share ul.active li:nth-child(3){
-    top:-100%;
-    left:0;
+    top:0;
+    left:100%;
     transition-delay:0.4s;
+}
+.share ul.active li:nth-child(4){
+    top:100%;
+    left:0;
+    transition-delay:0.6s;
 }
 .toggle {
     position:absolute;
@@ -269,7 +277,8 @@
         @else
         <li><a href="{{route('visto', $notice->id)}}" title="Marcar visto"><i class="fas fa-eye-slash"></i></a></li>
         @endif
-        <li><a href="{{route('archivarAviso', $notice->id)}}"><i class="fas fa-box" title="Archivar aviso" aria-hidden="true"></i></a></li>
+        <li><a href="{{route('archivarAviso', $notice->id)}}" title="Archivar aviso"><i class="fas fa-box" aria-hidden="true"></i></a></li>
+        <li><a href="#" data-toggle="modal" data-target="#modalDelete" title="Borrar aviso"><i class="fas fa-trash" aria-hidden="true"></i></a></li>
     </ul>
 </div>
 
@@ -304,6 +313,36 @@
       <div class="modal-footer">
               <button type="submit" class="btn btn-success"><i class="fas fa-edit mr-2"></i> Cambiar categoria</button>
             </form>
+          </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">¿Seguro que deseas borrar el Aviso {{$notice->id}}?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container text-center mb-2 mt-3">
+        <div class="modal-body" id="delete_body">
+          <div class="alert alert-danger" role="alert">
+              <h4 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> ¡Cuidado!</h4>
+              <p>Si borras una alerta, se borrarán todas las imagenes asociadas a la misma así como los datos del tiempo que hayan sido almacenados</p>
+              <hr>
+              <p class="mb-0">Ásegurate de querer borrar este aviso</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <a href="{{route('eliminar', $notice->id)}}" class="btn btn-danger" title="Marcar no visto"><i class="fas fa-trash"></i> Confirmar</a>
           </div>
     </div>
   </div>

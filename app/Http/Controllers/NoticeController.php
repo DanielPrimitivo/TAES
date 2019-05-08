@@ -68,6 +68,8 @@ class NoticeController extends Controller
 
     public function deleteNOT($id){
         Notice::deleteNOT($id);
+
+        return View::make('Main/avisoEliminado');
     }
 
     public static function archivar($id) {
