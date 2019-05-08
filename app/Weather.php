@@ -28,6 +28,8 @@ class Weather extends Model
         $weather->notice_id = $data['notice_id'];
 
         $weather->save();
+
+        return $weather;
     }
 
     // Lectura de un tiempo

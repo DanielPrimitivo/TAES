@@ -7,6 +7,7 @@ use App\Image;
 use App\Sender;
 use App\Notice;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\TimeController;
 
 class ImageController extends Controller
 {   
@@ -25,6 +26,7 @@ class ImageController extends Controller
         
         $notice_controll = new NoticeController();
         $id = $notice_controll->agruparAvisos($data['lat'], $data['long']);
+        //$time_controll = new TimeController();
         if($id != null){
             $datos_imagen = array("fecha" => $data['fecha'],
                                    "url" => $data['url'], 
@@ -35,7 +37,7 @@ class ImageController extends Controller
                                     "sender_id" => $sender->id);
             Image::createIMG($datos_imagen);
 
-            //invocar método del controlador de time
+            //$time_controll->gestorTiempo($id, $data['lat'], $data['long'], 0);
         }
         else{
             $datos_notice = array("fecha" => $data['fecha'],
@@ -56,13 +58,13 @@ class ImageController extends Controller
 
             Image::createIMG($datos_imagen);
 
-            //invocar método del controlador de time
+            //$time_controll->gestorTiempo($notice->id, $data['lat'], $data['long'], 0);
         }
     }
 
     public function generadorWS(){
         $datos_imagen = array("fecha" => '27/04/2019 - 11:09',
-                                "url" => 'imagen1',
+                                "url" => 'imagen1.jpg',
                                 "categoria_not" => 'Incendio', 
                                 "lat" => 38.387111, 
                                 "long" => -0.5111661, 

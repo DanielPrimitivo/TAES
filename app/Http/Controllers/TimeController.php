@@ -72,4 +72,19 @@ class TimeController extends Controller
         }
         return $array;
     }
+
+    public function gestorTiempo($id_notice, $lat, $lon, $hours) {
+        $api = $this->getWeather($lat, $lon, $hours);
+
+        if (!$api["error"]) {
+            $api += ['notice_id'=> $id_notice];
+
+            $tiempo = Weather::create($api);
+
+            dd($tiempo);
+        }
+        else {
+            dd("ERROR");
+        }
+    }
 }
