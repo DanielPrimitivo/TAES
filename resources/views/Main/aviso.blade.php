@@ -155,13 +155,13 @@
           <h5 class="text-center">Previsión del tiempo</h5>
           <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item ml-auto">
-        <a class="nav-link" href="#">1H</a>
+        <a class="nav-link" href="#">3H</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">2H</a>
+        <a class="nav-link" href="#">6H</a>
       </li>
       <li class="nav-item mr-auto">
-        <a class="nav-link" href="#">3H</a>
+        <a class="nav-link" href="#">9H</a>
       </li>
     </ul>
     </div>

@@ -76,11 +76,11 @@ cursor:pointer !important;
     <div class="col-xs-12 col-sm-12 col-lg-4 col-md-12 order-lg-1 order-12">
 <div class="shadow card mt-2 mb-2">
   <div class="card-header">
-    <span class="badge badge-info float-right mt-1" id="alertUpdateNotices" style="display: none;">
-
-    </span>
     Últimas imágenes
     <div class="float-right">
+      <span class="badge badge-info mt-1" id="alertUpdateImages" style="display: none;">
+
+      </span>
       <button onclick="noticeImages();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
     </div>
 </div>
@@ -271,19 +271,41 @@ function noticeTimes(notice)
               }
 }
 
+var numberImages = -1;
+
 function noticeImages()
 {
     var contentString = "";
+    var alertImgContent = "";
     $.ajax({
         type: 'POST',
         url: "{{route('ajax.Images')}}",
         data: {categoria: '{{$filtered}}' ,_token: '{{csrf_token()}}' },
         success: function(data){
+          if(numberImages > -1) {
+            if(data.images.length > numberImages) {
+              var numberNewImages = data.images.length - numberImages;
+              alertImgContent = '<i class="fas fa-info-circle"></i> ' + numberNewImages + ' nuevas imágenes';
+            }
+            else if(data.images.length == numberImages) {
+              alertImgContent = '<i class="fas fa-info-circle"></i> Sin nuevas imágenes';
+            }
+            else if(data.images.length < numberImages) {
+              var numberNewImages = Math.abs(data.images.length - numberImages);
+              alertImgContent = '<i class="fas fa-info-circle"></i> ' + numberNewImages + ' imágenes menos';
+            }
+            document.getElementById("alertUpdateImages").innerHTML = alertImgContent;
+            $("#alertUpdateImages").fadeIn("1000");
+            setTimeout(function(){
+              $("#alertUpdateImages").fadeOut();
+            }, 2000);
+          }
+
             if(data.images.length == 0) {
               document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoImages"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin Imagenes almacenadas!</div>';
               contentString = "";
             }
-            else {
+            else if(data.images.length != numberImages) {
                 for (i = 0; i < data.images.length; i++) {
                   var id = i+1;
                   var URL = "{{url('imagenes/')}}/"+data.images[i].url;
@@ -298,7 +320,8 @@ function noticeImages()
                          '</div>';
                 }
                 document.getElementById("imagesHolder").innerHTML = contentString;
-                $(".thumb").fadeIn("slow");
+                $(".thumb").fadeOut().delay(400).fadeIn("slow");
+                numberImages = data.images.length;
             }
         },
         error: function(jqxhr, status, exception) {
