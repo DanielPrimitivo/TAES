@@ -76,6 +76,9 @@ cursor:pointer !important;
     <div class="col-xs-12 col-sm-12 col-lg-4 col-md-12 order-lg-1 order-12">
 <div class="shadow card mt-2 mb-2">
   <div class="card-header">
+    <span class="badge badge-info float-right mt-1" id="alertUpdateNotices" style="display: none;">
+
+    </span>
     Últimas imágenes
     <div class="float-right">
       <button onclick="noticeImages();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
@@ -503,6 +506,14 @@ function updateNotices()
               setTimeout(function(){
                 $("#alertUpdateNotices").fadeOut();
               }, 2000);
+              var d = new Date();
+              if(d.getMinutes() < 10) {
+                var n = d.getHours() + ':0' + d.getMinutes();
+              }
+              else {
+                var n = d.getHours() + ':' + d.getMinutes();
+              }
+              document.getElementById("lastUpdateInfo").innerHTML = 'Actualizado a las ' + n;
             }
             else {
               var myLatlng = {lat: parseFloat(data.notices[0].lat), lng: parseFloat(data.notices[0].long)};
@@ -516,9 +527,10 @@ function updateNotices()
               for(i = data.notices.length-1; i >= 0; i--) {
                 noticeId = data.notices[i].id;
                 var fila = 'fila' + noticeId;
+                var URL = "{{url('aviso/')}}/"+data.notices[i].id;
                 console.log(fila);
                 var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
-                    '<h1 id="firstHeading" class="firstHeading">Aviso ' + data.notices[i].id + '<a class="btn-info btn-sm btn float-right w-50 mt-2" href="{{route('aviso', ['id' => $notice->id])}}" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
+                    '<h1 id="firstHeading" class="firstHeading">Aviso ' + data.notices[i].id + '<a class="btn-info btn-sm btn float-right w-50 mt-2" href="' + URL + '" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
                     '<div id="bodyContent">'+
                       '<div class="card shadow">'+
                         '<h5 class="card-header text-center"> <span class="badge badge-warning">' + data.notices[i].categoria + '</span>  El tiempo ahora   </h5>'+
