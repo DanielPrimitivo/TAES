@@ -65,6 +65,10 @@ class Webservice extends Controller
 	        $ejeY = $request->ejeY;
 	        $direccion = Webservice::convertirGiroscopio($ejeX, $ejeY);
 	        $url = $id . '.jpg';
+	        if(empty($request->telefono)){
+	        	$respuesta = ['respuesta' => 'nook'];
+	        	return response()->json($respuesta);
+	        }
 	        $telefono = $request->telefono;
 	        $categoria = $request->categoria;
 	        $comentarios = $request->comentarios;
