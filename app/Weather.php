@@ -16,14 +16,14 @@ class Weather extends Model
     }
      
     // Creación de un tiempo
-    public function create(array $data) {
+    public static function create(array $data) {
         $weather = new Weather();
 
-        $weather->viento = $data['viento'];
-        $weather->dirviento = $data['dirviento'];
+        $weather->viento = $data['vientoVel'];
+        $weather->dirviento = $data['vientoDir'];
         $weather->humedad = $data['humedad'];
         $weather->temperatura = $data['temperatura'];
-        $weather->lluvia = $data['lluvia'];
+        $weather->lluvia = $data['precipitaciones'];
         $weather->fecha = $data['fecha'];
         $weather->notice_id = $data['notice_id'];
 

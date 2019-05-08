@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Image;
 use App\Sender;
 use App\Notice;
+use App\Weather;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\TimeController;
 

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Time;
+use App\Weather;
 use Carbon\Carbon;
 use Cmfcmf\OpenWeatherMap\Exception;
+use Gmopx\LaravelOWM\LaravelOWM;
 
 class TimeController extends Controller
 {   
