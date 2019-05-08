@@ -10,7 +10,7 @@ use App\Http\Controllers\NoticeController;
 
 class ImageController extends Controller
 {   
-    public function reciveImage(array $data){
+    public static function reciveImage(array $data){
         if(Sender::exists($data['tlf'])){
             $sender = Sender::readByTlf($data['tlf']);
         }

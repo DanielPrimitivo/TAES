@@ -4,9 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ImageController;
+use Storage;
+use Exception;
 
 class Webservice extends Controller
 {
+
+	private function convertirGiroscopio($ejeX, $ejeY){
+    	//
+    	$var = 0;
+    	return $var;
+    }
+
+	private function numImagenes(){
+        static $numImagenes = 0;
+        $valorRetorno = $numImagenes;
+        $numImagenes++;
+        return $valorRetorno;
+    }
 
     /**
      * Display a listing of the resource.
@@ -38,19 +53,17 @@ class Webservice extends Controller
     {
     	try{
 	        //Guaradar la imagen en public/imagenes
-	        $id = numImagenes();
-	        //$imagen->guardar();
-	        $fimagen = fopen('public/imagenes/' . $id . '.jpg', 'w');
-	        fwrite($fimagen, json_decode($request->imagen));
-	        fclose($fimagen);
+	        $id = Webservice::numImagenes();
+	        //file_put_contents('public/imagenes/' . $id . '.jpg', json_decode($request->imagen));
+	        Storage::disk('imagenes')->put($id . '.jpg', json_decode($request->imagen));
 
 	        //Obtener los metadatos de la imagen
 	        $longitud = $request->longitud;
 	        $latitud = $request->latitud;
 	        $fecha = $request->fecha;
 	        $ejeX = $request->ejeX;
-	        $exeY = $request->ejeY;
-	        $direccion = convertirGiroscopio($ejeX, $ejeY);
+	        $ejeY = $request->ejeY;
+	        $direccion = Webservice::convertirGiroscopio($ejeX, $ejeY);
 	        $url = $id . '.jpg';
 	        $telefono = $request->telefono;
 	        $categoria = $request->categoria;
@@ -59,7 +72,7 @@ class Webservice extends Controller
 
 	        $datos = array('fecha' => $fecha, 'url' => $url, 'lat' => $latitud, 'long' => $longitud, 'direccion' => $direccion, 'categoria_not' => $categoria, 'tlf' => $telefono);
 
-	        ImageController::recieveImage($datos);
+	        ImageController::reciveImage($datos);
 	        $respuesta = ['respuesta' => 'ok'];
 	        return response()->json($respuesta);
 	    }
@@ -138,18 +151,5 @@ class Webservice extends Controller
         }
 
         return floatval($parts[0]) / floatval($parts[1]);
-    }
-
-    private function numImagenes(){
-        static $numImagenes = 0;
-        $valorRetorno = $numImagenes;
-        $numImagenes++;
-        return $valorRetorno;
-    }
-
-    private function convertirGiroscopio($ejeX, $ejeY){
-    	//
-    	$var = 0;
-    	return $var;
     }
 }
