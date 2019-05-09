@@ -55,7 +55,7 @@ class Webservice extends Controller
 	        //Guaradar la imagen en public/imagenes
 	        $id = Webservice::numImagenes();
 	        //file_put_contents('public/imagenes/' . $id . '.jpg', json_decode($request->imagen));
-	        Storage::disk('imagenes')->put($id . '.jpg', json_decode($request->imagen));
+	        Storage::disk('imagenes')->put($id . '.jpg', base64_decode($request->imagen));
 
 	        //Obtener los metadatos de la imagen
 	        $longitud = $request->longitud;
@@ -129,31 +129,5 @@ class Webservice extends Controller
     public function destroy($id)
     {
         //
-    }
-
-
-    //Funcion para consegui la latitud/longitud
-    private function getGPS($exifCoord, $hemisferio){
-        $grados = count($exifCoord ) > 0 ? gps2num(exifCoord[0]) : 0;
-        $minutos = count($exifCoord ) > 1 ? gps2num(exifCoord[1]) : 0;
-        $segundos = count($exifCoord ) > 2 ? gps2num(exifCoord[2]) : 0;
-
-        $flip = ($hemisferio == 'W' or $hemisferio == 'S') ? -1 : 1;
-
-        return $flip * ($grados + $minutos / 60 + $segundos / 3600);
-    }
-
-    //Funcion necesaria para conseguir la grados/segundos/minutos de la coordenada
-    private function gps2num($coordPart){
-        $parts = explode('/', $coordPart);
-        if(count($parts) <= 0){
-            return 0;
-        }
-
-        if(count($parts) == 1){
-            return $parts[0];
-        }
-
-        return floatval($parts[0]) / floatval($parts[1]);
     }
 }
