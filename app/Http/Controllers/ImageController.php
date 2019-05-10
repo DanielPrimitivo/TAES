@@ -37,8 +37,6 @@ class ImageController extends Controller
                                     "notice_id" => $id, 
                                     "sender_id" => $sender->id);
             Image::createIMG($datos_imagen);
-
-            $time_controll->gestorTiempo($id, $data['lat'], $data['long'], 0);
         }
         else{
             $datos_notice = array("fecha" => $data['fecha'],
@@ -65,16 +63,14 @@ class ImageController extends Controller
 
     public function generadorWS(){
         $datos_imagen = array("fecha" => '27/04/2019 - 11:09',
-                                "url" => 'imagen1.jpg',
+                                "url" => 'imagen50.jpg',
                                 "categoria_not" => 'Incendio', 
-                                "lat" => 38.387111, 
+                                "lat" => 50.387111, 
                                 "long" => -0.5111661, 
-                                "direccion" => 'Sur',
-                                "tlf" => 113456789);
+                                "direccion" => 'Norte',
+                                "tlf" => 999999999);
 
         $this->reciveImage($datos_imagen);
-
-        echo 'FUNCIONANDO';
     }
 
     public function agruparCategoria($categoria) {

@@ -78,15 +78,46 @@ class TimeController extends Controller
     public function gestorTiempo($id_notice, $lat, $lon, $hours) {
         $api = $this->getWeather($lat, $lon, $hours);
 
+        //dd($api['fecha']->getTimestamp());
+
         if (!$api["error"]) {
-            $api += ['notice_id'=> $id_notice];
+            $array = array(
+                'vientoVel' => $api['vientoVel']->getValue() * 3.6, //* 3.6 pasarlo a km/h
+                'vientoDir' => $api['vientoDir']->getUnit(),
+                'humedad' => $api['humedad']->getValue(),
+                'temperatura' => $api['temperatura']->getValue(),
+                'precipitaciones' => $api['precipitaciones']->getValue(),
+                'fecha' => $api['fecha']
+            );
 
-            $tiempo = Weather::create($api);
+            if ($hours == 0) {
+                $array += ['notice_id'=> $id_notice];
+                $res = Weather::searchWEATH($id_notice);
+                if (count($res) == 0) {
+                    $tiempo = Weather::create($array);
+                }
+                else {
+                    Weather::updateWEATH($res->id, $array);
+                }
+            }
+            else {
+                $array += ['rango_hora' => $hours];
 
-            dd($tiempo);
+                $weather = Weather::searchWEATH($id_notice);
+                $res = Prevision::searchPREV($weather->id);
+
+                $array += ['weather_id'=> $weather->id];
+                
+                if (count($res) == 0) {
+                    $prevision = Prevision::create($array);
+                }
+                else {
+                    $prevision = Prevision::updatePREV($res->id, $array);
+                }
+            }
         }
         else {
-            dd("ERROR");
+            // Error
         }
     }
 }
