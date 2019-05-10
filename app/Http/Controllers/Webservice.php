@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ImageController;
 use Storage;
 use Exception;
+use App\Image;
 
 class Webservice extends Controller
 {
@@ -17,10 +18,7 @@ class Webservice extends Controller
     }
 
 	private function numImagenes(){
-        static $numImagenes = 0;
-        $valorRetorno = $numImagenes;
-        $numImagenes++;
-        return $valorRetorno;
+        return Image::readAll()->count();
     }
 
     /**
