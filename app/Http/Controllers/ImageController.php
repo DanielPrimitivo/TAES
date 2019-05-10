@@ -27,7 +27,7 @@ class ImageController extends Controller
         
         $notice_controll = new NoticeController();
         $id = $notice_controll->agruparAvisos($data['lat'], $data['long']);
-        //$time_controll = new TimeController();
+        $time_controll = new TimeController();
         if($id != null){
             $datos_imagen = array("fecha" => $data['fecha'],
                                    "url" => $data['url'], 
@@ -38,7 +38,7 @@ class ImageController extends Controller
                                     "sender_id" => $sender->id);
             Image::createIMG($datos_imagen);
 
-            //$time_controll->gestorTiempo($id, $data['lat'], $data['long'], 0);
+            $time_controll->gestorTiempo($id, $data['lat'], $data['long'], 0);
         }
         else{
             $datos_notice = array("fecha" => $data['fecha'],
@@ -59,7 +59,7 @@ class ImageController extends Controller
 
             Image::createIMG($datos_imagen);
 
-            //$time_controll->gestorTiempo($notice->id, $data['lat'], $data['long'], 0);
+            $time_controll->gestorTiempo($notice->id, $data['lat'], $data['long'], 0);
         }
     }
 
