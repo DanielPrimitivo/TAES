@@ -56,7 +56,7 @@ cursor:pointer !important;
          }
          @media only screen and (min-width: 1080px) {
            .gm-style-iw {
-             min-height: 250px;
+             min-height: 280px;
            }
         }
 

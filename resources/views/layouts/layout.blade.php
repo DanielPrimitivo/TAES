@@ -64,10 +64,7 @@
 
 
 	<!-- TODO scripts externos -->
-	<!-- SCRIPT MAPS -->
-	<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5rNH_9DeGnfBvNc435hqkBvgz_m7cthc&callback=initMap">
-	</script>
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 	<script>
 		$(function(){
@@ -131,6 +128,10 @@
 
 	<script type="text/javascript">
 	@yield('js')
+	</script>
+	<!-- SCRIPT MAPS -->
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5rNH_9DeGnfBvNc435hqkBvgz_m7cthc&callback=initMap">
 	</script>
 </body>
 
