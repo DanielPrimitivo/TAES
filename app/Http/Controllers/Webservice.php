@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ImageController;
 use Storage;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use App\Image;
 
 class Webservice extends Controller
