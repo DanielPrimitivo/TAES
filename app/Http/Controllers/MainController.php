@@ -111,4 +111,9 @@ class MainController extends Controller
 
       return view::make('Main/senders')->with('senders', $senders);
     }
+
+    public function historic() {
+
+      return view::make('Main/historic');
+    }
 }
