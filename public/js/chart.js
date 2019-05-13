@@ -82,30 +82,30 @@ AmCharts.themes.light={themeName:"light",AmChart:{color:"#000000",backgroundColo
   // chart js - start
   // --------------------------------------------------
   var chartData = [ {
-    "date": "2018-01-01",
-    "fuegos": 227,
-    "inundaciones": 200,
-    "terremotos": 150,
-    "otro": 10,
-    "imagenes": 2000
+    "date": "2019-05-01",
+    "fuegos": 100,
+    "inundaciones": 60,
+    "terremotos": 4,
+    "otro": 30,
+    "imagenes": 1000
   }, {
-    "date": "2018-01-02",
-    "fuegos": 371,
-    "inundaciones": 500,
-    "terremotos": 150,
-    "otro": 10,
-    "imagenes": 1500
+    "date": "2019-05-08",
+    "fuegos": 150,
+    "inundaciones": 48,
+    "terremotos": 1,
+    "otro": 15,
+    "imagenes": 1254
   }, {
-    "date": "2018-01-03",
-    "fuegos": 433,
-    "inundaciones": 100,
-    "terremotos": 150,
-    "otro": 10,
-    "imagenes": 5000
-  } ];
+    "date": "2019-05-16",
+    "fuegos": 283,
+    "inundaciones": 142,
+    "terremotos": 5,
+    "otro": 5,
+    "imagenes": 3000
+  }];
   var chart = AmCharts.makeChart( "chartdiv", {
     "type": "serial",
-    "theme": "light",
+    "theme": "dark",
 
     "dataDateFormat": "YYYY-MM-DD",
     "dataProvider": chartData,
@@ -118,7 +118,7 @@ AmCharts.themes.light={themeName:"light",AmChart:{color:"#000000",backgroundColo
   "categoryField": "date",
   "categoryAxis": {
     "parseDates": true,
-    "minPeriod": "DD",
+    "minPeriod": "WW",
     "autoGridCount": false,
     "gridCount": 50,
     "gridAlpha": 0.1,
@@ -172,7 +172,7 @@ AmCharts.themes.light={themeName:"light",AmChart:{color:"#000000",backgroundColo
     "type": "column",
     "fillAlphas": 0.9,
     "valueAxis": "a1",
-    "balloonText": "[[value]]",
+    "balloonText": "[[value]] incendios",
     "legendValueText": "[[value]] avisos",
     "legendPeriodValueText": "totales: [[value.sum]] avisos",
     "lineColor": "#cc0000",
@@ -184,7 +184,7 @@ AmCharts.themes.light={themeName:"light",AmChart:{color:"#000000",backgroundColo
     "type": "column",
     "fillAlphas": 0.9,
     "valueAxis": "a1",
-    "balloonText": "[[value]]",
+    "balloonText": "[[value]] inundaciones",
     "legendValueText": "[[value]] avisos",
     "legendPeriodValueText": "totales: [[value.sum]] avisos",
     "lineColor": "#00BFFF",
@@ -196,7 +196,7 @@ AmCharts.themes.light={themeName:"light",AmChart:{color:"#000000",backgroundColo
     "type": "column",
     "fillAlphas": 0.9,
     "valueAxis": "a1",
-    "balloonText": "[[value]]",
+    "balloonText": "[[value]] terremotos",
     "legendValueText": "[[value]] avisos",
     "legendPeriodValueText": "totales: [[value.sum]] avisos",
     "lineColor": "#F4A460",
@@ -208,7 +208,7 @@ AmCharts.themes.light={themeName:"light",AmChart:{color:"#000000",backgroundColo
     "type": "column",
     "fillAlphas": 0.9,
     "valueAxis": "a1",
-    "balloonText": "[[value]]",
+    "balloonText": "[[value]] categoria otro",
     "legendValueText": "[[value]] avisos",
     "legendPeriodValueText": "totales: [[value.sum]] avisos",
     "lineColor": "#fff",
@@ -222,7 +222,7 @@ AmCharts.themes.light={themeName:"light",AmChart:{color:"#000000",backgroundColo
     "valueAxis": "a2",
     "lineColor": "#ffffff",
     "lineThickness": 1,
-    "legendValueText": "[[value]]/[[description]]",
+    "legendValueText": "imágenes totales [[value]]",
     "bullet": "round",
     "bulletSizeField": "townSize",
     "bulletBorderColor": "#ffffff",

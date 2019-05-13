@@ -48,6 +48,9 @@
                                     <a class="dropdown-item btn-danger" href="{{ route('manageSenders') }}">
                                         <i class="fas fa-id-card-alt mr-2"></i> Administrar remitentes
                                     </a>
+                                    <a class="dropdown-item btn-danger" href="{{ route('historic') }}">
+                                        <i class="fas fa-history mr-2"></i> Histórico
+                                    </a>
                                     <div class="dropdown-divider"></div>
                                       <a class="dropdown-item btn-danger" href="{{ route('logout') }}"
                                          onclick="event.preventDefault();

@@ -7,10 +7,13 @@ h3 a{color:#ffc107!important;}
   width: 100%;
   height: 500px;
 }
-.overlay-black {
-    background: rgba(5, 5, 5, 0.8);
+body {
+  background: rgba(5, 5, 5, 0.8);
 }
-.amcharts-graph-g2 .amcharts-graph-stroke {
+.overlay-black {
+
+}
+.amcharts-graph-g5 .amcharts-graph-stroke {
   stroke-dasharray: 3px 3px;
   stroke-linejoin: round;
   stroke-linecap: round;
@@ -216,7 +219,7 @@ h3 a{color:#ffc107!important;}
     border-top:7px solid transparent;
     border-left:7px solid #fff;
     border-right:7px solid transparent;
-    border-bottom:7px solid transparent;
+    border-bottom:7px solid trans100parent;
 }
 .amcharts-export-menu-bottom-right>ul>li>ul>li:last-child>a:after{
     content:"";
@@ -437,6 +440,7 @@ h3 a{color:#ffc107!important;}
                    <div class="container">
                        <div class="section-title">
                           <h3 align="center">Últimos avisos por categoría</h3>
+                          <h5 align="center" class="text-secondary">Último período de 15 días</h5>
                        </div>
                        <div id="chartdiv"></div>
                    </div>
