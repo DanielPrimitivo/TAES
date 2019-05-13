@@ -14,7 +14,7 @@ class Weather extends Model
     public function previsions() {
         return $this->hasMany('App\Prevision');
     }
-     
+
     // Creación de un tiempo
     public static function create(array $data) {
         $weather = new Weather();
@@ -49,7 +49,7 @@ class Weather extends Model
     // Actualización de un tiempo
     public static function updateWEATH(int $id, array $data) {
         $weather = Weather::find($id);
-        
+
         $weather->viento = $data['vientoVel'];
         $weather->dirviento = $data['vientoDir'];
         $weather->humedad = $data['humedad'];
@@ -69,7 +69,7 @@ class Weather extends Model
 
     public static function searchWEATH($notice_id) {
         $tiempo = Weather::where('notice_id', '=', $notice_id)->get();
-        
+
         return $tiempo;
     }
 }

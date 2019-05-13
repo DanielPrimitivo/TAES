@@ -35,6 +35,20 @@ class MainController extends Controller
         return response()->json(array('times' => $times), 200);
     }
 
+    public function updateNoticeTime() {
+        $data = request()->all();
+        $notice = Notice::find($data["notice"]);
+        $times = $notice->weather()->get();
+        $newWeatherArray = app('App\Http\Controllers\TimeController')->getWeather($notice->lat, $notice->long, 0);
+        $newWeatherArray['notice_id'] = $notice->id;
+        foreach($times as $time) {
+            Weather::updateWEATH($time->id, $newWeatherArray);
+            $time["lastActD"] = Carbon::parse($time->updated_at)->format('d-m-Y');
+            $time["lastActH"] = Carbon::parse($time->updated_at)->format('H:i');
+        }
+        return response()->json(array('times' => $times), 200);
+    }
+
     public function getAllImages() {
         $data = request()->all();
         $categoriaSelec = $data["categoria"];

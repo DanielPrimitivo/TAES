@@ -151,7 +151,7 @@ cursor:pointer !important;
             <tbody id="noticesListBody">
               @if(isset($notices))
                 @foreach($notices as $notice)
-                  <tr id="fila{{$notice->id}}" class="table-row marker-link" onclick="noticeTimes('{{$notice->id}}')" data-markerid="{{$loop->index}}">
+                  <tr id="fila{{$notice->id}}" class="table-row marker-link" onclick="noticeTimes('{{$notice->id}}', 'false')" data-markerid="{{$loop->index}}">
                     <td>{{ $notice->lat }}</td>
                     <td>{{ $notice->long }}</td>
                     <td><button onclick="location.href='{{route('aviso', $notice->id)}}';" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>
@@ -198,7 +198,7 @@ cursor:pointer !important;
       <div class="card-footer">
         <small class="text-muted"> <p class="d-inline" id="horAct2"></p>
         <div class="float-right">
-          <button href="" class="text-dark btn btn-sm btn-link d-inline" id="updateTimes"><i class="fas fa-sync-alt"></i></button>
+          <button class="text-dark btn btn-sm btn-link d-inline" id="updateTimes"><i class="fas fa-sync-alt"></i></button>
         </div>
       </small>
       </div>
@@ -215,11 +215,31 @@ cursor:pointer !important;
 @endsection
 
 @section('js')
-function noticeTimes(notice)
+function updateTimes(notice) {
+  $.ajax({
+      type: 'POST',
+      url: "{{route('ajax.updateTime')}}",
+      data: {notice: notice, _token: '{{csrf_token()}}' },
+      success: function(data){
+          if(data.times.length == 0) {
+            document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoTimes"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin datos del tiempo para el aviso!</div>';
+          }
+          else {
+
+              }
+              },
+              error: function(jqxhr, status, exception) {
+
+              }
+            });
+            noticeTimes(notice, 'true');
+}
+
+function noticeTimes(notice, fromUpdate)
 {
   console.log(notice);
     var fila = "fila" + notice;
-    if(document.getElementById(fila).className != 'table-primary table-row marker-link') {
+    if(document.getElementById(fila).className != 'table-primary table-row marker-link' || fromUpdate == 'true') {
       var elems = document.querySelectorAll(".table-primary");
 
       [].forEach.call(elems, function(el) {
@@ -245,7 +265,7 @@ function noticeTimes(notice)
                       document.getElementById("lluviaInfo").innerHTML = data.times[i].lluvia;
                       document.getElementById("horAct1").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
                       document.getElementById("horAct2").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
-                      document.getElementById("updateTimes").setAttribute("onclick", 'noticeTimes(' + notice + ')');
+                      document.getElementById("updateTimes").setAttribute("onclick", 'updateTimes(' + notice + ')');
                       switch(data.times[i].lluvia) {
                         case "fuerte":
                           document.getElementById("iconoTiempo").className = 'fas fa-cloud-showers-heavy text-center mt-5';
