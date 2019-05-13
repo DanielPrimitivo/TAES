@@ -262,7 +262,7 @@ function noticeTimes(notice)
                     }
                   },
                   error: function(jqxhr, status, exception) {
-                    alert('Exception:' + exception,);
+                    noticeTimes(notice);
                   }
                 });
               }
@@ -311,7 +311,7 @@ function noticeImages()
                   var URL = "{{url('imagenes/')}}/"+data.images[i].url;
                   contentString +=
                   '<div class="col-lg-4 col-md-5 col-xs-6 thumb" style="display:none;">' +
-                    '<a class="thumbnail" href="#" data-image-id="' + id + '" data-toggle="modal" data-title="Aviso' + data.images[i].notice_id + '"' +
+                    '<a class="thumbnail" href="#" data-image-id="' + id + '" data-toggle="modal" data-title="Aviso ' + data.images[i].notice_id + '"' +
                       'data-image="' + URL + '"' +
                        'data-target="#image-gallery"' +
                        'data-sender="' + data.images[i].sender_id.categoria + ', Tlf: ' + data.images[i].sender_id.tlf + '">' +
@@ -325,7 +325,7 @@ function noticeImages()
             }
         },
         error: function(jqxhr, status, exception) {
-             alert('Exception:' + exception,);
+             noticeImages();
          }
     });
     setTimeout(function(){
@@ -476,7 +476,7 @@ var marker{{$notice->id}} = new google.maps.Marker({
   position: aviso{{$notice->id}},
   map: map,
   animation: google.maps.Animation.DROP,
-  title: 'Aviso{{$notice->id}}'
+  title: 'Aviso {{$notice->id}}'
 });
 
 marker{{$notice->id}}.addListener('click', function() {
@@ -552,7 +552,7 @@ function updateNotices()
                 var fila = 'fila' + noticeId;
                 var URL = "{{url('aviso/')}}/"+data.notices[i].id;
                 console.log(fila);
-                var contentString = '<div id="content" class="col-md-12" style="width:500px;">'+
+                var contentString = '<div id="content" class="col-lg-12">'+
                     '<h1 id="firstHeading" class="firstHeading">Aviso ' + data.notices[i].id + '<a class="btn-info btn-sm btn float-right w-50 mt-2" href="' + URL + '" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
                     '<div id="bodyContent">'+
                       '<div class="card shadow">'+
@@ -575,7 +575,7 @@ function updateNotices()
                 var marker = new google.maps.Marker({
                   position: {lat: parseFloat(data.notices[i].lat), lng: parseFloat(data.notices[i].long)},
                   animation: google.maps.Animation.DROP,
-                  title: 'Aviso' + data.notices[i].id,
+                  title: 'Aviso ' + data.notices[i].id,
                   aviso: noticeId,
                   fila: fila,
                   info: i
