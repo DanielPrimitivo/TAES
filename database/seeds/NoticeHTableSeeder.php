@@ -12,6 +12,7 @@ class NoticeHTableSeeder extends Seeder
      */
     public function run()
     {
+        //arreglar
         $info = parse_ini_file("noticeh.ini", true);
         foreach($info as $noti){
             $notice = new Hnotice([
