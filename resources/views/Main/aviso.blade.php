@@ -161,7 +161,7 @@
       <div class="card shadow mb-2">
         <div class="card-header">
           <h5 class="text-center">Previsión del tiempo</h5>
-          <ul class="nav nav-tabs card-header-tabs">
+    <!--<ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item ml-auto">
         <a class="nav-link" href="#">3H</a>
       </li>
@@ -171,15 +171,40 @@
       <li class="nav-item mr-auto">
         <a class="nav-link" href="#">9H</a>
       </li>
-    </ul>
+    </ul>-->
+    <ul class="nav nav-pills card-header-tabs" id="pills-tab" role="tablist">
+  <li class="nav-item ml-auto">
+    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#prev3h" role="tab" aria-controls="pills-3h" aria-selected="true">3H</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#prev6h" role="tab" aria-controls="pills-6h" aria-selected="false">6H</a>
+  </li>
+  <li class="nav-item mr-auto">
+    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#prev9h" role="tab" aria-controls="pills-9h" aria-selected="false">9H</a>
+  </li>
+</ul>
     </div>
         <div class="card-body">
-          <ul class="list-group list-group-flush">
+          <div class="tab-content" id="pills-tabContent">
+          <ul class="tab-pane fade show active list-group list-group-flush" id="prev3h" role="tabpanel" aria-labelledby="pills-3h-tab">
             <li class="list-group-item">Humedad: <h6 class="text-muted float-right">90%</h6></li>
             <li class="list-group-item">Viento: <h6 class="text-muted float-right">10 km/h</h6></li>
             <li class="list-group-item">Temp min/max: <h6 class="text-muted float-right">10℃/24℃</h6></li>
             <li class="list-group-item">Precipitaciones: <h6 class="text-muted float-right">60%</h6></li>
           </ul>
+          <ul class="tab-pane fade list-group list-group-flush" id="prev6h" role="tabpanel" aria-labelledby="pills-6h-tab">
+            <li class="list-group-item">Humedad: <h6 class="text-muted float-right">96%</h6></li>
+            <li class="list-group-item">Viento: <h6 class="text-muted float-right">10 km/h</h6></li>
+            <li class="list-group-item">Temp min/max: <h6 class="text-muted float-right">10℃/24℃</h6></li>
+            <li class="list-group-item">Precipitaciones: <h6 class="text-muted float-right">60%</h6></li>
+          </ul>
+          <ul class="tab-pane fade list-group list-group-flush" id="prev9h" role="tabpanel" aria-labelledby="pills-9h-tab">
+            <li class="list-group-item">Humedad: <h6 class="text-muted float-right">99%</h6></li>
+            <li class="list-group-item">Viento: <h6 class="text-muted float-right">10 km/h</h6></li>
+            <li class="list-group-item">Temp min/max: <h6 class="text-muted float-right">10℃/24℃</h6></li>
+            <li class="list-group-item">Precipitaciones: <h6 class="text-muted float-right">60%</h6></li>
+          </ul>
+        </div>
         </div>
         <div class="card-footer">
           <small class="text-muted">ult. act el 10/04/2019 a las 22:31
@@ -193,22 +218,22 @@
 
 <div class="row-lg-5">
     <div class="card shadow">
-      <h5 class="card-header text-center">El tiempo ahora      </h5>
-      <div class="card-body">
+      <h5 class="card-header text-center">El tiempo ahora</h5>
+      <div class="card-body" id="timeInfoBody" style="display: none;">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Humedad: <h6 class="text-muted float-right">{{$weather->humedad}}%</h6></li>
-          <li class="list-group-item">Viento: <h6 class="text-muted float-right">{{$weather->viento}} km/h</h6></li>
-          <li class="list-group-item">Dirección viento: <h6 class="text-muted float-right">{{$weather->dirviento}}</h6></li>
-          <li class="list-group-item">Temp min/max: <h6 class="text-muted float-right">{{$weather->temperatura}}℃</h6></li>
-          <li class="list-group-item">Precipitaciones: <h6 class="text-muted float-right">{{$weather->lluvia}}</h6></li>
+          <li class="list-group-item">Humedad: <h6 class="text-muted float-right" id="humedadInfo"></h6></li>
+          <li class="list-group-item">Viento: <h6 class="text-muted float-right" id="sVientoInfo"></h6></li>
+          <li class="list-group-item">Dirección viento: <h6 class="text-muted float-right" id="dirVientoInfo"></h6></li>
+          <li class="list-group-item">Temperatura: <h6 class="text-muted float-right" id="temperaturaInfo"></h6></li>
+          <li class="list-group-item">Precipitaciones: <h6 class="text-muted float-right" id="lluviaInfo"></h6></li>
         </ul>
       </div>
       <div class="card-footer">
-        <small class="text-muted">ult. act {{$weather->updated_at->format('d-m-Y')}} a las {{$weather->updated_at->format('H:i:s')}}
-        <div class="float-right">
-        <a href="" class="text-dark"><i class="fas fa-sync-alt"></i></a>
-        </div>
+        <small class="text-muted" id="horAct1">
       </small>
+      <div class="float-right">
+        <button onclick="updateTimes({{$notice->id}});" class="text-dark btn btn-sm btn-link d-inline" id="updateTimes"><i class="fas fa-sync-alt"></i></button>
+      </div>
       </div>
     </div> <!-- End of card tiempoActual -->
   </div>
@@ -384,6 +409,38 @@
 @endsection
 
 @section('js')
+$('.nav-item a').click(function(){
+  //funciones aquí para recuperar información
+})
+
+function updateTimes(notice) {
+  $.ajax({
+      type: 'POST',
+      url: "{{route('ajax.updateTime')}}",
+      data: {notice: notice, _token: '{{csrf_token()}}' },
+      success: function(data){
+          if(data.times.length == 0) {
+
+          }
+          else {
+            for (i = 0; i < data.times.length; i++) {
+                document.getElementById("temperaturaInfo").innerHTML = data.times[i].temperatura;
+                document.getElementById("humedadInfo").innerHTML = data.times[i].humedad;
+                document.getElementById("sVientoInfo").innerHTML = data.times[i].viento;
+                document.getElementById("dirVientoInfo").innerHTML = data.times[i].dirviento;
+                document.getElementById("lluviaInfo").innerHTML = data.times[i].lluvia;
+                document.getElementById("horAct1").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
+              }
+              $('#timeInfoBody').fadeOut().fadeIn("slow");
+            }
+            },
+              error: function(jqxhr, status, exception) {
+
+              }
+            });
+}
+
+
 function deleteFilterImg()
 {
   document.getElementById("senderCat").selectedIndex = 0;
@@ -510,6 +567,7 @@ let modalId = $('#image-gallery');
 
 $(document)
   .ready(function () {
+    updateTimes({{$notice->id}});
 
     $('.toggle').click(function(){
         $('.toggle').toggleClass('active');

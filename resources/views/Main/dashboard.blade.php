@@ -247,6 +247,9 @@ function noticeTimes(notice, fromUpdate)
       });
       $("#temperaturaActualBody").fadeOut();
       $("#allTimesInfoBody").fadeOut();
+      setTimeout(function(){
+
+
       $.ajax({
           type: 'POST',
           url: "{{route('ajax.noticeTimes')}}",
@@ -304,7 +307,7 @@ function noticeTimes(notice, fromUpdate)
                   error: function(jqxhr, status, exception) {
                     noticeTimes(notice);
                   }
-                });
+                });}, 300);
               }
               else {
 
