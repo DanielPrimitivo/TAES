@@ -20,6 +20,7 @@ class CreateImageTable extends Migration
             $table->double('lat');
             $table->double('long');
             $table->string('direccion');
+            $table->string('comentarios')->nullable();
 
             $table->integer('notice_id')->unsigned();
             $table->foreign('notice_id')->references('id')->on('notices')->onDelete('cascade');

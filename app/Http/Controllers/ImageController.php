@@ -33,7 +33,8 @@ class ImageController extends Controller
                                    "url" => $data['url'], 
                                     "lat" =>$data['lat'], 
                                     "long" => $data['long'], 
-                                    "direccion" => $data['direccion'], 
+                                    "direccion" => $data['direccion'],
+                                    "comentarios" => $data['comentarios'],
                                     "notice_id" => $id, 
                                     "sender_id" => $sender->id);
             Image::createIMG($datos_imagen);
@@ -52,6 +53,7 @@ class ImageController extends Controller
                                     "lat" =>$data['lat'], 
                                     "long" => $data['long'], 
                                     "direccion" => $data['direccion'], 
+                                    "comentarios" => $data['comentarios'],
                                     "notice_id" => $notice->id, 
                                     "sender_id" => $sender->id);
 
@@ -68,6 +70,7 @@ class ImageController extends Controller
                                 "lat" => 50.387111, 
                                 "long" => -0.5111661, 
                                 "direccion" => 'Norte',
+                                "comentarios" => 'Es un incendio',
                                 "tlf" => 999999999);
 
         $this->reciveImage($datos_imagen);

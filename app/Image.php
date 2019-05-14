@@ -29,6 +29,7 @@ class Image extends Model
         $image->direccion = $data['direccion'];
         $image->notice_id = $data['notice_id'];
         $image->sender_id = $data['sender_id'];
+        $image->comentarios = $data['comentarios'];
 
         $image->save();
     }

@@ -21,7 +21,8 @@ class ImagesTableSeeder extends Seeder
                 'long' => $img['long'],
                 'direccion' => $img['direccion'],
                 'sender_id' => $img['sender_id'],
-                'notice_id' => $img['notice_id']
+                'notice_id' => $img['notice_id'],
+                'comentarios' => $img['comentarios']
             ]);
             $imagen->save();
         }

@@ -72,7 +72,7 @@ class Webservice extends Controller
 	        $comentarios = $request->comentarios;
 
 
-	        $datos = array('fecha' => $fecha, 'url' => $url, 'lat' => $latitud, 'long' => $longitud, 'direccion' => $direccion, 'categoria_not' => $categoria, 'tlf' => $telefono);
+	        $datos = array('fecha' => $fecha, 'url' => $url, 'lat' => $latitud, 'long' => $longitud, 'direccion' => $direccion, 'categoria_not' => $categoria, 'tlf' => $telefono, 'comentarios' => $comentarios);
 
 	        ImageController::reciveImage($datos);
 	        $respuesta = ['respuesta' => 'ok'];
