@@ -9,6 +9,7 @@ use App\Notice;
 use App\Weather;
 use App\Image;
 use App\Sender;
+Use App\Prevision;
 use Carbon\Carbon;
 use Gmopx\LaravelOWM\LaravelOWM;
 
@@ -34,6 +35,43 @@ class MainController extends Controller
             $time["categoria"] = $notice->categoria;
         }
         return response()->json(array('times' => $times), 200);
+    }
+
+    public function getNoticePrevisions() {
+        $data = request()->all();
+        $notice = Notice::find($data["notice"]);
+        $hourSpan = $data["hourSpan"];
+        $time = $notice->weather()->first();
+        $previsions = Prevision::searchPREV($time->id, $hourSpan);
+        if($previsions->isEmpty()) {
+          $newPrevisionArray = app('App\Http\Controllers\TimeController')->getWeather($notice->lat, $notice->long, $hourSpan);
+          $newPrevisionArray['weather_id'] = $time->id;
+          $newPrevisionArray['rango_hora'] = $hourSpan;
+          Prevision::createPREV($newPrevisionArray);
+        }
+        $previsions = Prevision::searchPREV($time->id, $hourSpan);
+        foreach($previsions as $prevision) {
+          $prevision["lastActD"] = Carbon::parse($time->updated_at)->format('d-m-Y');
+          $prevision["lastActH"] = Carbon::parse($time->updated_at)->format('H:i');
+        }
+        return response()->json(array('previsions' => $previsions), 200);
+    }
+
+    public function updateNoticePrevisions() {
+      $data = request()->all();
+      $notice = Notice::find($data["notice"]);
+      $hourSpan = $data["hourSpan"];
+      $time = $notice->weather()->first();
+      $previsions = Prevision::searchPREV($time->id, $hourSpan);
+
+      $newPrevisionArray = app('App\Http\Controllers\TimeController')->getWeather($notice->lat, $notice->long, $hourSpan);
+      $newPrevisionArray['weather_id'] = $time->id;
+      $newPrevisionArray['rango_hora'] = $hourSpan;
+
+      foreach($previsions as $prevision) {
+        Prevision::updatePREV($prevision->id ,$newPrevisionArray);
+      }
+      return response()->json(array('previsions' => $previsions), 200);
     }
 
     public function updateNoticeTime() {
