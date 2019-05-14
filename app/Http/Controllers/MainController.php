@@ -31,6 +31,7 @@ class MainController extends Controller
         foreach($times as $time) {
             $time["lastActD"] = Carbon::parse($time->updated_at)->format('d-m-Y');
             $time["lastActH"] = Carbon::parse($time->updated_at)->format('H:i');
+            $time["categoria"] = $notice->categoria;
         }
         return response()->json(array('times' => $times), 200);
     }
@@ -38,13 +39,14 @@ class MainController extends Controller
     public function updateNoticeTime() {
         $data = request()->all();
         $notice = Notice::find($data["notice"]);
-        $times = $notice->weather()->get();
         $newWeatherArray = app('App\Http\Controllers\TimeController')->getWeather($notice->lat, $notice->long, 0);
         $newWeatherArray['notice_id'] = $notice->id;
+        $times = $notice->weather()->get();
         foreach($times as $time) {
             Weather::updateWEATH($time->id, $newWeatherArray);
             $time["lastActD"] = Carbon::parse($time->updated_at)->format('d-m-Y');
             $time["lastActH"] = Carbon::parse($time->updated_at)->format('H:i');
+            $time["categoria"] = $notice->categoria;
         }
         return response()->json(array('times' => $times), 200);
     }

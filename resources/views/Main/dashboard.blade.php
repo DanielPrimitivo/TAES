@@ -258,9 +258,9 @@ function noticeTimes(notice, fromUpdate)
               else {
                   for (i = 0; i < data.times.length; i++) {
                       document.getElementById(fila).className = 'table-primary table-row marker-link';
-                      document.getElementById("temperaturaActual").innerHTML = data.times[i].temperatura + '℃';
-                      document.getElementById("humedadInfo").innerHTML = data.times[i].humedad + '%';
-                      document.getElementById("sVientoInfo").innerHTML = data.times[i].viento + 'km/h';
+                      document.getElementById("temperaturaActual").innerHTML = data.times[i].temperatura;
+                      document.getElementById("humedadInfo").innerHTML = data.times[i].humedad;
+                      document.getElementById("sVientoInfo").innerHTML = data.times[i].viento;
                       document.getElementById("dirVientoInfo").innerHTML = data.times[i].dirviento;
                       document.getElementById("lluviaInfo").innerHTML = data.times[i].lluvia;
                       document.getElementById("horAct1").innerHTML = 'Actualizado el ' + data.times[i].lastActD + ' a las ' + data.times[i].lastActH;
@@ -275,6 +275,26 @@ function noticeTimes(notice, fromUpdate)
                           break;
                           default:
                           document.getElementById("iconoTiempo").className = 'fas fa-sun text-center mt-5';
+                        }
+                        for(j = 0; j < InfoWindows.length; j++) {
+                          if(InfoWindows[j].notice_id == notice) {
+                            var URL = "{{url('aviso/')}}/"+notice;
+                            var contentString = '<div id="content" class="col-lg-12">'+
+                                '<h1 id="firstHeading" class="firstHeading">Aviso ' + notice + '<a class="btn-info btn-sm btn float-right w-50 mt-2" href="' + URL + '" id="link1"><i class="fas fa-external-link-alt mr-2"></i> Detalles</a></h1> '+
+                                '<div id="bodyContent">'+
+                                  '<div class="card shadow">'+
+                                    '<h5 class="card-header text-center"> <span class="badge badge-warning">' + data.times[i].categoria + '</span>  El tiempo ahora   </h5>'+
+                                '<div class="card-body">'+
+                                  '<ul class="list-group list-group-flush">' +
+                                    '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">' + data.times[i].humedad + '</h6></li>' +
+                                    '<li class="list-group-item">Temperatura: <h6 class="text-muted float-right">' + data.times[i].temperatura + '</h6></li>' +
+                                  '</ul>' +
+                                '</div>'+
+                                '</div>'+
+                                '</div>'+
+                                '</div>';
+                                InfoWindows[j].setContent(contentString);
+                          }
                         }
                       }
                       $("#temperaturaActualBody").fadeIn();
@@ -479,8 +499,8 @@ var contentString = '<div id="content" class="col-lg-12">'+
         '<h5 class="card-header text-center"> <span class="badge badge-warning">{{$notice->categoria}}</span>  El tiempo ahora   </h5>'+
     '<div class="card-body">'+
       '<ul class="list-group list-group-flush">' +
-        '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">{{$notice->weather()->firstOrFail()->humedad}}%</h6></li>' +
-        '<li class="list-group-item">Temperatura: <h6 class="text-muted float-right">{{$notice->weather()->firstOrFail()->temperatura}}℃</h6></li>' +
+        '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">{{$notice->weather()->firstOrFail()->humedad}}</h6></li>' +
+        '<li class="list-group-item">Temperatura: <h6 class="text-muted float-right">{{$notice->weather()->firstOrFail()->temperatura}}</h6></li>' +
       '</ul>' +
     '</div>'+
     '</div>'+
@@ -489,8 +509,11 @@ var contentString = '<div id="content" class="col-lg-12">'+
 
 var infowindow{{$notice->id}} = new google.maps.InfoWindow({
   content: contentString,
-  maxHeight: 100
+  maxHeight: 100,
+  notice_id: {{$notice->id}}
 });
+
+InfoWindows.unshift(infowindow{{$notice->id}});
 
 var marker{{$notice->id}} = new google.maps.Marker({
   position: aviso{{$notice->id}},
@@ -567,6 +590,7 @@ function updateNotices()
               var map = new google.maps.Map(document.getElementById("map"), mapOptions);
               var numberNewNotices = data.notices.length-markers.length;
               markers = [];
+              InfoWindows = [];
               for(i = data.notices.length-1; i >= 0; i--) {
                 noticeId = data.notices[i].id;
                 var fila = 'fila' + noticeId;
@@ -579,8 +603,8 @@ function updateNotices()
                         '<h5 class="card-header text-center"> <span class="badge badge-warning">' + data.notices[i].categoria + '</span>  El tiempo ahora   </h5>'+
                     '<div class="card-body">'+
                       '<ul class="list-group list-group-flush">' +
-                        '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">' + data.notices[i].weather.humedad + '%</h6></li>' +
-                        '<li class="list-group-item">Temperatura: <h6 class="text-muted float-right">' + data.notices[i].weather.temperatura + '℃</h6></li>' +
+                        '<li class="list-group-item">Humedad: <h6 class="text-muted float-right">' + data.notices[i].weather.humedad + '</h6></li>' +
+                        '<li class="list-group-item">Temperatura: <h6 class="text-muted float-right">' + data.notices[i].weather.temperatura + '</h6></li>' +
                       '</ul>' +
                     '</div>'+
                     '</div>'+
