@@ -57,39 +57,51 @@ class Notice extends Model
 
     }
 
-    // Añadir datos extras al aviso
-    public static function updateExtrasNOT(array $data) {
+    // Añadir o actualizar datos extras al aviso
+    public static function updateExtras(array $data) {
         $notice = Notice::find($data['id']);
         switch ($notice->categoria) {
             case "incendio":
                 $notice->hect = $data['hect'];
-                $notice->afect = $data['afect'];
-                $notice->danyos = $data['danyos'];
                 break;
 
             case "terremoto":
                 $notice->magn = $data['magn'];
-                $notice->afect = $data['afect'];
-                $notice->danyos = $data['danyos'];
                 break;
 
             case "inundacion":
                 $notice->prec = $data['prec'];
-                $notice->afect = $data['afect'];
-                $notice->danyos = $data['danyos'];
                 break;
-
             default:
-                $notice->afect = $data['afect'];
-                $notice->danyos = $data['danyos'];
                 break;
         }
+        $notice->afect = $data['afect'];
+        $notice->danyos = $data['danyos'];
         $notice->save();
     }
 
     public static function updateMagn($id, $magn) { //agregar o actualizar solo magnitud
         $notice = Notice::find($id);
         $notice->magn = $magn;
+        $notice->save();
+    }
+
+    public static function updatePrevExtras(array $data) { 
+        $notice = Notice::find($data['id']);
+        switch ($notice->categoria) {
+            case "incendio":
+                $notice->prevhect = $data['prevhect'];
+                break;
+
+            case "inundacion":
+                $notice->prevprec = $data['prevprec'];
+                break;
+
+            default:
+                break;
+        }
+        $notice->prevafect = $data['prevafect'];
+        $notice->prevdanyos = $data['prevdanyos'];
         $notice->save();
     }
 
