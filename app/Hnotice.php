@@ -24,6 +24,11 @@ class Hnotice extends Model
         $hnotice->visto = $notice->visto;
         $hnotice->lat = $notice->lat;
         $hnotice->long = $notice->long;
+        $hnotice->hect = $notice->hect;
+        $hnotice->magn = $notice->magn;
+        $hnotice->prec = $notice->prec;
+        $hnotice->afect = $notice->afect;
+        $hnotice->danyos = $notice->danyos;
 
         $hnotice->save();
 

@@ -21,9 +21,10 @@ class CreateHnoticeTable extends Migration
             $table->double('lat');
             $table->double('long');
             $table->integer('hect'); //cantidad de hectareas quemadas
+            $table->double('magn'); //Magnitud escala Richter
+            $table->double('prec'); //cantidad de precipitaciones L/m^2
             $table->integer('afect'); //cantidad de personas afectadas
             $table->integer('danyos'); //cantidad en daños materiales 
-            $table->double('prec'); //cantidad de precipitaciones L/m^2
             $table->timestamps();
         });
     }

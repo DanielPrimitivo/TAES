@@ -12,7 +12,6 @@ class NoticeHTableSeeder extends Seeder
      */
     public function run()
     {
-        //arreglar
         $info = parse_ini_file("noticeh.ini", true);
         foreach($info as $noti){
             $notice = new Hnotice([
@@ -22,9 +21,10 @@ class NoticeHTableSeeder extends Seeder
                 'lat' => $noti['lat'],
                 'long' => $noti['long'],
                 'hect' => $noti['hect'], //cantidad de hectareas quemadas
+                'magn' => $noti['magn'],
+                'prec' => $noti['prec'], //cantidad de precipitaciones L/m^2
                 'afect' => $noti['afect'], //cantidad de personas afectadas
-                'danyos' => $noti['danyos'], //cantidad en daños materiales 
-                'prec' => $noti['prec'] //cantidad de precipitaciones L/m^2
+                'danyos' => $noti['danyos'] //cantidad en daños materiales 
             ]);
             $notice->save();
         }
