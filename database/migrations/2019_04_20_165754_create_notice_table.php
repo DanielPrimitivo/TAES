@@ -27,10 +27,10 @@ class CreateNoticeTable extends Migration
             $table->boolean('visto');
             $table->double('lat');
             $table->double('long');
-            $table->integer('hectareas'); //cantidad de hectareas quemadas
-            $table->integer('prevhectareas'); //prevision de hectareas quemadas (historicos)
-            $table->integer('afectados'); //cantidad de personas afectadas
-            $table->integer('prevafectados'); //prevision de personas afectadas (historicos)
+            $table->integer('hect'); //cantidad de hectareas quemadas
+            $table->integer('prevhect'); //prevision de hectareas quemadas (historicos)
+            $table->integer('afect'); //cantidad de personas afectadas
+            $table->integer('prevafect'); //prevision de personas afectadas (historicos)
             $table->integer('danyos'); //cantidad en daños materiales 
             $table->integer('prevdanyos'); //prevision de cantidad de daños materiales (historicos)
             $table->double('prec'); //cantidad de precipitaciones L/m^2

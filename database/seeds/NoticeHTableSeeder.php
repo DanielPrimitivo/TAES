@@ -20,7 +20,11 @@ class NoticeHTableSeeder extends Seeder
                 'categoria' => $noti['categoria'],
                 'visto' => $noti['visto'],
                 'lat' => $noti['lat'],
-                'long' => $noti['long']
+                'long' => $noti['long'],
+                'hect' => $noti['hect'], //cantidad de hectareas quemadas
+                'afect' => $noti['afect'], //cantidad de personas afectadas
+                'danyos' => $noti['danyos'], //cantidad en daños materiales 
+                'prec' => $noti['prec'] //cantidad de precipitaciones L/m^2
             ]);
             $notice->save();
         }

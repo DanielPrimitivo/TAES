@@ -20,8 +20,8 @@ class CreateHnoticeTable extends Migration
             $table->boolean('visto');
             $table->double('lat');
             $table->double('long');
-            $table->integer('hectareas'); //cantidad de hectareas quemadas
-            $table->integer('afectados'); //cantidad de personas afectadas
+            $table->integer('hect'); //cantidad de hectareas quemadas
+            $table->integer('afect'); //cantidad de personas afectadas
             $table->integer('danyos'); //cantidad en daños materiales 
             $table->double('prec'); //cantidad de precipitaciones L/m^2
             $table->timestamps();
