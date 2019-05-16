@@ -82,6 +82,9 @@ class MainController extends Controller
         $times = $notice->weather()->get();
         foreach($times as $time) {
             Weather::updateWEATH($time->id, $newWeatherArray);
+        }
+        $times = $notice->weather()->get();
+        foreach($times as $time) {
             $time["lastActD"] = Carbon::parse($time->updated_at)->format('d-m-Y');
             $time["lastActH"] = Carbon::parse($time->updated_at)->format('H:i');
             $time["categoria"] = $notice->categoria;

@@ -7,6 +7,7 @@ use App\Http\Controllers\ImageController;
 use Storage;
 use Exception;
 use App\Image;
+use App\Himage;
 
 class Webservice extends Controller
 {
@@ -18,7 +19,7 @@ class Webservice extends Controller
     }
 
 	private function numImagenes(){
-        return Image::readAll()->count();
+        return Image::readAll()->count() + Himage::readAll()->count();
     }
 
     /**
