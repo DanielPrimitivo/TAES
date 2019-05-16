@@ -65,15 +65,10 @@ class Notice extends Model
                 $notice->hect = $data['hect'];
                 break;
 
-            case "terremoto":
-                $notice->magn = $data['magn'];
-                break;
-
             case "inundacion":
                 $notice->prec = $data['prec'];
                 break;
             default:
-                break;
         }
         $notice->afect = $data['afect'];
         $notice->danyos = $data['danyos'];
@@ -82,7 +77,8 @@ class Notice extends Model
 
     public static function updateMagn($id, $magn) { //agregar o actualizar solo magnitud
         $notice = Notice::find($id);
-        $notice->magn = $magn;
+        if ($notice->categoria == "terremoto")
+            $notice->magn = $magn;
         $notice->save();
     }
 
@@ -98,7 +94,6 @@ class Notice extends Model
                 break;
 
             default:
-                break;
         }
         $notice->prevafect = $data['prevafect'];
         $notice->prevdanyos = $data['prevdanyos'];
@@ -125,7 +120,6 @@ class Notice extends Model
         else{
             $notice->visto = 1;
         }
-
         $notice->save();
     }
 

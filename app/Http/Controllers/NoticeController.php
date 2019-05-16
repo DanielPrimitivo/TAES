@@ -167,7 +167,7 @@ class NoticeController extends Controller
         return $sum/$num;
     }
 
-    public function actualizarPrevExtras(Request $request) {
+    public function actualizarPrevExtras(Request $request) { //unicamente id
         $data = $request->all();
         $notice = Notice::readNOT($data['id']);
         $prevafect = $this->calcularPrevAfect($notice);
@@ -176,6 +176,7 @@ class NoticeController extends Controller
             case "incendio":
                 $prevhect = $this->calcularPrev($notice);
                 $array = array(
+                    'id' => $data['id'],
                     'prevhect' => $prevhect,
                     'prevafect' => $prevafect,
                     'prevdanyos' => $prevdanyos
@@ -185,6 +186,7 @@ class NoticeController extends Controller
             case "inundacion":
                 $prevprec = $this->calcularPrev($notice);
                 $array = array(
+                    'id' => $data['id'],
                     'prevprec' => $prevprec,
                     'prevafect' => $prevafect,
                     'prevdanyos' => $prevdanyos
@@ -193,12 +195,27 @@ class NoticeController extends Controller
 
             default:
                 $array = array(
+                    'id' => $data['id'],
                     'prevafect' => $prevafect,
                     'prevdanyos' => $prevdanyos
                 );
         }
         Notice::updatePrevExtras($array);
         $notice = Notice::readNOT($notice->id);
+        return view('')->with('notice', $notice);
+    }
+
+    public function actualizarExtras(Request $request) {
+        $data = $request->all();
+        Notice::updateExtras($data);
+        $notice = Notice::readNOT($data['id']);
+        return view('')->with('notice', $notice);
+    }
+
+    public function actualizarMagnitud(Request $request) {
+        $data = $request->all();
+        Notice::updateMagn($data['id'],$data['magn']);
+        $notice = Notice::readNOT($data['id']);
         return view('')->with('notice', $notice);
     }
  
