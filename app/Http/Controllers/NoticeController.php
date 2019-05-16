@@ -72,6 +72,136 @@ class NoticeController extends Controller
         return View::make('Main/avisoEliminado');
     }
 
+    public function agregarExtras(Request $request) {
+        $data = $request->all();
+        Notice::updateExtras($data);
+        $notice = Notice::readNOT($data['id']);
+        return view('')->with('notice', $notice);
+    }
+
+    public function calcularPrev($notice)  {
+        $hnotices = Hnotice::readAll();
+        $long = $notice->long;
+        $lat = $notice->lat;
+        $range = 1;
+        $num = 0;
+        $sum = 0;
+        foreach($hnotices as $hnotice) {
+            if ($hnotice->categoria == $notice->categoria) {
+                $lat2 = $hnotice->lat;
+                $long2 = $hnotice->long;
+                $dis = rad2deg(acos((sin(deg2rad($lat2))*sin(deg2rad($lat))) +
+                    (cos(deg2rad($lat2))*cos(deg2rad($lat))*cos(deg2rad($long2-$long)))));
+                $dis_km = $dis * 111.13384;
+                if ($dis_km < $range) {
+                    $num = $num + 1;
+                    if($notice->categoria == "inundacion")
+                        $sum = $sum + $hnotice->prec;
+                    else if ($notice->categoria == "incendio")
+                        $sum = $sum + $hnotice->hect;
+                }
+            }
+        }
+        return $sum/$num;
+    }
+
+    public function calcularPrevAfect($notice) {
+        $hnotices = Hnotice::readAll();
+        $long = $notice->long;
+        $lat = $notice->lat;
+        $range = 1;
+        $num = 0;
+        $sum = 0;
+        foreach($hnotices as $hnotice) {
+            if ($hnotice->categoria == $notice->categoria) {
+                $lat2 = $hnotice->lat;
+                $long2 = $hnotice->long;
+                $dis = rad2deg(acos((sin(deg2rad($lat2))*sin(deg2rad($lat))) +
+                    (cos(deg2rad($lat2))*cos(deg2rad($lat))*cos(deg2rad($long2-$long)))));
+                $dis_km = $dis * 111.13384;
+                if ($dis_km < $range) {
+                    $num = $num + 1;
+                    if($notice->categoria == "terremoto") {
+                        $magnh = $hnotice->magn;
+                        $magn = $hnotice->magn;
+                        $afecth = $hnotice->afect;
+                        $prev = ($magn/$magnh)*$afecth;
+                        $sum = $sum + $prev;
+                    }
+                    else
+                        $sum = $sum + $hnotice->afect;
+                }
+            }
+        }
+        return $sum/$num;
+    }
+
+    public function calcularPrevDanyos($notice) {
+        $hnotices = Hnotice::readAll();
+        $long = $notice->long;
+        $lat = $notice->lat;
+        $range = 1;
+        $num = 0;
+        $sum = 0;
+        foreach($hnotices as $hnotice) {
+            if ($hnotice->categoria == $notice->categoria) {
+                $lat2 = $hnotice->lat;
+                $long2 = $hnotice->long;
+                $dis = rad2deg(acos((sin(deg2rad($lat2))*sin(deg2rad($lat))) +
+                    (cos(deg2rad($lat2))*cos(deg2rad($lat))*cos(deg2rad($long2-$long)))));
+                $dis_km = $dis * 111.13384;
+                if ($dis_km < $range) {
+                    $num = $num + 1;
+                    if($notice->categoria == "terremoto") {
+                        $magnh = $hnotice->magn;
+                        $magn = $hnotice->magn;
+                        $danyosh = $hnotice->danyos;
+                        $prev = ($magn/$magnh)*$danyosh;
+                        $sum = $sum + $prev;
+                    }
+                    else
+                        $sum = $sum + $hnotice->danyos;
+                }
+            }
+        }
+        return $sum/$num;
+    }
+
+    public function actualizarPrevExtras(Request $request) {
+        $data = $request->all();
+        $notice = Notice::readNOT($data['id']);
+        $prevafect = $this->calcularPrevAfect($notice);
+        $prevdanyos = $this->calcularPrevDanyos($notice);
+        switch ($notice->categoria) {
+            case "incendio":
+                $prevhect = $this->calcularPrev($notice);
+                $array = array(
+                    'prevhect' => $prevhect,
+                    'prevafect' => $prevafect,
+                    'prevdanyos' => $prevdanyos
+                );
+                break;
+
+            case "inundacion":
+                $prevprec = $this->calcularPrev($notice);
+                $array = array(
+                    'prevprec' => $prevprec,
+                    'prevafect' => $prevafect,
+                    'prevdanyos' => $prevdanyos
+                );
+                break;
+
+            default:
+                $array = array(
+                    'prevafect' => $prevafect,
+                    'prevdanyos' => $prevdanyos
+                );
+        }
+        Notice::updatePrevExtras($array);
+        $notice = Notice::readNOT($notice->id);
+        return view('')->with('notice', $notice);
+    }
+ 
     public static function archivar($id) {
         $notice = Notice::readNOT($id);
         $hnotice = Hnotice::createHNOT($notice);
