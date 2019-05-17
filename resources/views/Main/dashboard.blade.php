@@ -147,13 +147,18 @@ cursor:pointer !important;
       <h5 class="card-header text-center">Últimos avisos</h5>
       <div class="card-body">
         <div class="table-responsive" id="sailorTableArea">
-          <table class="table table-hover table-wrapper-scroll-y">
+          <table class="table table-hover text-center table-wrapper-scroll-y">
             <tbody id="noticesListBody">
               @if(isset($notices))
+              <th>Aviso</th>
+              <th>Categoria</th>
+              <th>Imagenes</th>
+              <th>&nbsp;</th>
                 @foreach($notices as $notice)
                   <tr id="fila{{$notice->id}}" class="table-row marker-link" onclick="noticeTimes('{{$notice->id}}', 'false')" data-markerid="{{$loop->index}}">
-                    <td>{{ $notice->lat }}</td>
-                    <td>{{ $notice->long }}</td>
+                    <td><span class="badge badge-info">Aviso {{ $notice->id }}</span></td>
+                    <td><span class="badge badge-warning">{{ $notice->categoria }}</span></td>
+                    <td><span class="badge badge-pill badge-secondary">{{ $notice->images()->count() }}</span></td>
                     <td><button onclick="location.href='{{route('aviso', $notice->id)}}';" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>
                   </tr>
                 @endforeach
@@ -655,11 +660,16 @@ function updateNotices()
                 markers[i].setMap(map);
               }
               var newTableLine = "";
+              newTableLine = '<th>Aviso</th>' +
+              '<th>Categoria</th>' +
+              '<th>Imagenes</th>' +
+              '<th>&nbsp;</th>';
               for(i = 0; i < data.notices.length; i++) {
                 var URL = "{{url('aviso/')}}/"+data.notices[i].id;
                 newTableLine += '<tr id="fila' + data.notices[i].id + '" class="table-row marker-link" onclick="noticeTimes('+ data.notices[i].id +')" data-markerid="' + i + '">' +
-                  '<td>'+ data.notices[i].lat +'</td>' +
-                  '<td>'+ data.notices[i].long +'</td>' +
+                  '<td><span class="badge badge-info">Aviso' + data.notices[i].id +'</span></td>' +
+                  '<td><span class="badge badge-warning">'+ data.notices[i].categoria +'</span></td>' +
+                  '<td><span class="badge badge-pill badge-secondary">'+ data.notices[i].numImg +'</span></td>' +
                   '<td><button onclick="location.href=\'' + URL + '\';" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>' +
                 '</tr>';
               }
