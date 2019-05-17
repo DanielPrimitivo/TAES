@@ -134,6 +134,39 @@
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5rNH_9DeGnfBvNc435hqkBvgz_m7cthc&callback=initMap">
 	</script>
+	<!-- SCRIPT NOTIFICACIONES -->
+	<script>
+		function show(numAvisosNuevos){       
+			var title = "Nuevo Aviso"
+									, options = {
+									body: "Tienes " + numAvisosNuevos + " avisos nuevos.",
+									icon: "/fireviewer/logoRound.png"
+							};
+
+							if (!("Notification" in window)) {
+									alert("Este explorador no permite notificaciones de escritorio");
+							}
+							else if (Notification.permission === "granted") {
+
+									var n = new Notification(title, options);
+									n.onshow=function(){
+												setTimeout(n.close.bind(n), 5000); 
+									}
+									n.onclick = function () {
+											window.location = 'http://alertviewer.francecentral.cloudapp.azure.com/alertviewer/'
+											n.close();
+									};
+							}
+							else if (Notification.permission !== 'denied') {
+									Notification.requestPermission(function (permission) {
+											if (permission === "granted") {
+													var n = new Notification(title, options);
+											}
+									});
+							}
+
+			}
+	</script>
 </body>
 
 </html>
