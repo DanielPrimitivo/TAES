@@ -81,7 +81,7 @@ cursor:pointer !important;
       <span class="badge badge-info mt-1" id="alertUpdateImages" style="display: none;">
 
       </span>
-      <button onclick="noticeImages();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
+      <button onclick="noticeImages('true');" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
     </div>
 </div>
   <div class="card-body scroll-box">
@@ -172,7 +172,7 @@ cursor:pointer !important;
         </small>
         <small>
         <div class="float-right">
-          <button onclick="updateNotices();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
+          <button onclick="updateNotices('true');" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
         </div>
       </small>
         <span class="badge badge-info float-right mt-1" id="alertUpdateNotices" style="display: none;">
@@ -310,7 +310,7 @@ function noticeTimes(notice, fromUpdate)
                     }
                   },
                   error: function(jqxhr, status, exception) {
-                    noticeTimes(notice);
+
                   }
                 });}, 300);
               }
@@ -321,7 +321,7 @@ function noticeTimes(notice, fromUpdate)
 
 var numberImages = -1;
 
-function noticeImages()
+function noticeImages(fromButton)
 {
     var contentString = "";
     var alertImgContent = "";
@@ -343,14 +343,15 @@ function noticeImages()
               alertImgContent = '<i class="fas fa-info-circle"></i> ' + numberNewImages + ' imágenes menos';
             }
             document.getElementById("alertUpdateImages").innerHTML = alertImgContent;
-            $("#alertUpdateImages").fadeIn("1000");
-            setTimeout(function(){
-              $("#alertUpdateImages").fadeOut();
-            }, 2000);
+            if(fromButton == 'true' || data.images.length != numberImages) {
+              $("#alertUpdateImages").fadeIn("1000");
+              setTimeout(function(){
+                $("#alertUpdateImages").fadeOut();
+              }, 2000);
+            }
           }
 
             if(data.images.length == 0) {
-              document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoImages"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin Imagenes almacenadas!</div>';
               contentString = "";
             }
             else if(data.images.length != numberImages) {
@@ -373,12 +374,15 @@ function noticeImages()
             }
         },
         error: function(jqxhr, status, exception) {
-             noticeImages();
+
          }
     });
     setTimeout(function(){
       loadGallery(true, 'a.thumbnail');
     }, 1000);
+    if(fromButton == 'false') {
+        setTimeout(noticeImages, 5000, 'false');
+    }
 }
 
 //This function disables buttons when needed
@@ -451,13 +455,15 @@ let modalId = $('#image-gallery');
 $(document)
   .ready(function () {
 
-    noticeImages();
+    noticeImages('false');
 
     @foreach($notices as $notice)
     @if ($loop->first)
       noticeTimes({{$notice->id}});
     @endif
     @endforeach
+
+    setTimeout(updateNotices, 5000, 'false');
   });
 
 // build key actions
@@ -565,7 +571,7 @@ var noticeId = null;
 var fila = null;
 var InfoWindows = [];
 
-function updateNotices()
+function updateNotices(fromButton)
 {
   var alertContent = "";
     $.ajax({
@@ -576,10 +582,12 @@ function updateNotices()
             if(data.notices.length == 0 || data.notices.length == markers.length) {
               alertContent = '<i class="fas fa-info-circle"></i> Sin nuevos avisos';
               document.getElementById("alertUpdateNotices").innerHTML = alertContent;
-              $("#alertUpdateNotices").fadeIn("1000");
-              setTimeout(function(){
-                $("#alertUpdateNotices").fadeOut();
-              }, 2000);
+              if(fromButton == 'true') {
+                $("#alertUpdateNotices").fadeIn("1000");
+                setTimeout(function(){
+                  $("#alertUpdateNotices").fadeOut();
+                }, 2000);
+              }
               var d = new Date();
               if(d.getMinutes() < 10) {
                 var n = d.getHours() + ':0' + d.getMinutes();
@@ -681,6 +689,7 @@ function updateNotices()
                 alertContent = '<i class="fas fa-info-circle"></i> ' + numberLessNotices + ' alertas menos';
               }
               else {
+                show(numberNewNotices);
                 alertContent = '<i class="fas fa-info-circle"></i> ' + numberNewNotices + ' nuevas alertas';
               }
               document.getElementById("alertUpdateNotices").innerHTML = alertContent;
@@ -706,8 +715,12 @@ function updateNotices()
             }
         },
         error: function(jqxhr, status, exception) {
-             alert('Exception:' + exception,);
+
          }
     });
+    if(fromButton == 'false') {
+      setTimeout(updateNotices, 5000, 'false');
+    }
 }
+
 @endsection
