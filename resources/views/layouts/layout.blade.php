@@ -109,7 +109,7 @@
 												case "inundacion":
 													contentString += '<a class="dropdown-item btn-outline-secondary" href="' + URL + '" id="link1"><i class="fas fa-water mr-2"></i> Aviso ' + data.notices[i].id + '</a>';
 												break;
-												case "otros":
+												case "otro":
 													contentString += '<a class="dropdown-item btn-outline-secondary" href="' + URL + '" id="link1"><i class="fas fa-clone mr-2"></i> Aviso ' + data.notices[i].id + '</a>';
 												break;
 												default:
