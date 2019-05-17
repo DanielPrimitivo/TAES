@@ -109,6 +109,7 @@ class MainController extends Controller
             $sender = $image->sender()->firstOrFail();
             $image->sender_id = $sender;
           }
+          rsort($images);
           return response()->json(array('images' => $images), 200);
         }
 
