@@ -61,6 +61,39 @@ cursor:pointer !important;
         }
 
 
+
+        * {box-sizing: border-box}
+
+       /* Make the image to responsive */
+       .img-responsive {
+         display: block;
+         width: 100%;
+         height: auto;
+       }
+
+       /* The overlay effect - lays on top of the container and over the image */
+       .overlay {
+         position: absolute;
+         bottom: 0;
+         background: rgb(0, 0, 0);
+         background: rgba(0, 0, 0, 0.5); /* Black see-through */
+         color: #f1f1f1;
+         width: 96%;
+         transition: .5s ease;
+         opacity:0;
+         color: white;
+         font-size: 18px;
+         padding: 30px;
+         text-align: center;
+         margin-bottom: 15px;
+       }
+
+       /* When you mouse over the container, fade in the overlay title */
+       .image-container:hover .overlay {
+         opacity: 1;
+       }
+
+
 @endsection
 
 @section('content')
@@ -105,8 +138,9 @@ cursor:pointer !important;
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                    <div class="modal-body image-container">
+                        <img id="image-gallery-image" class="img-responsive" src="">
+                        <div class="overlay"><h6 id="image-gallery-timestamp"></h6><p id="image-gallery-comment"></p></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
@@ -363,7 +397,9 @@ function noticeImages(fromButton)
                     '<a class="thumbnail" href="#" data-image-id="' + id + '" data-toggle="modal" data-title="Aviso ' + data.images[i].notice_id + '"' +
                       'data-image="' + URL + '"' +
                        'data-target="#image-gallery"' +
-                       'data-sender="' + data.images[i].sender_id.categoria + ', Tlf: ' + data.images[i].sender_id.tlf + '">' +
+                       'data-sender="' + data.images[i].sender_id.categoria + ', Tlf: ' + data.images[i].sender_id.tlf + '"' +
+                       'data-timestamp="' + data.images[i].fecha + '"' +
+                       'data-comment="' + data.images[i].comentarios + '">' +
                          '<img class="img-thumbnail" src="' + URL + '" alt="Another alt text">' +
                            '</a>' +
                          '</div>';
@@ -431,6 +467,10 @@ function loadGallery(setIDs, setClickAttr) {
       .text($sel.data('title'));
     $('#image-gallery-sender')
       .text($sel.data('sender'));
+    $('#image-gallery-comment')
+      .text($sel.data('comment'));
+    $('#image-gallery-timestamp')
+      .text($sel.data('timestamp'));
     $('#image-gallery-image')
       .attr('src', $sel.data('image'));
     disableButtons(counter, $sel.data('image-id'));
