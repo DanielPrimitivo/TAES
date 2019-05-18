@@ -120,7 +120,7 @@
 							}
 					},
 					error: function(jqxhr, status, exception) {
-							 alert('Exception:' + exception,);
+							 
 					 }
 			});
 			setTimeout(loadPendingButton, 5000);
