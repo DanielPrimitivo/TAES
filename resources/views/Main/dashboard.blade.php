@@ -61,6 +61,39 @@ cursor:pointer !important;
         }
 
 
+
+        * {box-sizing: border-box}
+
+       /* Make the image to responsive */
+       .img-responsive {
+         display: block;
+         width: 100%;
+         height: auto;
+       }
+
+       /* The overlay effect - lays on top of the container and over the image */
+       .overlay {
+         position: absolute;
+         bottom: 0;
+         background: rgb(0, 0, 0);
+         background: rgba(0, 0, 0, 0.5); /* Black see-through */
+         color: #f1f1f1;
+         width: 96%;
+         transition: .5s ease;
+         opacity:0;
+         color: white;
+         font-size: 18px;
+         padding: 30px;
+         text-align: center;
+         margin-bottom: 15px;
+       }
+
+       /* When you mouse over the container, fade in the overlay title */
+       .image-container:hover .overlay {
+         opacity: 1;
+       }
+
+
 @endsection
 
 @section('content')
@@ -81,7 +114,7 @@ cursor:pointer !important;
       <span class="badge badge-info mt-1" id="alertUpdateImages" style="display: none;">
 
       </span>
-      <button onclick="noticeImages();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
+      <button onclick="noticeImages('true');" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
     </div>
 </div>
   <div class="card-body scroll-box">
@@ -105,8 +138,9 @@ cursor:pointer !important;
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                    <div class="modal-body image-container">
+                        <img id="image-gallery-image" class="img-responsive" src="">
+                        <div class="overlay"><h6 id="image-gallery-timestamp"></h6><p id="image-gallery-comment"></p></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
@@ -147,13 +181,18 @@ cursor:pointer !important;
       <h5 class="card-header text-center">Últimos avisos</h5>
       <div class="card-body">
         <div class="table-responsive" id="sailorTableArea">
-          <table class="table table-hover table-wrapper-scroll-y">
+          <table class="table table-hover text-center table-wrapper-scroll-y">
             <tbody id="noticesListBody">
               @if(isset($notices))
+              <th>Aviso</th>
+              <th>Categoria</th>
+              <th>Imagenes</th>
+              <th>&nbsp;</th>
                 @foreach($notices as $notice)
                   <tr id="fila{{$notice->id}}" class="table-row marker-link" onclick="noticeTimes('{{$notice->id}}', 'false')" data-markerid="{{$loop->index}}">
-                    <td>{{ $notice->lat }}</td>
-                    <td>{{ $notice->long }}</td>
+                    <td><span class="badge badge-info">Aviso {{ $notice->id }}</span></td>
+                    <td><span class="badge badge-warning">{{ $notice->categoria }}</span></td>
+                    <td><span class="badge badge-pill badge-secondary">{{ $notice->images()->count() }}</span></td>
                     <td><button onclick="location.href='{{route('aviso', $notice->id)}}';" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>
                   </tr>
                 @endforeach
@@ -167,7 +206,7 @@ cursor:pointer !important;
         </small>
         <small>
         <div class="float-right">
-          <button onclick="updateNotices();" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
+          <button onclick="updateNotices('true');" class="text-dark btn btn-sm btn-link"><i class="fas fa-sync-alt"></i></button>
         </div>
       </small>
         <span class="badge badge-info float-right mt-1" id="alertUpdateNotices" style="display: none;">
@@ -305,7 +344,7 @@ function noticeTimes(notice, fromUpdate)
                     }
                   },
                   error: function(jqxhr, status, exception) {
-                    noticeTimes(notice);
+
                   }
                 });}, 300);
               }
@@ -316,7 +355,7 @@ function noticeTimes(notice, fromUpdate)
 
 var numberImages = -1;
 
-function noticeImages()
+function noticeImages(fromButton)
 {
     var contentString = "";
     var alertImgContent = "";
@@ -338,14 +377,15 @@ function noticeImages()
               alertImgContent = '<i class="fas fa-info-circle"></i> ' + numberNewImages + ' imágenes menos';
             }
             document.getElementById("alertUpdateImages").innerHTML = alertImgContent;
-            $("#alertUpdateImages").fadeIn("1000");
-            setTimeout(function(){
-              $("#alertUpdateImages").fadeOut();
-            }, 2000);
+            if(fromButton == 'true' || data.images.length != numberImages) {
+              $("#alertUpdateImages").fadeIn("1000");
+              setTimeout(function(){
+                $("#alertUpdateImages").fadeOut();
+              }, 2000);
+            }
           }
 
             if(data.images.length == 0) {
-              document.getElementById("temperaturaActual").innerHTML = '<div class="col row alert alert-warning mt-2 ml-auto mr-auto" id="alertNoImages"><i class="fas fa-exclamation-triangle mr-2"></i>¡Sin Imagenes almacenadas!</div>';
               contentString = "";
             }
             else if(data.images.length != numberImages) {
@@ -357,7 +397,9 @@ function noticeImages()
                     '<a class="thumbnail" href="#" data-image-id="' + id + '" data-toggle="modal" data-title="Aviso ' + data.images[i].notice_id + '"' +
                       'data-image="' + URL + '"' +
                        'data-target="#image-gallery"' +
-                       'data-sender="' + data.images[i].sender_id.categoria + ', Tlf: ' + data.images[i].sender_id.tlf + '">' +
+                       'data-sender="' + data.images[i].sender_id.categoria + ', Tlf: ' + data.images[i].sender_id.tlf + '"' +
+                       'data-timestamp="' + data.images[i].fecha + '"' +
+                       'data-comment="' + data.images[i].comentarios + '">' +
                          '<img class="img-thumbnail" src="' + URL + '" alt="Another alt text">' +
                            '</a>' +
                          '</div>';
@@ -368,12 +410,15 @@ function noticeImages()
             }
         },
         error: function(jqxhr, status, exception) {
-             noticeImages();
+
          }
     });
     setTimeout(function(){
       loadGallery(true, 'a.thumbnail');
     }, 1000);
+    if(fromButton == 'false') {
+        setTimeout(noticeImages, 5000, 'false');
+    }
 }
 
 //This function disables buttons when needed
@@ -422,6 +467,10 @@ function loadGallery(setIDs, setClickAttr) {
       .text($sel.data('title'));
     $('#image-gallery-sender')
       .text($sel.data('sender'));
+    $('#image-gallery-comment')
+      .text($sel.data('comment'));
+    $('#image-gallery-timestamp')
+      .text($sel.data('timestamp'));
     $('#image-gallery-image')
       .attr('src', $sel.data('image'));
     disableButtons(counter, $sel.data('image-id'));
@@ -446,13 +495,15 @@ let modalId = $('#image-gallery');
 $(document)
   .ready(function () {
 
-    noticeImages();
+    noticeImages('false');
 
     @foreach($notices as $notice)
     @if ($loop->first)
       noticeTimes({{$notice->id}});
     @endif
     @endforeach
+
+    setTimeout(updateNotices, 5000, 'false');
   });
 
 // build key actions
@@ -560,7 +611,7 @@ var noticeId = null;
 var fila = null;
 var InfoWindows = [];
 
-function updateNotices()
+function updateNotices(fromButton)
 {
   var alertContent = "";
     $.ajax({
@@ -571,10 +622,12 @@ function updateNotices()
             if(data.notices.length == 0 || data.notices.length == markers.length) {
               alertContent = '<i class="fas fa-info-circle"></i> Sin nuevos avisos';
               document.getElementById("alertUpdateNotices").innerHTML = alertContent;
-              $("#alertUpdateNotices").fadeIn("1000");
-              setTimeout(function(){
-                $("#alertUpdateNotices").fadeOut();
-              }, 2000);
+              if(fromButton == 'true') {
+                $("#alertUpdateNotices").fadeIn("1000");
+                setTimeout(function(){
+                  $("#alertUpdateNotices").fadeOut();
+                }, 2000);
+              }
               var d = new Date();
               if(d.getMinutes() < 10) {
                 var n = d.getHours() + ':0' + d.getMinutes();
@@ -655,11 +708,16 @@ function updateNotices()
                 markers[i].setMap(map);
               }
               var newTableLine = "";
+              newTableLine = '<th>Aviso</th>' +
+              '<th>Categoria</th>' +
+              '<th>Imagenes</th>' +
+              '<th>&nbsp;</th>';
               for(i = 0; i < data.notices.length; i++) {
                 var URL = "{{url('aviso/')}}/"+data.notices[i].id;
                 newTableLine += '<tr id="fila' + data.notices[i].id + '" class="table-row marker-link" onclick="noticeTimes('+ data.notices[i].id +')" data-markerid="' + i + '">' +
-                  '<td>'+ data.notices[i].lat +'</td>' +
-                  '<td>'+ data.notices[i].long +'</td>' +
+                  '<td><span class="badge badge-info">Aviso' + data.notices[i].id +'</span></td>' +
+                  '<td><span class="badge badge-warning">'+ data.notices[i].categoria +'</span></td>' +
+                  '<td><span class="badge badge-pill badge-secondary">'+ data.notices[i].numImg +'</span></td>' +
                   '<td><button onclick="location.href=\'' + URL + '\';" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>' +
                 '</tr>';
               }
@@ -671,6 +729,7 @@ function updateNotices()
                 alertContent = '<i class="fas fa-info-circle"></i> ' + numberLessNotices + ' alertas menos';
               }
               else {
+                show(numberNewNotices);
                 alertContent = '<i class="fas fa-info-circle"></i> ' + numberNewNotices + ' nuevas alertas';
               }
               document.getElementById("alertUpdateNotices").innerHTML = alertContent;
@@ -696,8 +755,12 @@ function updateNotices()
             }
         },
         error: function(jqxhr, status, exception) {
-             alert('Exception:' + exception,);
+
          }
     });
+    if(fromButton == 'false') {
+      setTimeout(updateNotices, 5000, 'false');
+    }
 }
+
 @endsection

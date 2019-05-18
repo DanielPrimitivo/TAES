@@ -83,8 +83,7 @@
 	</script>
 
 	<script>
-	$(document)
-	  .ready(function () {
+	function loadPendingButton() {
 		var contentString = "";
 			$.ajax({
 					type: 'POST',
@@ -124,6 +123,11 @@
 							 alert('Exception:' + exception,);
 					 }
 			});
+			setTimeout(loadPendingButton, 5000);
+	}
+	$(document)
+	  .ready(function () {
+			loadPendingButton();
 	});
 	</script>
 
@@ -137,7 +141,7 @@
 	<!-- SCRIPT NOTIFICACIONES -->
 	<script>
 		function show(numAvisosNuevos){
-			var title = "Nuevo Aviso"
+			var title = "Nuevos Avisos"
 									, options = {
 									body: "Tienes " + numAvisosNuevos + " avisos nuevos.",
 									icon: "/fireviewer/logoRound.png"
@@ -153,7 +157,7 @@
 												setTimeout(n.close.bind(n), 5000);
 									}
 									n.onclick = function () {
-											window.location = 'http://alertviewer.francecentral.cloudapp.azure.com/alertviewer/'
+											window.focus();
 											n.close();
 									};
 							}
