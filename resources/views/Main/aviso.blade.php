@@ -603,7 +603,7 @@ function noticeImages(fromButton)
             }
         },
         error: function(jqxhr, status, exception) {
-             alert('Exception:' + exception,);
+             
          }
     });
     setTimeout(function(){
