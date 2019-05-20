@@ -36,7 +36,7 @@ class NoticeController extends Controller
     }
 
     public function agruparCategoria($categoria) {
-        $notices = Notice::getByCategory($categoria)->get();
+        $notices = Notice::getByCategory($categoria)->orderBy('id', 'desc')->get();
 
         return view::make('Main/dashboard')->with('notices', $notices)->with('filtered', $categoria)->with('lastCall', Carbon::now()->format('H:i'));
     }
