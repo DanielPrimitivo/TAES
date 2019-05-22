@@ -722,7 +722,7 @@ function updateNotices(fromButton)
                 newTableLine += '<tr id="fila' + data.notices[i].id + '" class="table-row marker-link" onclick="noticeTimes('+ data.notices[i].id +')" data-markerid="' + i + '">' +
                   '<td><span class="badge badge-info">Aviso' + data.notices[i].id +'</span></td>' +
                   '<td><span class="badge badge-warning">'+ data.notices[i].categoria +'</span></td>' +
-                  '<td><span id="filaNumImg ' + data.notices[i].id + '" class="badge badge-pill badge-secondary">'+ data.notices[i].numImg +'</span></td>' +
+                  '<td><span id="filaNumImg' + data.notices[i].id + '" class="badge badge-pill badge-secondary">'+ data.notices[i].numImg +'</span></td>' +
                   '<td><button onclick="location.href=\'' + URL + '\';" class="text-dark btn btn-sm btn-link"><i class="fas fa-external-link-alt"></i></button></td>' +
                 '</tr>';
               }
